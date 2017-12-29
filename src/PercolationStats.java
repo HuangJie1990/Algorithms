@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 /**
  * @author huangjie
@@ -10,6 +11,8 @@ public class PercolationStats {
 
     private int times;
     private double[] threshold;
+    private double mean;
+    private double stddev;
 
     /**
      * @param n      the order of grid
@@ -27,8 +30,10 @@ public class PercolationStats {
                 int col = StdRandom.uniform(n) + 1;
                 percolation.open(row, col);
             }
-            threshold[i] = (double) percolation.numberOfOpenSites() /(n * n);
+            threshold[i] = (double) percolation.numberOfOpenSites() / (n * n);
         }
+        mean = StdStats.mean(threshold);
+        stddev = StdStats.stddev(threshold);
     }
 
     /**
@@ -37,11 +42,7 @@ public class PercolationStats {
      * @description sample mean of percolation threshold
      **/
     public double mean() {
-        double sum = 0.0;
-        for (double d : threshold) {
-            sum += d;
-        }
-        return sum / times;
+        return mean;
     }
 
     /**
@@ -50,13 +51,7 @@ public class PercolationStats {
      * @description sample standard deviation of percolation threshold
      **/
     public double stddev() {
-        if (times == 1) return Double.POSITIVE_INFINITY;
-        double mean = mean();
-        double sum = 0.0;
-        for (double d : threshold) {
-            sum += Math.pow(d - mean, 2);
-        }
-        return Math.sqrt(sum / (times - 1));
+        return stddev;
     }
 
     /**
@@ -65,8 +60,6 @@ public class PercolationStats {
      * @description low endpoint of 95% confidence interval
      **/
     public double confidenceLo() {
-        double mean = mean();
-        double stddev = stddev();
         return mean - 1.96 * stddev / Math.sqrt(times);
     }
 
@@ -76,8 +69,6 @@ public class PercolationStats {
      * @description high endpoint of 95% confidence interval
      **/
     public double confidenceHi() {
-        double mean = mean();
-        double stddev = stddev();
         return mean + 1.96 * stddev / Math.sqrt(times);
     }
 
@@ -87,8 +78,11 @@ public class PercolationStats {
      * @description test client
      **/
     public static void main(String[] args) {
-        PercolationStats percolationStats=new PercolationStats(100,1000);
-        StdOut.println(percolationStats.mean());
-        StdOut.println("confidenceLo is "+percolationStats.confidenceLo()+", confidenceHi is "+percolationStats.confidenceHi());
+        int n = Integer.parseInt(args[0]);
+        int trails = Integer.parseInt(args[1]);
+        PercolationStats percolationStats = new PercolationStats(n, trails);
+        StdOut.printf("%-25s= %f\n", "mean", percolationStats.mean());
+        StdOut.printf("%-25s= %f\n", "stddev", percolationStats.stddev());
+        StdOut.printf("%-25s= [%f, %f]\n", "95% confidence interval", percolationStats.confidenceLo(), percolationStats.confidenceHi());
     }
 }
