@@ -1,3 +1,5 @@
+package w1;
+
 import edu.princeton.cs.algs4.*;
 
 /**
