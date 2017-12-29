@@ -1,7 +1,4 @@
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.Stopwatch;
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+import edu.princeton.cs.algs4.*;
 
 /**
  * @author huangjie
@@ -9,30 +6,29 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
  **/
 public class Percolation {
 
-    private boolean[] sites;
+    private boolean[] opened;
+    private boolean[] connectedTop;
+    private boolean[] connectedBottom;
     private int numberOfOpenSites;
-    private int row, col, top, bottom;
-    private WeightedQuickUnionUF topUF;
-    private WeightedQuickUnionUF topBottomUF;
+    private final int order;
+    private final int size;
+    private WeightedQuickUnionUF uf;
+    private boolean percolate;
 
     /**
      * @param
      * @return
-     * @description create n-by-n grid, with all sites blocked
+     * @description create n-by-n grid, with all opened blocked
      **/
     public Percolation(int n) {
         if (n <= 0) throw new IllegalArgumentException("argument to Percolation() must bigger than 0");
-        topUF = new WeightedQuickUnionUF(n * n + 1);
-        topBottomUF = new WeightedQuickUnionUF(n * n + 2);
-        row = n;
-        col = n;
-        sites = new boolean[n * n + 1];
+        order = n;
+        size = n * n;
+        uf = new WeightedQuickUnionUF(size);
+        opened = new boolean[size];
+        connectedTop = new boolean[size];
+        connectedBottom = new boolean[size];
 
-        //the index of virtual top site
-        top = 0;
-
-        //the index of virtual bottom site
-        bottom = n * n + 1;
     }
 
     /**
@@ -43,54 +39,47 @@ public class Percolation {
     public void open(int row, int col) {
         validate(row, col);
         int current = index(row, col);
-
         //do nothing if this site is already open
         if (isOpen(current)) return;
+        opened[current] = true;
+        boolean top = false;
+        boolean bottom = false;
 
-        sites[current] = true;
-        //if this site is in the top row, union it with the virtual top site
         if (row == 1) {
-            topUF.union(current, top);
-            topBottomUF.union(current, top);
-        } else if (row == this.row) {
-            topBottomUF.union(current, bottom);
+            top = true;
+        }
+        if (row == order) {
+            bottom = true;
         }
 
-        int u = row - 1;
-        if (u >= 1) {
-            int upper = index(u, col);
-            if (isOpen(upper)) {
-                topUF.union(current, upper);
-                topBottomUF.union(current, upper);
-            }
+        if (row < order && isOpen(current + order)) {
+            if (connectedTop[uf.find(current + order)]) top = true;
+            if (connectedBottom[uf.find(current + order)]) bottom = true;
+            uf.union(current, current + order);
         }
 
-        int b = row + 1;
-        if (b <= this.row) {
-            int bottom = index(b, col);
-            if (isOpen(bottom)) {
-                topUF.union(current, bottom);
-                topBottomUF.union(current, bottom);
-            }
+        if (row > 1 && isOpen(current - order)) {
+            if (connectedTop[uf.find(current - order)]) top = true;
+            if (connectedBottom[uf.find(current - order)]) bottom = true;
+            uf.union(current, current - order);
         }
 
-        int l = col - 1;
-        if (l >= 1) {
-            int left = index(row, l);
-            if (isOpen(left)) {
-                topUF.union(current, left);
-                topBottomUF.union(current, left);
-            }
+        if (col < order && isOpen(current + 1)) {
+            if (connectedTop[uf.find(current + 1)]) top = true;
+            if (connectedBottom[uf.find(current + 1)]) bottom = true;
+            uf.union(current, current + 1);
         }
 
-        int r = col + 1;
-        if (r <= this.col) {
-            int right = index(row, r);
-            if (isOpen(right)) {
-                topUF.union(current, right);
-                topBottomUF.union(current, right);
-            }
+        if (col > 1 && isOpen(current - 1)) {
+            if (connectedTop[uf.find(current - 1)]) top = true;
+            if (connectedBottom[uf.find(current - 1)]) bottom = true;
+            uf.union(current, current - 1);
         }
+
+        connectedTop[uf.find(current)] = top;
+        connectedBottom[uf.find(current)] = bottom;
+        if (connectedTop[uf.find(current)] && connectedBottom[uf.find(current)]) percolate = true;
+
         numberOfOpenSites++;
     }
 
@@ -101,24 +90,24 @@ public class Percolation {
      **/
     public boolean isOpen(int row, int col) {
         validate(row, col);
-        return sites[index(row, col)];
+        return opened[index(row, col)];
     }
 
     private boolean isOpen(int i) {
-        if (i < 1 || i > sites.length)
-            throw new IllegalArgumentException(String.format("argument is an integer varies in the interval [1, %d]", sites.length));
-        return sites[i];
+        if (i < 0 || i >= opened.length)
+            throw new IllegalArgumentException(String.format("argument is an integer varies in the interval [0, %d]", opened.length-1));
+        return opened[i];
     }
 
     /**
      * {@code row} of site, {@code col} of site
      *
      * @param
-     * @return int, the index of site(i, j) in sites array, let sites[0] be the virtual top site
+     * @return int, the index of site(i, j) in opened array, let opened[0] be the virtual top site
      * @description
      **/
     private int index(int row, int j) {
-        return this.row * (row - 1) + j;
+        return order * (row - 1) + j - 1;
     }
 
     /**
@@ -128,14 +117,13 @@ public class Percolation {
      **/
     public boolean isFull(int row, int col) {
         validate(row, col);
-        if (topUF.find(index(row, col)) == topUF.find(0)) return true;
-        return false;
+        return connectedTop[uf.find(index(row, col))];
     }
 
     /**
      * @param
      * @return int
-     * @description number of open sites
+     * @description number of open opened
      **/
     public int numberOfOpenSites() {
         return numberOfOpenSites;
@@ -147,25 +135,27 @@ public class Percolation {
      * @description does the system percolate?
      **/
     public boolean percolates() {
-        return topBottomUF.find(top) == topBottomUF.find(bottom);
+        return percolate;
     }
 
     private void validate(int i, int j) {
-        if (i < 1 || i > row)
-            throw new IllegalArgumentException(String.format("row index must be an integer varies in the interval [1, %d]", row));
-        if (j < 1 || j > col)
-            throw new IllegalArgumentException(String.format("col index must be an integer varies in the interval [1, %d]", col));
+        if (i < 1 || i > order)
+            throw new IllegalArgumentException(String.format("row index must be an integer varies in the interval [1, %d]", order));
+        if (j < 1 || j > order)
+            throw new IllegalArgumentException(String.format("col index must be an integer varies in the interval [1, %d]", order));
     }
 
     public static void main(String[] args) {
         Stopwatch stopwatch = new Stopwatch();
-        Percolation percolation = new Percolation(5);
-        while (!percolation.percolates()) {
-            int row = StdRandom.uniform(5) + 1;
-            int col = StdRandom.uniform(5) + 1;
+        In in = new In(args[0]);
+        int n = in.readInt();
+        Percolation percolation = new Percolation(n);
+        while (!in.isEmpty()) {
+            int row = in.readInt();
+            int col = in.readInt();
             percolation.open(row, col);
         }
-        StdOut.println(percolation.numberOfOpenSites());
+        StdOut.println(percolation.percolates());
         System.out.println(stopwatch.elapsedTime());
     }
 }
