@@ -23,6 +23,8 @@ public class PercolationStats {
      * @description perform trails independent experiment on an n-by-n grid
      **/
     public PercolationStats(int n, int trials) {
+        if (n <= 0) throw new IllegalArgumentException("first argument must be an integer bigger than 0");
+        if (trials <= 0) throw new IllegalArgumentException("second argument must be an integer bigger than 0");
         times = trials;
         threshold = new double[trials];
         for (int i = 0; i < trials; i++) {
