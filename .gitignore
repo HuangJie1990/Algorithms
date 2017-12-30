@@ -62,7 +62,6 @@ fabric.properties
 *.iml
 /.idea/
 /out/
-/data/
 /result/
 
 # BlueJ files
