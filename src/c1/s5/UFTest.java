@@ -4,13 +4,14 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Stopwatch;
+import w1.WeightedQuickUnionUF;
 
 public class UFTest {
     public static void main(String[] args) {
-       /* In in = new In(args[0]);
+        In in = new In(args[0]);
         int N = in.readInt();
         Stopwatch stopwatch=new Stopwatch();
-        UF uf = new WQUPC(N);
+        WeightedQuickUnionUF uf = new WeightedQuickUnionUF(N);
         while (!in.isEmpty()) {
             int p = in.readInt();
             int q = in.readInt();
@@ -18,12 +19,10 @@ public class UFTest {
                 uf.union(p, q);
             }
         }
-        StdOut.println(uf.count());
-        StdOut.println(stopwatch.elapsedTime());*/
-
-        boolean[] b = new boolean[2];
-        for (int i = 0; i < b.length; i++) {
-            StdOut.println(b[i]);
+        for (int i = 0; i < N; i++) {
+            StdOut.println(String.format("root(%d) is %d, max(%d) is %d",i,uf.root(i),i,uf.find(i)));
         }
+        StdOut.println(uf.count());
+        StdOut.println(stopwatch.elapsedTime());
     }
 }
