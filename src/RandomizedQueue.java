@@ -1,5 +1,3 @@
-package w2;
-
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -82,7 +80,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if (!hasNext()) throw new IllegalArgumentException("there is no more members");
+            if (!hasNext()) throw new NoSuchElementException("there is no more members");
             Item item = aux[current];
             current++;
             return item;
