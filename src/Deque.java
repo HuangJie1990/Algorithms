@@ -1,11 +1,20 @@
-package w2;
-
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/*
+Analyzing memory of Deque
+
+Class Deque:
+16+8+8+4+4=40 bytes
+
+Inner Class Node；
+16+8+8+8+8=48 bytes
+
+Inner Class DequeIterator；
+16+8+8=32 bytes
+
+Total 48n+72 bytes
+ */
 public class Deque<Item> implements Iterable<Item> {
     private Node first;
     private Node last;
@@ -14,7 +23,9 @@ public class Deque<Item> implements Iterable<Item> {
     public Deque() {
     }
 
-    ;
+    public static void main(String[] args) {
+
+    }
 
     public boolean isEmpty() {
         return n == 0;
@@ -29,7 +40,7 @@ public class Deque<Item> implements Iterable<Item> {
         Node oldFirst = first;
         first = new Node();
         first.item = item;
-        if (isEmpty()) last=first;
+        if (isEmpty()) last = first;
         else {
             first.next = oldFirst;
             oldFirst.pre = first;
@@ -91,9 +102,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if(current==null) throw new NoSuchElementException("there is no more items in deque");
-            Item item=current.item;
-            current=current.next;
+            if (current == null) throw new NoSuchElementException("there is no more items in deque");
+            Item item = current.item;
+            current = current.next;
             return item;
         }
 
@@ -101,9 +112,5 @@ public class Deque<Item> implements Iterable<Item> {
         public void remove() {
             throw new UnsupportedOperationException("remove is unsupported");
         }
-    }
-
-    public static void main(String[] args){
-
     }
 }
