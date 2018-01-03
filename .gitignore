@@ -63,6 +63,7 @@ fabric.properties
 /.idea/
 /out/
 /result/
+/data/
 
 # BlueJ files
 *.ctxt
