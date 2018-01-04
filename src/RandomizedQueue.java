@@ -80,7 +80,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException("there is no more members");
+            if (!hasNext()) throw new NoSuchElementException("there is no more items");
             Item item = aux[current];
             current++;
             return item;
