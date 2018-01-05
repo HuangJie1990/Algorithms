@@ -13,13 +13,16 @@ public class SortTest {
     public static void main(String[] args) {
         In in = new In(args[0]);
         int[] temp = in.readAllInts();
-        Integer[] a = new Integer[10];
-        for (int i = 0; i < 10; i++) {
-            a[i] = temp[i];
+        int n = temp.length;
+        Stopwatch stopwatch = new Stopwatch();
+        for (int i = 0; i < 100; i++) {
+            Integer[] a = new Integer[n];
+            for (int j = 0; j < n; j++) {
+                a[j] = temp[j];
+            }
+            MergeBU.sort(a);
+//            Sort.show(a);
         }
-        Stopwatch stopwatch=new Stopwatch();
-        Bubble.sort(a);
-        Sort.show(a);
         StdOut.println();
         StdOut.println(stopwatch.elapsedTime());
     }
