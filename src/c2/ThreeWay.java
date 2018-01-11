@@ -37,8 +37,7 @@ public class ThreeWay {
             if (cmp > 0) {
                 lt++;
                 i++;
-            }
-            else if (cmp < 0) {
+            } else if (cmp < 0) {
                 gt--;
             } else i++;
         }
