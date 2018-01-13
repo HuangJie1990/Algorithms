@@ -1,0 +1,1653 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+Findbugs:     FAILED (2 warnings)
+PMD:          PASSED
+Checkstyle:   FAILED (0 errors, 3 warnings)
+
+Correctness:  38/49 tests passed
+Memory:       18/22 tests passed
+Timing:       125/125 tests passed
+
+Aggregate score: 84.71%
+[Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+4.3K Jan 13 11:25 Board.java
+3.3K Jan 13 11:25 Solver.java
+
+
+********************************************************************************
+*  COMPILING
+********************************************************************************
+
+
+% javac Board.java
+*-----------------------------------------------------------
+
+% javac Solver.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Board:
+
+Solver:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS
+********************************************************************************
+
+
+% findbugs *.class
+*-----------------------------------------------------------
+M P NAB_NEEDLESS_BOOLEAN_CONSTANT_CONVERSION NAB: Method new Solver(Board) needlessly boxes a boolean constant  At Solver.java:[line 26]
+M P NAB_NEEDLESS_BOOLEAN_CONSTANT_CONVERSION NAB: Method new Solver(Board) needlessly boxes a boolean constant  At Solver.java:[line 36]
+Warnings generated: 2
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+[WARN] Board.java:143:47: The local (or parameter) variable 'i0' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] Board.java:143:55: The local (or parameter) variable 'j0' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] Solver.java:9:19: Use the primitive type instead of the corresponding wrapper type 'Boolean'. For example, use 'boolean' instead of 'Boolean'. [WrapperType]
+Checkstyle ends with 0 errors and 3 warnings.
+
+% custom checkstyle checks for Board.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for Solver.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Board
+*-----------------------------------------------------------
+Running 24 total tests.
+
+Tests 5, 6, 13, and 14 rely upon toString() returning results in prescribed format.
+
+Test 1a: check hamming() with file inputs
+  * puzzle04.txt
+  * puzzle00.txt
+  * puzzle07.txt
+  * puzzle17.txt
+  * puzzle27.txt
+  * puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 1b: check hamming() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 9-by-9
+  * 10-by-10
+  * 127-by-127
+==> passed
+
+Test 2a: check manhattan() with file inputs
+  * puzzle04.txt
+    - student   manhattan() = 6
+    - reference manhattan() = 4
+        3
+         0  1  3
+         4  2  5
+         7  8  6
+
+
+  * puzzle00.txt
+  * puzzle07.txt
+  * puzzle17.txt
+    - student   manhattan() = 17
+    - reference manhattan() = 13
+        3
+         5  1  8
+         2  7  3
+         4  0  6
+
+
+  * puzzle27.txt
+    - student   manhattan() = 15
+    - reference manhattan() = 17
+        3
+         5  8  7
+         1  4  6
+         3  0  2
+
+
+  * puzzle2x2-unsolvable1.txt
+    - student   manhattan() = 2
+    - reference manhattan() = 3
+        2
+         1  0
+         2  3
+
+
+==> FAILED
+
+Test 2b: check manhattan() with random n-by-n boards
+  * 2-by-2
+    - student   manhattan() = 5
+    - reference manhattan() = 4
+        2
+         0  3
+         1  2
+
+
+    - failed on trial 1 of 1000
+
+  * 3-by-3
+    - student   manhattan() = 17
+    - reference manhattan() = 13
+        3
+         1  0  6
+         7  4  8
+         5  3  2
+
+
+    - failed on trial 1 of 1000
+
+  * 4-by-4
+    - student   manhattan() = 41
+    - reference manhattan() = 40
+        4
+         0  7  3 10
+        14 11  2 13
+         8  1 12 15
+         9  6  4  5
+
+
+    - failed on trial 1 of 1000
+
+  * 5-by-5
+    - student   manhattan() = 84
+    - reference manhattan() = 76
+        5
+         7 18  0  1 13
+         9 11 20 10 19
+         3 22 21  8 23
+         2 14 24  5 17
+         6 16 15  4 12
+
+
+    - failed on trial 2 of 1000
+
+  * 9-by-9
+    - student   manhattan() = 495
+    - reference manhattan() = 469
+        9
+         6 62 49 13  3 42 66 72 76
+        78 67 77 35  9 15 45 33 60
+        19 65 48 50 26 30  8 56 46
+        28  2 37 57 25 21 75 22 74
+        68 63 51 55 27 70 18 59 16
+        34 41 40 61 53 29 47 54 69
+        14 80 44 17 23  1 31  0 11
+        38  5 58 73 52 64 36 10 24
+         4 12 20 39 79 32 43  7 71
+
+
+    - failed on trial 1 of 1000
+
+  * 10-by-10
+    - student   manhattan() = 687
+    - reference manhattan() = 678
+        10
+         6 50 26 58 53 82 90 55 60 99
+        16 92 68 30 28  9 83 97 31 24
+        38 66 81 86 91 42 94 36 71 29
+        52 63 65 48 69 15 64 61  2  7
+        85 49 47 84  3 95 93 87 59 34
+        89 56 57 39 96 25 77 19 10 41
+        44 62 74 23 67  8 51 72 40 22
+        21 75  1 33 73 43 12 27 13 88
+        70  4 78 20 18  5 32 76 17 11
+        14 35 45  0 80 46 37 54 79 98
+
+
+    - failed on trial 1 of 1000
+
+  * 127-by-127
+    - student   manhattan() = 1366216
+    - reference manhattan() = 1365290
+
+    - failed on trial 1 of 10
+
+==> FAILED
+
+Test 3: check dimension() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 6-by-6
+==> passed
+
+Test 4a: check toString() with file inputs
+  * puzzle04.txt
+  * puzzle00.txt
+  * puzzle06.txt
+  * puzzle09.txt
+  * puzzle23.txt
+  * puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 4b: check toString() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 9-by-9
+  * 10-by-10
+  * 127-by-127
+==> passed
+
+Test 5a: check neighbors() with file inputs
+  * puzzle04.txt
+  * puzzle00.txt
+  * puzzle06.txt
+  * puzzle09.txt
+  * puzzle23.txt
+  * puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 5b: check neighbors() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 9-by-9
+  * 10-by-10
+  * 127-by-127
+==> passed
+
+Test 6a: check neighbors() of neigbors() with file inputs
+  * puzzle04.txt
+  * puzzle00.txt
+  * puzzle06.txt
+  * puzzle09.txt
+  * puzzle23.txt
+  * puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 6b: check neighbors() of neighbors() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 9-by-9
+  * 10-by-10
+==> passed
+
+Test 7a: check twin() with file inputs
+  * puzzle04.txt
+  * puzzle00.txt
+  * puzzle06.txt
+  * puzzle09.txt
+  * puzzle23.txt
+  * puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 7b: check twin() with random n-by-n boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 9-by-9
+  * 10-by-10
+==> passed
+
+Test 8a: check isGoal() with file inputs
+  * puzzle00.txt
+  * puzzle04.txt
+  * puzzle16.txt
+  * puzzle06.txt
+  * puzzle09.txt
+  * puzzle23.txt
+  * puzzle2x2-unsolvable1.txt
+  * puzzle3x3-unsolvable1.txt
+  * puzzle3x3-00.txt
+  * puzzle4x4-00.txt
+==> passed
+
+Test 8b: check isGoal() on n-by-n goal boards
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+  * 5-by-5
+  * 6-by-6
+  * 100-by-100
+==> passed
+
+Test 9: check that two Board objects can be created at the same time
+  * random 3-by-3 and 3-by-3 boards
+  * random 4-by-4 and 4-by-4 boards
+  * random 2-by-2 and 2-by-2 boards
+  * random 3-by-3 and 4-by-4 boards
+  * random 4-by-4 and 3-by-3 boards
+==> passed
+
+Test 10a: check equals()
+  * reflexive
+  * symmetric
+  * transitive
+  * argument is null
+  * argument is of type String
+  * Board object stored in a variable of type Object
+==> passed
+
+Test 10b: check correctness of equals() on random n-by-n boards
+  * n = 2
+  * n = 3
+  * n = 4
+  * 5 <= n < 10
+==> passed
+
+Test 10c: check equals() when board sizes m and n are different
+  * m = 4, n = 5
+  * m = 2, n = 5
+  * m = 5, n = 3
+  * m = 2, n = 3
+  * m = 3, n = 2
+==> passed
+
+Test 11: check that Board is immutable by changing argument array after
+         construction and making sure Board does not mutate
+==> passed
+
+Test 12: check that Board is immutable by testing whether methods
+         return the same value, regardless of order in which called
+  * puzzle10.txt
+  * puzzle20.txt
+  * puzzle30.txt
+  * 2-by-2
+  * 3-by-3
+  * 4-by-4
+==> passed
+
+Test 13: check dimension() on a board that is kth-neighbor of a board
+  * 0th neighbor of puzzle27.txt
+  * 1st neighbor of puzzle27.txt
+  * 2nd neighbor of puzzle27.txt
+  * 13th neighbor of puzzle27.txt
+  * 13th neighbor of puzzle00.txt
+  * 13th neighbor of puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 14: check hamming() on a board that is kth-neighbor of a board
+  * 0th neighbor of puzzle27.txt
+  * 1st neighbor of puzzle27.txt
+  * 2nd neighbor of puzzle27.txt
+  * 13th neighbor of puzzle27.txt
+  * 13th neighbor of puzzle00.txt
+  * 13th neighbor of puzzle2x2-unsolvable1.txt
+==> passed
+
+Test 15: check manhattan() on a board that is a kth-neighbor of a board
+  * 0th neighbor of puzzle27.txt
+    - student   manhattan() = 15
+    - reference manhattan() = 17
+        3
+         5  8  7
+         1  4  6
+         3  0  2
+
+
+  * 1st neighbor of puzzle27.txt
+    - student   manhattan() = 14
+    - reference manhattan() = 16
+        3
+         5  8  7
+         1  4  6
+         3  2  0
+
+
+  * 2nd neighbor of puzzle27.txt
+  * 13th neighbor of puzzle27.txt
+  * 13th neighbor of puzzle00.txt
+  * 13th neighbor of puzzle2x2-unsolvable1.txt
+    - student   manhattan() = 3
+    - reference manhattan() = 4
+        2
+         1  3
+         2  0
+
+
+==> FAILED
+
+
+Total: 21/24 tests passed!
+
+
+================================================================
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of Board
+*-----------------------------------------------------------
+Running 10 total tests.
+
+Memory usage of an n-by-n board
+[ must be at most 4n^2 + 32n + 64 bytes ]
+
+
+              n       student (bytes)    reference (bytes)
+----------------------------------------------------------
+=> passed     2           144                  128
+=> passed     3           208                  192
+=> passed     4           256                  240
+=> passed     8           576                  560
+=> passed    12          1024                 1008
+=> passed    16          1600                 1584
+=> passed    20          2304                 2288
+=> passed    37          6872                 6856
+=> passed    72         23104                23088
+=> passed   120         61504                61488
+==> 10/10 tests passed
+
+Total: 10/10 tests passed!
+
+Student   memory = 4.00 n^2 + 32.00 n + 64.00   (R^2 = 1.000)
+Reference memory = 4.00 n^2 + 32.00 n + 48.00   (R^2 = 1.000)
+
+================================================================
+
+
+
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference Board)
+********************************************************************************
+
+Testing correctness of Solver
+*-----------------------------------------------------------
+Running 25 total tests.
+
+Test 1a: check moves() with file inputs
+  * puzzle00.txt
+  * puzzle01.txt
+  * puzzle02.txt
+  * puzzle03.txt
+  * puzzle04.txt
+  * puzzle05.txt
+  * puzzle06.txt
+  * puzzle07.txt
+  * puzzle08.txt
+  * puzzle09.txt
+  * puzzle10.txt
+  * puzzle11.txt
+  * puzzle12.txt
+  * puzzle13.txt
+==> passed
+
+Test 1b: check solution() with file inputs
+  * puzzle00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+  * puzzle01.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+  * puzzle02.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 4
+    - moves()              = 2
+
+  * puzzle03.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 5
+    - moves()              = 3
+
+  * puzzle04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle06.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 8
+    - moves()              = 6
+
+  * puzzle07.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 17
+    - moves()              = 7
+
+  * puzzle08.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 11
+    - moves()              = 8
+
+  * puzzle09.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 11
+    - moves()              = 9
+
+  * puzzle10.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12
+    - moves()              = 10
+
+  * puzzle11.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 23
+    - moves()              = 11
+
+  * puzzle12.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 22
+    - moves()              = 12
+
+  * puzzle13.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 15
+    - moves()              = 13
+
+==> FAILED
+
+Test 2a: check moves() with more file inputs
+  * puzzle14.txt
+  * puzzle15.txt
+  * puzzle16.txt
+  * puzzle17.txt
+  * puzzle18.txt
+  * puzzle19.txt
+  * puzzle20.txt
+  * puzzle21.txt
+  * puzzle22.txt
+  * puzzle23.txt
+  * puzzle24.txt
+  * puzzle25.txt
+  * puzzle26.txt
+  * puzzle27.txt
+  * puzzle28.txt
+  * puzzle29.txt
+  * puzzle30.txt
+  * puzzle31.txt
+==> passed
+
+Test 2b: check solution() with more file inputs
+  * puzzle14.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 94
+    - moves()              = 14
+
+  * puzzle15.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 17
+    - moves()              = 15
+
+  * puzzle16.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 45
+    - moves()              = 16
+
+  * puzzle17.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 167
+    - moves()              = 17
+
+  * puzzle18.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 199
+    - moves()              = 18
+
+  * puzzle19.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 273
+    - moves()              = 19
+
+  * puzzle20.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 428
+    - moves()              = 20
+
+  * puzzle21.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1042
+    - moves()              = 21
+
+  * puzzle22.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1037
+    - moves()              = 22
+
+  * puzzle23.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1576
+    - moves()              = 23
+
+  * puzzle24.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1631
+    - moves()              = 24
+
+  * puzzle25.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3053
+    - moves()              = 25
+
+  * puzzle26.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3551
+    - moves()              = 26
+
+  * puzzle27.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3372
+    - moves()              = 27
+
+  * puzzle28.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 8117
+    - moves()              = 28
+
+  * puzzle29.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3540
+    - moves()              = 29
+
+  * puzzle30.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 13030
+    - moves()              = 30
+
+  * puzzle31.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 13904
+    - moves()              = 31
+
+==> FAILED
+
+Test 3a: check moves() with random solvable n-by-n boards
+  * 1000 random 3-by-3 boards that are exactly 1 move from goal
+  * 1000 random 3-by-3 boards that are exactly 2 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 3 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 4 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 5 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 6 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 7 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 8 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 9 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 10 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 11 moves from goal
+  * 1000 random 3-by-3 boards that are exactly 12 moves from goal
+==> passed
+
+Test 3b: check solution() with random solvable n-by-n boards
+  * 1000 random 3-by-3 boards that are exactly 1 move from goal
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+    - failed on trial 1 of 1000
+
+==> FAILED
+
+Test 4: create two Solver objects at the same time
+  * puzzle04.txt and puzzle04.txt
+  * puzzle00.txt and puzzle04.txt
+  * puzzle04.txt and puzzle00.txt
+==> passed
+
+Test 5a: call isSolvable() with file inputs
+  * puzzle01.txt
+  * puzzle03.txt
+  * puzzle04.txt
+  * puzzle17.txt
+  * puzzle3x3-unsolvable1.txt
+  * puzzle3x3-unsolvable2.txt
+  * puzzle4x4-unsolvable.txt
+==> passed
+
+Test 5b: call isSolvable() on random n-by-n boards
+  * 100 random 2-by-2 boards
+==> passed
+
+Test 6: check moves() on unsolvable puzzles
+  * puzzle2x2-unsolvable1.txt
+  * puzzle2x2-unsolvable2.txt
+  * puzzle3x3-unsolvable1.txt
+  * puzzle3x3-unsolvable2.txt
+  * puzzle4x4-unsolvable.txt
+==> passed
+
+Test 7: check solution() on unsolvable puzzles
+  * puzzle2x2-unsolvable1.txt
+  * puzzle2x2-unsolvable2.txt
+  * puzzle3x3-unsolvable1.txt
+  * puzzle3x3-unsolvable2.txt
+  * puzzle4x4-unsolvable.txt
+==> passed
+
+Test 8a: check that Solver is immutable by testing whether methods
+         return the same value, regardless of order in which called
+  * puzzle3x3-00.txt
+  * puzzle3x3-01.txt
+  * puzzle3x3-05.txt
+  * puzzle3x3-10.txt
+  * random 2-by-2 solvable boards
+==> passed
+
+Test 8b: check that Solver is immutable by testing whether methods
+         return the same value, regardless of order in which called
+  * puzzle3x3-unsolvable1.txt
+  * puzzle3x3-unsolvable2.txt
+  * puzzle4x4-unsolvable.txt
+  * random 2-by-2 unsolvable boards
+==> passed
+
+Test 9a: check that equals() method in Board is called
+  * puzzle00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+    - did not call the equals() method in Board
+    - likely a bug in the critical optimization
+
+  * puzzle04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle10.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12
+    - moves()              = 10
+
+==> FAILED
+
+Test 9b: check that equals() method in Board is called only
+         with an argument of type Board
+  * puzzle00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+  * puzzle04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle10.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12
+    - moves()              = 10
+
+==> passed
+
+Test 9c: check that equals() method in Board is called only
+         with a neighbor of a neighbor as an argument
+  * puzzle00.txt
+  * puzzle04.txt
+  * puzzle05.txt
+  * puzzle10.txt
+  * puzzle27.txt
+==> passed
+
+Test 10: check that constructor throws exception if board is null
+==> passed
+
+Test 11a: check moves() with 2-by-2 file inputs
+  * puzzle2x2-00.txt
+  * puzzle2x2-01.txt
+  * puzzle2x2-02.txt
+  * puzzle2x2-03.txt
+  * puzzle2x2-04.txt
+  * puzzle2x2-05.txt
+  * puzzle2x2-06.txt
+==> passed
+
+Test 11b: check solution() with 2-by-2 file inputs
+  * puzzle2x2-00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+  * puzzle2x2-01.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+  * puzzle2x2-02.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 4
+    - moves()              = 2
+
+  * puzzle2x2-03.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 5
+    - moves()              = 3
+
+  * puzzle2x2-04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle2x2-05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle2x2-06.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 13
+    - moves()              = 6
+
+==> FAILED
+
+Test 12a: check moves() with 3-by-3 file inputs
+  * puzzle3x3-00.txt
+  * puzzle3x3-01.txt
+  * puzzle3x3-02.txt
+  * puzzle3x3-03.txt
+  * puzzle3x3-04.txt
+  * puzzle3x3-05.txt
+  * puzzle3x3-06.txt
+  * puzzle3x3-07.txt
+  * puzzle3x3-08.txt
+  * puzzle3x3-09.txt
+  * puzzle3x3-10.txt
+  * puzzle3x3-11.txt
+  * puzzle3x3-12.txt
+  * puzzle3x3-13.txt
+  * puzzle3x3-14.txt
+  * puzzle3x3-15.txt
+  * puzzle3x3-16.txt
+  * puzzle3x3-17.txt
+  * puzzle3x3-18.txt
+  * puzzle3x3-19.txt
+  * puzzle3x3-20.txt
+  * puzzle3x3-21.txt
+  * puzzle3x3-22.txt
+  * puzzle3x3-23.txt
+  * puzzle3x3-24.txt
+  * puzzle3x3-25.txt
+  * puzzle3x3-26.txt
+  * puzzle3x3-27.txt
+  * puzzle3x3-28.txt
+  * puzzle3x3-29.txt
+  * puzzle3x3-30.txt
+==> passed
+
+Test 12b: check solution() with 3-by-3 file inputs
+  * puzzle3x3-00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+  * puzzle3x3-01.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+  * puzzle3x3-02.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 4
+    - moves()              = 2
+
+  * puzzle3x3-03.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 5
+    - moves()              = 3
+
+  * puzzle3x3-04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle3x3-05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle3x3-06.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 8
+    - moves()              = 6
+
+  * puzzle3x3-07.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 14
+    - moves()              = 7
+
+  * puzzle3x3-08.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 19
+    - moves()              = 8
+
+  * puzzle3x3-09.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 11
+    - moves()              = 9
+
+  * puzzle3x3-10.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 18
+    - moves()              = 10
+
+  * puzzle3x3-11.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 20
+    - moves()              = 11
+
+  * puzzle3x3-12.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 39
+    - moves()              = 12
+
+  * puzzle3x3-13.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 49
+    - moves()              = 13
+
+  * puzzle3x3-14.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 31
+    - moves()              = 14
+
+  * puzzle3x3-15.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 51
+    - moves()              = 15
+
+  * puzzle3x3-16.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 198
+    - moves()              = 16
+
+  * puzzle3x3-17.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 329
+    - moves()              = 17
+
+  * puzzle3x3-18.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 407
+    - moves()              = 18
+
+  * puzzle3x3-19.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 21
+    - moves()              = 19
+
+  * puzzle3x3-20.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 384
+    - moves()              = 20
+
+  * puzzle3x3-21.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 770
+    - moves()              = 21
+
+  * puzzle3x3-22.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1165
+    - moves()              = 22
+
+  * puzzle3x3-23.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 872
+    - moves()              = 23
+
+  * puzzle3x3-24.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3604
+    - moves()              = 24
+
+  * puzzle3x3-25.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3012
+    - moves()              = 25
+
+  * puzzle3x3-26.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1867
+    - moves()              = 26
+
+  * puzzle3x3-27.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12795
+    - moves()              = 27
+
+  * puzzle3x3-28.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12541
+    - moves()              = 28
+
+  * puzzle3x3-29.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 12421
+    - moves()              = 29
+
+  * puzzle3x3-30.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 13504
+    - moves()              = 30
+
+==> FAILED
+
+Test 13a: check moves() with 4-by-4 file inputs
+  * puzzle4x4-00.txt
+  * puzzle4x4-01.txt
+  * puzzle4x4-02.txt
+  * puzzle4x4-03.txt
+  * puzzle4x4-04.txt
+  * puzzle4x4-05.txt
+  * puzzle4x4-06.txt
+  * puzzle4x4-07.txt
+  * puzzle4x4-08.txt
+  * puzzle4x4-09.txt
+  * puzzle4x4-10.txt
+  * puzzle4x4-11.txt
+  * puzzle4x4-12.txt
+  * puzzle4x4-13.txt
+  * puzzle4x4-14.txt
+  * puzzle4x4-15.txt
+  * puzzle4x4-16.txt
+  * puzzle4x4-17.txt
+  * puzzle4x4-18.txt
+  * puzzle4x4-19.txt
+  * puzzle4x4-20.txt
+  * puzzle4x4-21.txt
+  * puzzle4x4-22.txt
+  * puzzle4x4-23.txt
+  * puzzle4x4-24.txt
+  * puzzle4x4-25.txt
+  * puzzle4x4-26.txt
+  * puzzle4x4-27.txt
+  * puzzle4x4-28.txt
+  * puzzle4x4-29.txt
+  * puzzle4x4-30.txt
+==> passed
+
+Test 13b: check solution() with 4-by-4 file inputs
+  * puzzle4x4-00.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 2
+    - moves()              = 0
+
+  * puzzle4x4-01.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+  * puzzle4x4-02.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 4
+    - moves()              = 2
+
+  * puzzle4x4-03.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 5
+    - moves()              = 3
+
+  * puzzle4x4-04.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6
+    - moves()              = 4
+
+  * puzzle4x4-05.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7
+    - moves()              = 5
+
+  * puzzle4x4-06.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 8
+    - moves()              = 6
+
+  * puzzle4x4-07.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 9
+    - moves()              = 7
+
+  * puzzle4x4-08.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 10
+    - moves()              = 8
+
+  * puzzle4x4-09.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 11
+    - moves()              = 9
+
+  * puzzle4x4-10.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 18
+    - moves()              = 10
+
+  * puzzle4x4-11.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 16
+    - moves()              = 11
+
+  * puzzle4x4-12.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 14
+    - moves()              = 12
+
+  * puzzle4x4-13.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 19
+    - moves()              = 13
+
+  * puzzle4x4-14.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 37
+    - moves()              = 14
+
+  * puzzle4x4-15.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 47
+    - moves()              = 15
+
+  * puzzle4x4-16.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 34
+    - moves()              = 16
+
+  * puzzle4x4-17.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 67
+    - moves()              = 17
+
+  * puzzle4x4-18.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 522
+    - moves()              = 18
+
+  * puzzle4x4-19.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 139
+    - moves()              = 19
+
+  * puzzle4x4-20.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 34
+    - moves()              = 20
+
+  * puzzle4x4-21.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 246
+    - moves()              = 21
+
+  * puzzle4x4-22.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 184
+    - moves()              = 22
+
+  * puzzle4x4-23.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1622
+    - moves()              = 23
+
+  * puzzle4x4-24.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 291
+    - moves()              = 24
+
+  * puzzle4x4-25.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 659
+    - moves()              = 25
+
+  * puzzle4x4-26.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 1941
+    - moves()              = 26
+
+  * puzzle4x4-27.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 701
+    - moves()              = 27
+
+  * puzzle4x4-28.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 6288
+    - moves()              = 28
+
+  * puzzle4x4-29.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 7994
+    - moves()              = 29
+
+  * puzzle4x4-30.txt
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 700
+    - moves()              = 30
+
+==> FAILED
+
+Test 14a: check moves() with random solvable n-by-n boards
+  * 100 random 2-by-2 boards that are <= 6 moves from goal
+  * 200 random 3-by-3 boards that are <= 20 moves from goal
+  * 200 random 4-by-4 boards that are <= 20 moves from goal
+  * 200 random 5-by-5 boards that are <= 20 moves from goal
+==> passed
+
+Test 14b: check solution() with random solvable n-by-n boards
+  * 100 random 2-by-2 boards that are <= 6 moves from goal
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 3
+    - moves()              = 1
+
+    - failed on trial 1 of 100
+
+  * 200 random 3-by-3 boards that are <= 20 moves from goal
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 61
+    - moves()              = 16
+
+    - failed on trial 1 of 200
+
+  * 200 random 4-by-4 boards that are <= 20 moves from goal
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 19
+    - moves()              = 14
+
+    - failed on trial 1 of 200
+
+  * 200 random 5-by-5 boards that are <= 20 moves from goal
+    - number of boards in solution() does not equal to 1 + moves()
+      (it should be 1 greater because solution() starts with the inital board)
+    - length of solution() = 19
+    - moves()              = 9
+
+    - failed on trial 1 of 200
+
+==> FAILED
+
+
+Total: 17/25 tests passed!
+
+
+================================================================
+********************************************************************************
+*  MEMORY (substituting reference Board)
+********************************************************************************
+
+Analyzing memory of Solver
+*-----------------------------------------------------------
+Running 12 total tests.
+
+Maximum allowed time per puzzle is 5.0 seconds.
+Maximum allowed memory per puzzle = 200000000 bytes.
+
+Test 1: Measure memory of Solver.
+
+               filename   moves   memory
+---------------------------------------------
+=> passed  puzzle10.txt      10     4712
+=> passed  puzzle15.txt      15     5640
+=> FAILED  puzzle20.txt      20    54792  (10.9x)
+=> FAILED  puzzle25.txt      25   390792  (62.7x)
+=> FAILED  puzzle30.txt      30  1667848 (224.8x)
+=> FAILED  puzzle35.txt      35  4782000 (472.4x)
+==> 2/6 tests passed
+
+
+
+Test 2: Measure memory of MinPQ.
+
+                              deep              max           ending
+               filename     memory             size             size
+--------------------------------------------------------------------
+=> passed  puzzle10.txt      29120               34               33
+=> passed  puzzle15.txt      36400               52               51
+=> passed  puzzle20.txt     284080              587              586
+=> passed  puzzle25.txt    2039712             4214             4213
+=> passed  puzzle30.txt    8552464            17038            17037
+=> passed  puzzle35.txt   98711040           271122           271121
+==> 6/6 tests passed
+
+
+Total: 8/12 tests passed!
+
+================================================================
+
+
+
+********************************************************************************
+*  TIMING (substituting reference Board)
+********************************************************************************
+
+Timing Solver
+*-----------------------------------------------------------
+Running 125 total tests.
+
+Maximum allowed time per puzzle is 5.0 seconds.
+
+Test 1: Measure CPU time and check correctness
+
+               filename   moves    n  seconds
+---------------------------------------------
+=> passed  puzzle20.txt      20    3     0.02
+=> passed  puzzle22.txt      22    3     0.01
+=> passed  puzzle21.txt      21    3     0.01
+=> passed  puzzle23.txt      23    3     0.01
+=> passed  puzzle24.txt      24    3     0.01
+=> passed  puzzle25.txt      25    3     0.02
+=> passed  puzzle27.txt      27    3     0.01
+=> passed  puzzle29.txt      29    3     0.01
+=> passed  puzzle26.txt      26    3     0.02
+=> passed  puzzle28.txt      28    3     0.04
+=> passed  puzzle30.txt      30    3     0.07
+=> passed  puzzle31.txt      31    3     0.07
+=> passed  puzzle39.txt      39    4     0.08
+=> passed  puzzle41.txt      41    5     0.14
+=> passed  puzzle34.txt      34    4     0.23
+=> passed  puzzle37.txt      37    4     0.25
+=> passed  puzzle44.txt      44    5     0.19
+=> passed  puzzle32.txt      32    4     0.28
+=> passed  puzzle35.txt      35    4     0.30
+=> passed  puzzle33.txt      33    4     0.63
+=> passed  puzzle43.txt      43    4     0.61
+=> passed  puzzle46.txt      46    4     0.56
+=> passed  puzzle40.txt      40    4     0.63
+=> passed  puzzle36.txt      36    4     1.20
+=> passed  puzzle45.txt      45    4     1.31
+==> 25/25 tests passed
+
+
+
+Test 2: Count MinPQ operations
+
+               filename   insert()         delMin()
+---------------------------------------------------
+=> passed  puzzle20.txt       1439              853
+=> passed  puzzle22.txt       3481             2071
+=> passed  puzzle21.txt       3541             2081
+=> passed  puzzle23.txt       5299             3149
+=> passed  puzzle24.txt       5427             3259
+=> passed  puzzle25.txt      10316             6103
+=> passed  puzzle27.txt      11209             6741
+=> passed  puzzle29.txt      11637             7077
+=> passed  puzzle26.txt      11894             7099
+=> passed  puzzle28.txt      26974            16231
+=> passed  puzzle30.txt      43094            26057
+=> passed  puzzle31.txt      46007            27805
+=> passed  puzzle39.txt      71417            35045
+=> passed  puzzle41.txt     116491            50009
+=> passed  puzzle34.txt     151673            73159
+=> passed  puzzle37.txt     166811            80085
+=> passed  puzzle44.txt     275661           123165
+=> passed  puzzle32.txt     521596           249495
+=> passed  puzzle35.txt     528418           257297
+=> passed  puzzle33.txt     622352           298883
+=> passed  puzzle43.txt    1056805           508833
+=> passed  puzzle46.txt    1032320           516741
+=> passed  puzzle40.txt    1108443           541467
+=> passed  puzzle36.txt    2086331          1011485
+=> passed  puzzle45.txt    2418079          1189753
+==> 25/25 tests passed
+
+
+
+Test 3: Count Board operations (that should not get called)
+
+               filename    hamming()   toString()     tileAt()
+--------------------------------------------------------------
+=> passed  puzzle20.txt            0            0            0
+=> passed  puzzle22.txt            0            0            0
+=> passed  puzzle21.txt            0            0            0
+=> passed  puzzle23.txt            0            0            0
+=> passed  puzzle24.txt            0            0            0
+=> passed  puzzle25.txt            0            0            0
+=> passed  puzzle27.txt            0            0            0
+=> passed  puzzle29.txt            0            0            0
+=> passed  puzzle26.txt            0            0            0
+=> passed  puzzle28.txt            0            0            0
+=> passed  puzzle30.txt            0            0            0
+=> passed  puzzle31.txt            0            0            0
+=> passed  puzzle39.txt            0            0            0
+=> passed  puzzle41.txt            0            0            0
+=> passed  puzzle34.txt            0            0            0
+=> passed  puzzle37.txt            0            0            0
+=> passed  puzzle44.txt            0            0            0
+=> passed  puzzle32.txt            0            0            0
+=> passed  puzzle35.txt            0            0            0
+=> passed  puzzle33.txt            0            0            0
+=> passed  puzzle43.txt            0            0            0
+=> passed  puzzle46.txt            0            0            0
+=> passed  puzzle40.txt            0            0            0
+=> passed  puzzle36.txt            0            0            0
+=> passed  puzzle45.txt            0            0            0
+==> 25/25 tests passed
+
+
+
+Test 4a: Count Board operations (that should get called)
+
+               filename    Board()            equals()         manhattan()
+--------------------------------------------------------------------------
+=> passed  puzzle20.txt       2289                2279                2292
+=> passed  puzzle22.txt       5549                5543                5552
+=> passed  puzzle21.txt       5619                5611                5622
+=> passed  puzzle23.txt       8445                8437                8448
+=> passed  puzzle24.txt       8683                8673                8686
+=> passed  puzzle25.txt      16416               16408               16419
+=> passed  puzzle27.txt      17947               17939               17950
+=> passed  puzzle29.txt      18711               18703               18714
+=> passed  puzzle26.txt      18990               18984               18993
+=> passed  puzzle28.txt      43202               43192               43205
+=> passed  puzzle30.txt      69148               69142               69151
+=> passed  puzzle31.txt      73809               73801               73812
+=> passed  puzzle39.txt     106459              106451              106462
+=> passed  puzzle41.txt     166497              166487              166500
+=> passed  puzzle34.txt     224829              224823              224832
+=> passed  puzzle37.txt     246893              246885              246896
+=> passed  puzzle44.txt     398823              398813              398826
+=> passed  puzzle32.txt     771088              771078              771091
+=> passed  puzzle35.txt     785712              785702              785715
+=> passed  puzzle33.txt     921232              921224              921235
+=> passed  puzzle43.txt    1565635             1565627             1565638
+=> passed  puzzle46.txt    1549058             1549050             1549061
+=> passed  puzzle40.txt    1649907             1649901             1649910
+=> passed  puzzle36.txt    3097813             3097803             3097816
+=> passed  puzzle45.txt    3607829             3607821             3607832
+==> 25/25 tests passed
+
+
+
+Test 4b: count Board operations (that should get called),
+         rejecting if doesn't adhere to stricter caching limits
+
+               filename    Board()            equals()         manhattan()
+--------------------------------------------------------------------------
+=> passed  puzzle20.txt       2289                2279                2292
+=> passed  puzzle22.txt       5549                5543                5552
+=> passed  puzzle21.txt       5619                5611                5622
+=> passed  puzzle23.txt       8445                8437                8448
+=> passed  puzzle24.txt       8683                8673                8686
+=> passed  puzzle25.txt      16416               16408               16419
+=> passed  puzzle27.txt      17947               17939               17950
+=> passed  puzzle29.txt      18711               18703               18714
+=> passed  puzzle26.txt      18990               18984               18993
+=> passed  puzzle28.txt      43202               43192               43205
+=> passed  puzzle30.txt      69148               69142               69151
+=> passed  puzzle31.txt      73809               73801               73812
+=> passed  puzzle39.txt     106459              106451              106462
+=> passed  puzzle41.txt     166497              166487              166500
+=> passed  puzzle34.txt     224829              224823              224832
+=> passed  puzzle37.txt     246893              246885              246896
+=> passed  puzzle44.txt     398823              398813              398826
+=> passed  puzzle32.txt     771088              771078              771091
+=> passed  puzzle35.txt     785712              785702              785715
+=> passed  puzzle33.txt     921232              921224              921235
+=> passed  puzzle43.txt    1565635             1565627             1565638
+=> passed  puzzle46.txt    1549058             1549050             1549061
+=> passed  puzzle40.txt    1649907             1649901             1649910
+=> passed  puzzle36.txt    3097813             3097803             3097816
+=> passed  puzzle45.txt    3607829             3607821             3607832
+==> 25/25 tests passed
+
+
+Total: 125/125 tests passed!
+
+
+================================================================
