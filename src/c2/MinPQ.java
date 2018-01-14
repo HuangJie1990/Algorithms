@@ -48,7 +48,7 @@ public class MinPQ<Transantion> extends PriorityQueue<Transaction> {
     private void sink(int k) {
         while (2 * k <= N) {
             int j = 2 * k;
-            if (j < N && Sort.greater(j, j + 1))
+            if (j < N && Sort.greater(j, j + 1));
         }
     }
 }

@@ -1,5 +1,6 @@
 package w4;
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
@@ -27,27 +28,23 @@ public class Board {
                 }
                 if (b[i][j] != d * i + j + 1) {
                     hamming++;
-                    manhattan += Math.abs(b[i][j] / d - i);
-                    manhattan += Math.abs(b[i][j] % d - 1 - j);
+                    manhattan += Math.abs((b[i][j]-1) / d - i);
+                    manhattan += Math.abs((b[i][j]-1) % d - j);
                 }
             }
         }
     }
 
     public static void main(String[] args) {
-        int[][] blocks = {{8, 1, 3}, {4, 0, 2}, {7, 6, 5}};
-        Board b = new Board(blocks);
-        StdOut.println(b.hamming());
-        StdOut.println(b.manhattan());
-        StdOut.println(b.isGoal());
-        StdOut.println(b.dimension());
-        StdOut.println(b);
-        StdOut.println(b.twin());
-        for (Board board :
-                b.neighbors()) {
-            StdOut.println(board);
-            StdOut.println(board.manhattan());
-        }
+        // create initial board from file
+        In in = new In(args[0]);
+        int n = in.readInt();
+        int[][] blocks = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                blocks[i][j] = in.readInt();
+        Board initial = new Board(blocks);
+        StdOut.println(initial.manhattan());
     }
 
     public int dimension() {
@@ -142,10 +139,10 @@ public class Board {
         return a;
     }
 
-    private void exchange(int[][] blocks, int i0, int j0, int i1, int j1) {
-        int temp = blocks[i0][j0];
-        blocks[i0][j0] = blocks[i1][j1];
-        blocks[i1][j1] = temp;
+    private void exchange(int[][] blocks, int ia, int ja, int ib, int jb) {
+        int temp = blocks[ia][ja];
+        blocks[ia][ja] = blocks[ib][jb];
+        blocks[ib][jb] = temp;
     }
 
 }

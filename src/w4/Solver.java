@@ -1,32 +1,34 @@
 package w4;
 
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
-import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Solver {
 
-    private final Queue<Board> queue;
-    private final Boolean isSolvable;
+    private final Stack<Board> solution;
+    private final boolean isSolvable;
     private int n;
 
     public Solver(Board initial) {
         if (initial == null) throw new IllegalArgumentException("Constructor argument is null");
         Node current = new Node(initial, null);
         Node twinCurrent = new Node(initial.twin(), null);
-        queue = new Queue<>();
+        solution = new Stack<>();
         MinPQ<Node> pq = new MinPQ<>();
         MinPQ<Node> twinPQ = new MinPQ<>();
         pq.insert(current);
         twinPQ.insert(twinCurrent);
-        queue.enqueue(current.board);
         while (true) {
             current = pq.delMin();
-            queue.enqueue(current.board);
             if (current.board.isGoal()) {
                 isSolvable = true;
                 n = current.moves;
+                for (Node x = current; x != null; x = x.pre) {
+                    solution.push(x.board);
+                }
                 break;
             }
             for (Board b : current.board.neighbors()) {
@@ -55,7 +57,7 @@ public class Solver {
     }
 
     public Iterable<Board> solution() {
-        return isSolvable ? queue : null;
+        return isSolvable ? solution : null;
     }
 
     public static void main(String[] args) {

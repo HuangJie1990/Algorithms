@@ -8,7 +8,7 @@ public class TopM {
     public static void main(String[] args) {
         In in = new In(args[0]);
         int m = in.readInt();
-        PriorityQueue<Transaction> pq = new MinPQ()
+        PriorityQueue<Transaction> pq = new MinPQ();
         while (!in.isEmpty()) {
             String t = in.readLine();
             Transaction transaction = new Transaction(t);
