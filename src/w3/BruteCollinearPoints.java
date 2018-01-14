@@ -13,32 +13,30 @@ import java.util.Arrays;
  **/
 public class BruteCollinearPoints {
 
-    private ArrayList<LineSegment> lines;
+    private final ArrayList<LineSegment> lines;
     private LineSegment[] segments;
-    private Point[] p;
+    private final Point[] p;
 
     public BruteCollinearPoints(Point[] points) {
+
+
         if (points == null) throw new IllegalArgumentException();
         int n = points.length;
+        p = new Point[n];
+        System.arraycopy(points, 0, p, 0, n);
         for (int i = 0; i < n; i++) {
-            validate(points[i]);
+            validate(p[i]);
         }
-        Arrays.sort(points);
+        Arrays.sort(p);
         for (int i = 1; i < n; i++) {
-            check(points[i], points[i - 1]);
+            check(p[i], p[i - 1]);
         }
-
 
         lines = new ArrayList<>();
         if (n < 4) {
             segments = lines.toArray(new LineSegment[lines.size()]);
             return;
         }
-        p = new Point[n];
-        for (int i = 0; i < n; i++) {
-            p[i] = points[i];
-        }
-
 
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {

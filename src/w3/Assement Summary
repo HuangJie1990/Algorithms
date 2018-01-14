@@ -7,22 +7,22 @@ API:          PASSED
 
 Findbugs:     FAILED (4 warnings)
 PMD:          PASSED
-Checkstyle:   FAILED (0 errors, 4 warnings)
+Checkstyle:   FAILED (0 errors, 2 warnings)
 
-Correctness:  37/41 tests passed
+Correctness:  39/41 tests passed
 Memory:       1/1 tests passed
 Timing:       10/41 tests passed
 
-Aggregate score: 79.02%
+Aggregate score: 81.95%
 [Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.0K Jan  7 15:02 BruteCollinearPoints.java
-3.8K Jan  7 15:02 FastCollinearPoints.java
-4.6K Jan  7 15:02 Point.java
+3.0K Jan  8 05:25 BruteCollinearPoints.java
+3.9K Jan  8 05:25 FastCollinearPoints.java
+4.6K Jan  8 05:25 Point.java
 
 
 ********************************************************************************
@@ -61,10 +61,10 @@ FastCollinearPoints:
 
 % findbugs *.class
 *-----------------------------------------------------------
-M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'BruteCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At BruteCollinearPoints.java:[line 64]
-L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At BruteCollinearPoints.java:[line 44]
-M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'FastCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At FastCollinearPoints.java:[line 80]
-L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At FastCollinearPoints.java:[line 46]
+M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'BruteCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At BruteCollinearPoints.java:[line 62]
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At BruteCollinearPoints.java:[line 42]
+M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'FastCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At FastCollinearPoints.java:[line 78]
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At FastCollinearPoints.java:[line 44]
 Warnings generated: 4
 
 
@@ -76,13 +76,14 @@ Warnings generated: 4
 BruteCollinearPoints.java:14: The private instance (or static) variable 'lines' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 BruteCollinearPoints.java:16: Can you replace the instance (or static) variable 'p' with a local variable? [SingularField]
 BruteCollinearPoints.java:16: The private instance (or static) variable 'p' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
-BruteCollinearPoints.java:64: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
+BruteCollinearPoints.java:62: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
 FastCollinearPoints.java:14: Can you replace the instance (or static) variable 'p' with a local variable? [SingularField]
 FastCollinearPoints.java:14: The private instance (or static) variable 'p' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 FastCollinearPoints.java:16: The private instance (or static) variable 'lines' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
-FastCollinearPoints.java:80: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
+FastCollinearPoints.java:78: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
+FastCollinearPoints.java:90: Use the 'isEmpty()' method instead of comparing 'size()' to '0'. [UseCollectionIsEmpty]
 Point.java:129: The private instance (or static) variable 'invokePoint' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
-PMD ends with 9 warnings.
+PMD ends with 10 warnings.
 
 
 ================================================================
@@ -90,11 +91,9 @@ PMD ends with 9 warnings.
 
 % checkstyle *.java
 *-----------------------------------------------------------
-[WARN] BruteCollinearPoints.java:45:34: Do not use the letter 'l' as a local variable name. It is hard to distinguish from the number '1'. [LocalVariableName]
-[WARN] FastCollinearPoints.java:35:11: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] FastCollinearPoints.java:83:33: The local (or parameter) variable 'p' has the same name as an instance variable. Use a different name. [HiddenField]
-[WARN] FastCollinearPoints.java:96:14: Conditional logic can be removed. [SimplifyBooleanReturn]
-Checkstyle ends with 0 errors and 4 warnings.
+[WARN] BruteCollinearPoints.java:43:34: Do not use the letter 'l' as a local variable name. It is hard to distinguish from the number '1'. [LocalVariableName]
+[WARN] FastCollinearPoints.java:81:33: The local (or parameter) variable 'p' has the same name as an instance variable. Use a different name. [HiddenField]
+Checkstyle ends with 0 errors and 2 warnings.
 
 % custom checkstyle checks for Point.java
 *-----------------------------------------------------------
@@ -258,49 +257,42 @@ Test 9: random line segments
 Test 10: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 20 operations involving BruteCollinearPoints
+    - failed after 16 operations involving BruteCollinearPoints
     - first and last call to segments() returned different arrays
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
           mutate points[] array that was passed to constructor
-          mutate points[] array that was passed to constructor
-          mutate points[] array that was passed to constructor
-          collinear.segments()
-          mutate points[] array that was passed to constructor
-          collinear.segments()
           collinear.numberOfSegments() -> 2
-          collinear.segments()
-          collinear.numberOfSegments() -> 2
-          collinear.segments()
           collinear.numberOfSegments() -> 2
           mutate points[] array that was passed to constructor
           collinear.numberOfSegments() -> 2
-          mutate points[] array that was passed to constructor
+          collinear.segments()
+          collinear.numberOfSegments() -> 2
           mutate array returned by last call to segments()
           mutate points[] array that was passed to constructor
-          collinear.numberOfSegments() -> 2
-          collinear.numberOfSegments() -> 2
+          mutate array returned by last call to segments()
+          mutate array returned by last call to segments()
+          mutate points[] array that was passed to constructor
+          mutate array returned by last call to segments()
+          mutate array returned by last call to segments()
           collinear.segments()
 
     - failed on trial 1 of 100
 
   * equidistant.txt
-    - failed after 12 operations involving BruteCollinearPoints
+    - failed after 9 operations involving BruteCollinearPoints
     - first and last call to segments() returned different arrays
 
     - sequence of operations was:
           BruteCollinearPoints collinear = new BruteCollinearPoints(points);
           collinear.segments()
           collinear.segments()
-          collinear.segments()
-          collinear.segments()
-          mutate points[] array that was passed to constructor
-          collinear.segments()
           mutate points[] array that was passed to constructor
           mutate array returned by last call to segments()
-          collinear.numberOfSegments() -> 4
-          collinear.numberOfSegments() -> 4
+          mutate array returned by last call to segments()
+          mutate array returned by last call to segments()
+          mutate points[] array that was passed to constructor
           collinear.segments()
 
     - failed on trial 1 of 100
@@ -309,14 +301,8 @@ Test 10: check that data type is immutable by testing whether each method
 
 Test 11: check that data type does not mutate the constructor argument
   * input8.txt
-    - data type mutated the points[] array
-    - data type should have no side effects unless documented in API
-
   * equidistant.txt
-    - data type mutated the points[] array
-    - data type should have no side effects unless documented in API
-
-==> FAILED
+==> passed
 
 Test 12: numberOfSegments() is consistent with segments()
   * filename = input8.txt
@@ -349,7 +335,7 @@ Test 14: check that the constructor throws an exception if duplicate points
 ==> passed
 
 
-Total: 15/17 tests passed!
+Total: 16/17 tests passed!
 
 
 ================================================================
@@ -489,41 +475,29 @@ Test 12: m*n points on an m-by-n grid
 Test 13: check that data type is immutable by testing whether each method
          returns the same value, regardless of any intervening operations
   * input8.txt
-    - failed after 16 operations involving FastCollinearPoints
+    - failed after 5 operations involving FastCollinearPoints
     - first and last call to segments() returned different arrays
     - sequence of operations was:
           FastCollinearPoints collinear = new FastCollinearPoints(points);
           collinear.segments()
-          mutate array returned by last call to segments()
           mutate points[] array that was passed to constructor
-          mutate points[] array that was passed to constructor
-          mutate array returned by last call to segments()
-          mutate points[] array that was passed to constructor
-          mutate points[] array that was passed to constructor
-          mutate array returned by last call to segments()
-          mutate array returned by last call to segments()
-          mutate points[] array that was passed to constructor
-          mutate array returned by last call to segments()
-          mutate points[] array that was passed to constructor
-          collinear.numberOfSegments() -> 2
           mutate array returned by last call to segments()
           collinear.segments()
     - failed on trial 1 of 100
 
   * equidistant.txt
-    - failed after 12 operations involving FastCollinearPoints
+    - failed after 11 operations involving FastCollinearPoints
     - first and last call to segments() returned different arrays
     - sequence of operations was:
           FastCollinearPoints collinear = new FastCollinearPoints(points);
+          mutate points[] array that was passed to constructor
+          collinear.numberOfSegments() -> 4
           collinear.segments()
           collinear.numberOfSegments() -> 4
+          collinear.segments()
           mutate array returned by last call to segments()
-          mutate array returned by last call to segments()
-          mutate array returned by last call to segments()
-          mutate points[] array that was passed to constructor
-          mutate points[] array that was passed to constructor
           collinear.numberOfSegments() -> 4
-          collinear.numberOfSegments() -> 4
+          mutate array returned by last call to segments()
           mutate array returned by last call to segments()
           collinear.segments()
     - failed on trial 1 of 100
@@ -532,14 +506,8 @@ Test 13: check that data type is immutable by testing whether each method
 
 Test 14: check that data type does not mutate the constructor argument
   * input8.txt
-    - data type mutated the points[] array
-    - data type should have no side effects unless documented in API
-
   * equidistant.txt
-    - data type mutated the points[] array
-    - data type should have no side effects unless documented in API
-
-==> FAILED
+==> passed
 
 Test 15: numberOfSegments() is consistent with segments()
   * filename = input8.txt
@@ -572,7 +540,7 @@ Test 17: check that the constructor throws an exception if duplicate points
 ==> passed
 
 
-Total: 19/21 tests passed!
+Total: 20/21 tests passed!
 
 
 ================================================================
@@ -608,11 +576,11 @@ Test 1a-1e: Find collinear points among n random distinct points
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    16   0.00        1120           0           1120                   61
+=> passed    16   0.00        1120           0           1120                   63
 => passed    32   0.00        9920           0           9920                  153
-=> passed    64   0.01       83328           0          83328                  368
-=> passed   128   0.01      682752           0         682752                  867
-=> passed   256   0.04     5527448           0        5527448                 1972
+=> passed    64   0.01       83328           0          83328                  374
+=> passed   128   0.02      682752           0         682752                  866
+=> passed   256   0.04     5527040           0        5527040                 1980
 ==> 5/5 tests passed
 
 Test 2a-2e: Find collinear points among n/4 arbitrary line segments
@@ -621,11 +589,11 @@ Test 2a-2e: Find collinear points among n/4 arbitrary line segments
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    16   0.00        1264           0           1264                   60
-=> passed    32   0.00       10506           0          10506                  151
-=> passed    64   0.00       86590           0          86590                  367
-=> passed   128   0.01      695400           0         695400                  864
-=> passed   256   0.04     5578434           0        5578434                 1974
+=> passed    16   0.00        1312           0           1312                   61
+=> passed    32   0.00       10702           0          10702                  154
+=> passed    64   0.00       86818           0          86818                  364
+=> passed   128   0.01      696248           0         696248                  868
+=> passed   256   0.03     5580824           0        5580824                 1996
 ==> 5/5 tests passed
 
 Total: 10/10 tests passed!
@@ -645,15 +613,15 @@ Test 1a-1g: Find collinear points among n random distinct points
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.01        7936       17948          43832                  371
-=> passed   128   0.01       32256       84336         200928                  868
-=> passed   256   0.04      130048      388973         907994                 1995
-=> passed   512   0.17      522240     1732550        3987340                 4485
-=> passed  1024   0.33     2093056     7933296       17959648                10003
-=> passed  2048   0.88     8380416    35598391       79577198                22051
+=> passed    64   0.01        7936       18615          45166                  359
+=> passed   128   0.01       32256       88552         209360                  866
+=> passed   256   0.06      130048      415184         960416                 1996
+=> passed   512   0.18      522240     1880218        4282676                 4493
+=> passed  1024   0.31     2093056     8503481       19100018                 9985
+=> passed  2048   0.92     8380416    37838001       84056418                22035
 ==> 6/6 tests passed
 
-lg ratio(slopeTo() + 2*compare()) = lg (79577198 / 17959648) = 2.15
+lg ratio(slopeTo() + 2*compare()) = lg (84056418 / 19100018) = 2.14
 => passed
 
 ==> 7/7 tests passed
@@ -663,31 +631,31 @@ Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.00        7936        4764          17464                 5222
-=> passed   128   0.00       32256       17796          67848                18788
-=> passed   256   0.00      130048       68717         267482                70861
-=> passed   512   0.02      522240      269399        1061038               274065
-=> passed  1024   0.08     2093056     1065026        4223108              1075226
-=> passed  2048   0.11     8380416     4231214       16842844              4253511
-=> passed  4096   0.41    33538048    16859163       67256374             16907607
-==> 7/7 tests passed
+=> passed    64   0.00        7936        4519          16974                15271
+=> passed   128   0.01       32256       17364          66984                67164
+=> passed   256   0.01      130048       67973         265994               294384
+=> passed   512   0.10      522240      267972        1058184              1293539
+=> passed  1024   0.25     2093056     1062029        4217114              5677492
+=> FAILED  2048   0.43     8380416     4225314       16831044             24723209   (1.1x)
+=> FAILED  4096   1.65    33538048    16846993       67232034            107250141   (1.3x)
+==> 5/7 tests passed
 
-lg ratio(slopeTo() + 2*compare()) = lg (67256374 / 16842844) = 2.00
+lg ratio(slopeTo() + 2*compare()) = lg (67232034 / 16831044) = 2.00
 => passed
 
-==> 8/8 tests passed
+==> 6/8 tests passed
 
 Test 3a-3g: Find collinear points among the n points on an n/4-by-4 grid
 
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.01        7936       13806          35548                20318
-=> passed   128   0.01       32256       49444         131144               256907
-=> FAILED   256   0.06      130048      186057         502162              3844693   (3.1x)
-=> FAILED   512   0.44      522240      709981        1942202             60335435  (12.8x)
-=> FAILED  1024   6.97     2093056     2753051        7599158            959002645  (52.0x)
-=> FAILED  2048 111.27     8380416    10799584       29979584          15304104429 (210.9x)
+=> passed    64   0.00        7936       17569          43074                20953
+=> passed   128   0.01       32256       72701         177658               260676
+=> FAILED   256   0.05      130048      281318         692684              3853767   (3.1x)
+=> FAILED   512   0.65      522240     1108045        2738330             60357379  (12.8x)
+=> FAILED  1024   9.87     2093056     4394448       10881952            959055157  (52.0x)
+=> FAILED  2048 154.09     8380416    17521928       43424272          15304243645 (210.9x)
 Aborting: time limit of 10 seconds exceeded
 
 Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
@@ -695,11 +663,11 @@ Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
                                                       slopeTo()
              n    time     slopeTo()   compare()  + 2*compare()        compareTo()
 -----------------------------------------------------------------------------------------------
-=> passed    64   0.00        7936       16785          41506                 9823
-=> passed   128   0.00       32256       65945         164146                78762
-=> passed   256   0.02      130048      246644         623336              1001907
-=> FAILED   512   0.24      522240      949973        2422186             14992642   (2.2x)
-=> FAILED  1024   3.53     2093056     3696110        9485276            235826879   (8.9x)
+=> passed    64   0.00        7936       18423          44782                10116
+=> passed   128   0.00       32256       85954         204164                80634
+=> passed   256   0.03      130048      382824         895696              1011702
+=> FAILED   512   0.39      522240     1624198        3770636             15020272   (2.2x)
+=> FAILED  1024   5.16     2093056     6749136       15591328            235912735   (8.9x)
 
 
 WARNING: the time limit of 180 seconds was exceeded, so not all tests could be completed.
