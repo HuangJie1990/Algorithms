@@ -1,4 +1,4 @@
-package ChapterThree;
+package c3;
 
 import edu.princeton.cs.algs4.Queue;
 

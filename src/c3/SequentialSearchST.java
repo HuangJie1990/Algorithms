@@ -1,7 +1,6 @@
-package ChapterThree;
+package c3;
 
 import edu.princeton.cs.algs4.Queue;
-
 public class SequentialSearchST<Key, Value> {
 
     private Node first;
@@ -34,16 +33,22 @@ public class SequentialSearchST<Key, Value> {
 
     public void put(Key key, Value value) {
         if (key == null) throw new IllegalArgumentException("argument to put() is null");
+
+        //防御性代码，防止延迟删除
         if (value == null) {
             delete(key);
             return;
         }
+
+        //符号表不为空
         for (Node x = first; x != null; x = x.next) {
             if (key.equals(x.key)) {
                 x.value = value;
                 return;
             }
         }
+
+        //符号表为空
         first = new Node(key, value, first);
         n++;
     }

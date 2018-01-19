@@ -25,8 +25,15 @@ public class Sort {
         return true;
     }
 
+    private static int cmp;
+
     public static boolean less(Comparable v, Comparable w) {
+        cmp++;
         return v.compareTo(w) < 0;
+    }
+
+    public static int cmpCount() {
+        return cmp;
     }
 
     public static boolean greater(Comparable v, Comparable w) {

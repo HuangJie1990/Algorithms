@@ -5,13 +5,13 @@ import edu.princeton.cs.algs4.StdRandom;
 public class Quick {
 
     private static int partition(Comparable[] a, int lo, int hi) {
-        int i = lo, j = hi;
+        int i = lo, j = hi+1;
         while (true) {
             while (Sort.less(a[++i], a[lo])) {
-                if (i > hi) break;
+                if (i == hi) break;
             }
             while (Sort.less(a[lo], a[--j])) {
-                if (j < lo) break;
+                if (j == lo) break;
             }
             if (i >= j) break;
             Sort.exch(a, i, j);

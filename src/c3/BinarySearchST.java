@@ -1,4 +1,4 @@
-package ChapterThree;
+package c3;
 
 import edu.princeton.cs.algs4.Queue;
 
@@ -34,29 +34,35 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    Key min() {
+    public Key min() {
         if (isEmpty()) throw new NoSuchElementException("called min() with empty symbol table");
         return keys[0];
     }
 
     @Override
-    Key max() {
+    public Key max() {
         if (isEmpty()) throw new NoSuchElementException("called max() with empty symbol table");
         return keys[n - 1];
     }
 
+    //largest key less than or equal to key
     @Override
-    Key floor(Key key) {
+    public Key floor(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         int i = rank(key);
+        //如果keys中存在key，返回key
         if (i < n && key.compareTo(keys[i]) == 0) return keys[i];
+        /*如果keys中不存在key，分两种情况
+        1,rank(key)==0,返回null；
+        2,rank(key)>0, 返回keys[i-1].
+         */
         if (i == 0) return null;
         else return keys[i - 1];
     }
 
     //大于等于key的最小键,类似于小数的向上取整
     @Override
-    Key ceiling(Key key) {
+    public Key ceiling(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         int i = rank(key);
         if (i == n) return null;
@@ -65,39 +71,41 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
 
     //如果keys中存在key，keys[rank(key)]=key,否则keys[rank(key)]>key>keys[rank(key)-1]
     @Override
-    int rank(Key key) {
+    public int rank(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         int lo = 0, hi = n - 1;
+        //符号表中不存在key的时候，lo>hi时结束循环，返回lo
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
             int cmp = key.compareTo(keys[mid]);
             if (cmp < 0) hi = mid - 1;
             else if (cmp > 0) lo = mid + 1;
+                //符号表中存在key的时候，keys[mid]==key时结束循环，返回mid
             else return mid;
         }
         return lo;
     }
 
     @Override
-    Key select(int k) {
+    public Key select(int k) {
         if (k < 0 || k >= n) throw new IllegalArgumentException("called select() with invalid argument: \" + k");
         return keys[k];
     }
 
     @Override
-    void deleteMin() {
+    public void deleteMin() {
         if (isEmpty()) throw new NoSuchElementException("called deletemin() with empty symbol table");
         delete(min());
     }
 
     @Override
-    void deleteMax() {
+    public void deleteMax() {
         if (isEmpty()) throw new NoSuchElementException("called deleteMax() with empty symbol table");
         delete(max());
     }
 
     @Override
-    int size(Key lo, Key hi) {
+    public int size(Key lo, Key hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to size() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to size() is null");
         if (lo.compareTo(hi) > 0) return 0;
@@ -106,7 +114,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    Iterable<Key> keys(Key lo, Key hi) {
+    public Iterable<Key> keys(Key lo, Key hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to keys() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to keys() is null");
 
@@ -132,7 +140,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    void put(Key key, Value value) {
+    public void put(Key key, Value value) {
         if (key == null) throw new IllegalArgumentException("first argument to put() is null");
         if (value == null) {
             delete(key);
@@ -156,7 +164,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    Value get(Key key) {
+    public Value get(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         if (isEmpty()) return null;
         int i = rank(key);
@@ -165,7 +173,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    void delete(Key key) {
+    public void delete(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         if (isEmpty()) throw new NoSuchElementException("called min() with empty symbol table");
         int i = rank(key);
@@ -183,23 +191,23 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
     }
 
     @Override
-    boolean contains(Key key) {
+    public boolean contains(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         return get(key) != null;
     }
 
     @Override
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return n == 0;
     }
 
     @Override
-    int size() {
+    public int size() {
         return n;
     }
 
     @Override
-    Iterable<Key> keys() {
+    public Iterable<Key> keys() {
         return keys(min(), max());
     }
 

@@ -1,6 +1,7 @@
-package ChapterThree;
+package c3;
 
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.NoSuchElementException;
 
@@ -23,7 +24,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Key min() {
+    public Key min() {
         if (root == null) throw new NoSuchElementException("called min() with empty symbol table");
         return min(root).key;
     }
@@ -43,7 +44,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Key floor(Key key) {
+    public Key floor(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to floor() is null");
         if (isEmpty()) throw new NoSuchElementException("called floor() with empty symbol table");
         Node x = floor(root, key);
@@ -63,7 +64,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Key ceiling(Key key) {
+    public Key ceiling(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to ceiling() is null");
         if (isEmpty()) throw new NoSuchElementException("called floor() with empty symbol table");
         Node x = ceiling(root, key);
@@ -83,7 +84,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    int rank(Key key) {
+    public int rank(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to rank() is null");
         return rank(root, key);
     }
@@ -97,7 +98,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Key select(int k) {
+    public Key select(int k) {
         if (k < 0 || k > size(root)) throw new IllegalArgumentException("augument to select() is null");
         return select(root, k).key;
     }
@@ -106,12 +107,12 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
         if (x == null) return null;
         int t = size(x.left);
         if (t > k) return select(x.left, k);
-        if (t < k) return select(x.right, k - t - 1);
+        else if (t < k) return select(x.right, k - t - 1);
         else return x;
     }
 
     @Override
-    void deleteMin() {
+    public void deleteMin() {
         if (isEmpty()) throw new NoSuchElementException("called deleteMin() with empty symbol table");
         root = deleteMin(root);
     }
@@ -124,7 +125,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    void deleteMax() {
+    public void deleteMax() {
         if (isEmpty()) throw new NoSuchElementException("called deleteMax() with empty symbol table");
         root = deleteMax(root);
     }
@@ -137,17 +138,16 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    int size(Key lo, Key hi) {
+    public int size(Key lo, Key hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to size() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to size() is null");
-
         if (lo.compareTo(hi) > 0) return 0;
         if (contains(hi)) return rank(hi) - rank(lo) + 1;
         return rank(hi) - rank(lo);
     }
 
     @Override
-    Iterable<Key> keys(Key lo, Key hi) {
+    public Iterable<Key> keys(Key lo, Key hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to keys() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to keys() is null");
         Queue<Key> queue = new Queue<>();
@@ -165,12 +165,15 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    void put(Key key, Value value) {
+    public void put(Key key, Value value) {
         if (key == null) throw new IllegalArgumentException("first argument to put() is null");
+
+        //防御代码，避免延迟删除
         if (value == null) {
             delete(key);
             return;
         }
+
         root = put(root, key, value);
     }
 
@@ -185,10 +188,21 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Value get(Key key) {
+    public Value get(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         return get(root, key);
     }
+//    public Value get(Key key) {
+//        Node x = root;
+//        while (x != null) {
+//            int cmp = key.compareTo(x.key);
+//            if (cmp > 0) x = x.right;
+//            else if (cmp < 0) x = x.left;
+//            return x.value;
+//        }
+//        return null;
+//    }
+
 
     private Value get(Node x, Key key) {
         if (x == null) return null;
@@ -199,7 +213,7 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    void delete(Key key) {
+    public void delete(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to delete is null");
         root = delete(root, key);
     }
@@ -222,18 +236,18 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    boolean contains(Key key) {
+    public boolean contains(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         return get(key) != null;
     }
 
     @Override
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return size() == 0;
     }
 
     @Override
-    int size() {
+    public int size() {
         return size(root);
     }
 
@@ -243,7 +257,20 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
     }
 
     @Override
-    Iterable<Key> keys() {
+    public Iterable<Key> keys() {
         return keys(min(), max());
+    }
+
+    //中序遍历
+
+    public void print(){
+        print(root);
+    }
+
+    private void print(Node x) {
+        if (x == null) return;
+        print(x.left);
+        StdOut.print(x.key + " ");
+        print(x.right);
     }
 }

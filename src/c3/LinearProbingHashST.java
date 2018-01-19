@@ -1,6 +1,4 @@
-package ChapterThree;
-
-import ChapterOne.BagStackQueue.LinkedList;
+package c3;
 
 public class LinearProbingHashST<Key, Value> extends ST<Key, Value> {
 
@@ -78,22 +76,22 @@ public class LinearProbingHashST<Key, Value> extends ST<Key, Value> {
     }
 
     @Override
-    boolean contains(Key key) {
+    public boolean contains(Key key) {
         return get(key) != null;
     }
 
     @Override
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return N == 0;
     }
 
     @Override
-    int size() {
+    public int size() {
         return N;
     }
 
     @Override
-    Iterable<Key> keys() {
+    public Iterable<Key> keys() {
         return null;
     }
 }
