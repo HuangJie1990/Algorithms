@@ -6,25 +6,9 @@ import java.util.NoSuchElementException;
 
 public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> {
 
-    private Node root;
-
     private static final boolean RED = true;
     private static final boolean BLACK = false;
-
-    private class Node {
-        Key key;
-        Value value;
-        Node left, right;
-        int N;
-        boolean color;
-
-        public Node(Key key, Value value, int n, boolean color) {
-            this.key = key;
-            this.value = value;
-            N = n;
-            this.color = color;
-        }
-    }
+    private Node root;
 
     private boolean isRed(Node x) {
         if (x == null) return false;
@@ -32,12 +16,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
     }
 
     private Node rotateLeft(Node h) {
-        assert isRed(h.right);
+        assert (h != null) && isRed(h.right);
         Node x = h.right;
         h.right = x.left;
         x.left = h;
         x.color = h.color;
         h.color = RED;
+        x.N = h.N;
+        h.N = size(h.left) + size(h.left) + 1;
         return x;
     }
 
@@ -48,6 +34,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
         x.right = h;
         x.color = h.color;
         h.color = RED;
+        x.N = h.N;
+        h.N = size(h.left) + size(h.right) + 1;
         return x;
     }
 
@@ -55,9 +43,46 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
         assert !isRed(h);
         assert isRed(h.left);
         assert isRed(h.right);
-        h.color = RED;
-        h.left.color = BLACK;
-        h.right.color = RED;
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+    }
+
+    private Node moveRedLeft(Node h) {
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    private Node moveRedRight(Node h) {
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    private Node balance(Node h) {
+        if (isRed(h.right)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+
+        h.N = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node x) {
+        if (x == null) return -1;
+        return 1 + Math.max(height(x.left), height(x.right));
     }
 
     //Same as BST
@@ -156,12 +181,44 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
 
     @Override
     public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("BST is empty");
 
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMin(Node h) {
+        if (h.left == null) return null;
+
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+
+        h.left = deleteMin(h.left);
+        return balance(h);
     }
 
     @Override
     public void deleteMax() {
+        if (isEmpty()) throw new NoSuchElementException("BST underflow");
 
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+        if (isRed(h.left))
+            h = rotateRight(h);
+        if (h.right == null)
+            return null;
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
     }
 
     //Same as BST
@@ -196,13 +253,48 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
     @Override
     public void put(Key key, Value value) {
         if (key == null) throw new IllegalArgumentException("first argument to put is null");
-
+        root = put(root, key, value);
+        root.color = BLACK;
     }
 
     //Complete
     private Node put(Node h, Key key, Value value) {
+        if (h == null) return new Node(key, value, 1, RED);
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) h.left = put(h.left, key, value);
+        else if (cmp > 0) h.right = put(h.right, key, value);
+        else h.value = value;
 
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+        h.N = size(h.left) + size(h.right) + 1;
+
+        return h;
     }
+
+    private Node delete(Node h, Key key) {
+        if (key.compareTo(h.key) < 0) {
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left, key);
+        } else {
+            if (isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                Node x = min(h.right);
+                h.key = x.key;
+                h.value = x.value;
+                h.right = deleteMin(h.right);
+            } else h.right = delete(h.right, key);
+        }
+        return balance(h);
+    }
+
 
     //Same as BST
     @Override
@@ -222,7 +314,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
 
     @Override
     public void delete(Key key) {
+        if (key == null) throw new IllegalArgumentException("argument to delete() is null");
+        if (!contains(key)) return;
 
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = delete(root, key);
+        if (!isEmpty()) root.color = BLACK;
     }
 
     //Same as BST
@@ -253,5 +352,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends SortST<Key,
     @Override
     public Iterable<Key> keys() {
         return keys(min(), max());
+    }
+
+    private class Node {
+        Key key;
+        Value value;
+        Node left, right;
+        int N;
+        boolean color;
+
+        public Node(Key key, Value value, int n, boolean color) {
+            this.key = key;
+            this.value = value;
+            N = n;
+            this.color = color;
+        }
     }
 }
