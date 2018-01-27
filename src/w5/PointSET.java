@@ -1,6 +1,11 @@
 package w5;
 
-import edu.princeton.cs.algs4.*;
+
+import edu.princeton.cs.algs4.Point2D;
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.RectHV;
+import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.StdDraw;
 
 /**
  * @author
@@ -59,7 +64,7 @@ public class PointSET {
     //a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D p) {
         if (p == null) throw new IllegalArgumentException("argument to nearest() is null");
-        double minDis = Double.MAX_VALUE;
+        double minDis = Double.POSITIVE_INFINITY;
         Point2D min = null;
         for (Point2D point :
                 ps) {
