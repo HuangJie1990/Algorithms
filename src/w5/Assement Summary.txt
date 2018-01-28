@@ -5,23 +5,23 @@ ASSESSMENT SUMMARY
 Compilation:  PASSED
 API:          PASSED
 
-Findbugs:     PASSED
+Findbugs:     FAILED (3 warnings)
 PMD:          PASSED
-Checkstyle:   FAILED (0 errors, 22 warnings)
+Checkstyle:   FAILED (0 errors, 19 warnings)
 
-Correctness:  19/36 tests passed
+Correctness:  32/36 tests passed
 Memory:       16/16 tests passed
-Timing:       42/42 tests passed
+Timing:       36/42 tests passed
 
-Aggregate score: 71.67%
+Aggregate score: 90.48%
 [Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-5.8K Jan 27 11:04 KdTree.java
-2.2K Jan 27 11:04 PointSET.java
+6.5K Jan 28 10:55 KdTree.java
+2.2K Jan 28 10:55 PointSET.java
 
 
 ********************************************************************************
@@ -55,6 +55,10 @@ KdTree:
 
 % findbugs *.class
 *-----------------------------------------------------------
+M C NP_NULL_ON_SOME_PATH NP: Dereferences the variable 'h', but its value might be null on some execution branch.  Dereferenced at KdTree.java:[line 112]
+L D NP_LOAD_OF_KNOWN_NULL_VALUE NP: The variable 'near' is known to be null at this point due to an earlier check against null.  At KdTree.java:[line 135]
+M D DLS_DEAD_LOCAL_STORE DLS: Assigns a value to the local variable 'min' but that value is never used.  At KdTree.java:[line 153]
+Warnings generated: 3
 
 
 ================================================================
@@ -62,8 +66,8 @@ KdTree:
 
 % pmd .
 *-----------------------------------------------------------
-KdTree.java:155: The private instance (or static) variable 'point' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
-KdTree.java:156: The private instance (or static) variable 'rect' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+KdTree.java:173: The private instance (or static) variable 'point' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+KdTree.java:174: The private instance (or static) variable 'rect' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 PointSET.java:77: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
 PMD ends with 3 warnings.
 
@@ -73,15 +77,16 @@ PMD ends with 3 warnings.
 
 % checkstyle *.java
 *-----------------------------------------------------------
-[WARN] KdTree.java:17:17: The instance variable 'N' must start with a lowercase letter and use camelCase. [MemberName]
-[WARN] KdTree.java:22:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:27:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:32:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:62:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:77:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:104:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:121:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] KdTree.java:126: Did you mean to use 'Double.POSITIVE_INFINITY' instead of 'Double.MAX_VALUE'? [Infinity]
+[WARN] KdTree.java:15:17: The instance variable 'N' must start with a lowercase letter and use camelCase. [MemberName]
+[WARN] KdTree.java:20:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:25:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:30:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:60:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:75:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:102:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:117:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:140:56: Use the primitive type instead of the corresponding wrapper type 'Double'. For example, use 'boolean' instead of 'Boolean'. [WrapperType]
+[WARN] KdTree.java:142:9: Use the primitive type instead of the corresponding wrapper type 'Double'. For example, use 'boolean' instead of 'Boolean'. [WrapperType]
 [WARN] PointSET.java:15:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
 [WARN] PointSET.java:20:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
 [WARN] PointSET.java:25:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
@@ -90,7 +95,6 @@ PMD ends with 3 warnings.
 [WARN] PointSET.java:42:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
 [WARN] PointSET.java:50:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
 [WARN] PointSET.java:61:7: '//' or '/*' is not followed by whitespace. [WhitespaceAfter]
-[WARN] PointSET.java:64: Did you mean to use 'Double.POSITIVE_INFINITY' instead of 'Double.MAX_VALUE'? [Infinity]
 Checkstyle ends with 0 errors and 18 warnings.
 
 % custom checkstyle checks for PointSET.java
@@ -100,10 +104,6 @@ Checkstyle ends with 0 errors and 1 warning.
 
 % custom checkstyle checks for KdTree.java
 *-----------------------------------------------------------
-[WARN] KdTree.java:131:49: Do not call 'distanceTo()' in this program; instead use 'distanceSquaredTo()'. [Performance]
-[WARN] KdTree.java:136:57: Do not call 'distanceTo()' in this program; instead use 'distanceSquaredTo()'. [Performance]
-[WARN] KdTree.java:137:59: Do not call 'distanceTo()' in this program; instead use 'distanceSquaredTo()'. [Performance]
-Checkstyle ends with 0 errors and 3 warnings.
 
 
 ================================================================
@@ -235,360 +235,60 @@ Test 1b: insert non-degenerate points; check size() and isEmpty() after each ins
 Test 1c: insert distinct points; check size() and isEmpty() after each insertion
   * 1 random distinct points in a 1-by-1 grid
   * 10 random distinct points in a 8-by-8 grid
-    - failed after inserting point 7 of 10
-    - student   size()    = 6
-    - reference size()    = 7
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  0.5 0.125
-      B  0.125 1.0
-      C  0.25 0.5
-      D  0.875 0.75
-      E  0.875 0.5
-      F  0.375 0.5
-      G  0.875 0.25
-
   * 20 random distinct points in a 16-by-16 grid
-    - failed after inserting point 9 of 20
-    - student   size()    = 8
-    - reference size()    = 9
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  0.875 0.375
-      B  0.6875 0.5625
-      C  0.125 0.25
-      D  0.75 0.8125
-      E  1.0 0.4375
-      F  0.4375 0.9375
-      G  0.6875 0.6875
-      H  1.0 0.5
-      I  0.75 0.9375
-
   * 10000 random distinct points in a 128-by-128 grid
-    - failed after inserting point 17 of 10000
-    - student   size()    = 16
-    - reference size()    = 17
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  0.53125 0.1484375
-      B  0.0 0.65625
-      C  0.375 0.53125
-      D  0.296875 0.2734375
-      E  0.1875 0.1015625
-      F  0.8984375 0.3046875
-      G  0.328125 0.5859375
-      H  0.3515625 0.1328125
-      I  0.9140625 0.890625
-      J  0.5078125 0.984375
-      K  0.828125 0.9921875
-      L  0.625 0.734375
-      M  0.1875 0.3671875
-      N  0.65625 0.90625
-      O  0.453125 0.5703125
-      P  0.5546875 0.421875
-      Q  0.328125 0.4609375
-
   * 100000 random distinct points in a 1024-by-1024 grid
-    - failed after inserting point 69 of 100000
-    - student   size()    = 68
-    - reference size()    = 69
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-
   * 100000 random distinct points in a 65536-by-65536 grid
-    - failed after inserting point 1185 of 100000
-    - student   size()    = 1184
-    - reference size()    = 1185
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-
-==> FAILED
+==> passed
 
 Test 1d: insert general points; check size() and isEmpty() after each insertion
   * 5 random general points in a 1-by-1 grid
-    - failed after inserting point 5 of 5
-    - student   size()    = 2
-    - reference size()    = 3
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  1.0 1.0
-      B  0.0 0.0
-      C  0.0 0.0
-      D  0.0 0.0
-      E  1.0 0.0
-
   * 10 random general points in a 4-by-4 grid
-    - failed after inserting point 4 of 10
-    - student   size()    = 3
-    - reference size()    = 4
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  1.0 1.0
-      B  0.25 0.25
-      C  0.25 0.5
-      D  0.25 1.0
-
   * 50 random general points in a 8-by-8 grid
-    - failed after inserting point 2 of 50
-    - student   size()    = 1
-    - reference size()    = 2
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  0.375 1.0
-      B  0.375 0.0
-
   * 100000 random general points in a 16-by-16 grid
-    - failed after inserting point 7 of 100000
-    - student   size()    = 6
-    - reference size()    = 7
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-    - sequence of points inserted:
-      A  0.3125 0.625
-      B  0.8125 0.25
-      C  0.4375 0.0
-      D  1.0 0.6875
-      E  0.25 0.6875
-      F  0.625 0.125
-      G  0.625 0.25
-
   * 100000 random general points in a 128-by-128 grid
-    - failed after inserting point 40 of 100000
-    - student   size()    = 39
-    - reference size()    = 40
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-
   * 100000 random general points in a 1024-by-1024 grid
-    - failed after inserting point 131 of 100000
-    - student   size()    = 130
-    - reference size()    = 131
-    - student   isEmpty() = false
-    - reference isEmpty() = false
-
-==> FAILED
+==> passed
 
 Test 2a: insert points from file; check contains() with random query points
   * input0.txt
   * input1.txt
-    - failed on trial 6 of 10000
-    - query point          = (0.5, 0.31)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.5 0.5
-
   * input5.txt
-    - failed on trial 3 of 10000
-    - query point          = (0.4, 0.5)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.7 0.2
-      B  0.5 0.4
-      C  0.2 0.3
-      D  0.4 0.7
-      E  0.9 0.6
-
   * input10.txt
-    - failed on trial 37 of 10000
-    - query point          = (0.32, 0.88)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.372 0.497
-      B  0.564 0.413
-      C  0.226 0.577
-      D  0.144 0.179
-      E  0.083 0.51
-      F  0.32 0.708
-      G  0.417 0.362
-      H  0.862 0.825
-      I  0.785 0.725
-      J  0.499 0.208
-
-==> FAILED
+==> passed
 
 Test 2b: insert non-degenerate points; check contains() with random query points
   * 1 random non-degenerate points in a 1-by-1 grid
-    - failed on trial 2 of 10000
-    - query point          = (0.0, 0.0)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.0 1.0
-
   * 5 random non-degenerate points in a 8-by-8 grid
-    - failed on trial 1 of 10000
-    - query point          = (0.25, 0.0)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.0 0.5
-      B  1.0 0.0
-      C  0.875 0.875
-      D  0.5 0.125
-      E  0.125 0.625
-
   * 10 random non-degenerate points in a 16-by-16 grid
-    - failed on trial 2 of 10000
-    - query point          = (0.125, 0.9375)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.125 0.4375
-      B  0.9375 0.5625
-      C  0.6875 0.875
-      D  0.0625 0.3125
-      E  1.0 0.125
-      F  0.25 0.0
-      G  0.875 0.9375
-      H  0.1875 0.1875
-      I  0.4375 0.25
-      J  0.5625 0.5
-
   * 20 random non-degenerate points in a 32-by-32 grid
-    - failed on trial 10 of 10000
-    - query point          = (0.84375, 0.90625)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.25 0.34375
-      B  0.625 0.78125
-      C  0.65625 0.375
-      D  0.15625 0.96875
-      E  0.53125 1.0
-      F  0.71875 0.03125
-      G  0.5625 0.21875
-      H  0.3125 0.0
-      I  0.34375 0.6875
-      J  0.59375 0.71875
-      K  0.5 0.59375
-      L  0.96875 0.125
-      M  0.125 0.25
-      N  0.21875 0.4375
-      O  0.0625 0.0625
-      P  1.0 0.90625
-      Q  0.03125 0.40625
-      R  0.40625 0.28125
-      S  0.375 0.53125
-      T  0.8125 0.09375
-
   * 500 random non-degenerate points in a 1024-by-1024 grid
-    - failed on trial 45 of 10000
-    - query point          = (0.734375, 0.6806640625)
-    - student   contains() = true
-    - reference contains() = false
-
   * 10000 random non-degenerate points in a 65536-by-65536 grid
-    - failed on trial 264 of 10000
-    - query point          = (0.019287109375, 0.9422149658203125)
-    - student   contains() = true
-    - reference contains() = false
-
-==> FAILED
+==> passed
 
 Test 2c: insert distinct points; check contains() with random query points
   * 1 random distinct points in a 1-by-1 grid
-    - failed on trial 2 of 10000
-    - query point          = (0.0, 1.0)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.0 0.0
-
   * 10 random distinct points in a 4-by-4 grid
-    - failed on trial 4 of 10000
-    - query point          = (0.5, 0.25)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.25 0.75
-      B  0.75 0.25
-      C  0.0 0.75
-      D  0.25 1.0
-      E  0.75 0.75
-      F  0.0 0.0
-      G  0.5 1.0
-      H  0.75 1.0
-      I  0.0 1.0
-      J  1.0 0.25
-
   * 20 random distinct points in a 8-by-8 grid
-    - failed on trial 4 of 10000
-    - query point          = (0.875, 0.125)
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of points inserted:
-      A  0.625 0.75
-      B  1.0 0.0
-      C  0.875 0.875
-      D  0.875 0.375
-      E  0.0 0.0
-      F  0.125 0.25
-      G  0.75 0.125
-      H  0.0 0.5
-      I  0.375 0.0
-      J  0.375 0.5
-      K  0.625 0.25
-      L  0.5 0.625
-      M  0.375 1.0
-      N  0.375 0.25
-      O  0.375 0.875
-      P  0.75 0.625
-      Q  1.0 0.5
-      R  0.5 0.75
-      S  0.125 0.125
-      T  0.875 0.5
-
   * 10000 random distinct points in a 128-by-128 grid
-    - failed on trial 1 of 10000
-    - query point          = (0.5234375, 0.4453125)
-    - student   contains() = true
-    - reference contains() = false
-
   * 100000 random distinct points in a 1024-by-1024 grid
-    - failed on trial 1 of 10000
-    - query point          = (0.107421875, 0.333984375)
-    - student   contains() = true
-    - reference contains() = false
-
   * 100000 random distinct points in a 65536-by-65536 grid
-    - failed on trial 4 of 10000
-    - query point          = (0.335968017578125, 0.653411865234375)
-    - student   contains() = true
-    - reference contains() = false
-
-==> FAILED
+==> passed
 
 Test 2d: insert general points; check contains() with random query points
   * 10000 random general points in a 1-by-1 grid
   * 10000 random general points in a 16-by-16 grid
   * 10000 random general points in a 128-by-128 grid
-    - failed on trial 1 of 10000
-    - query point          = (0.484375, 0.125)
-    - student   contains() = true
-    - reference contains() = false
-
   * 10000 random general points in a 1024-by-1024 grid
-    - failed on trial 6 of 10000
-    - query point          = (0.2939453125, 0.998046875)
-    - student   contains() = true
-    - reference contains() = false
-
-==> FAILED
+==> passed
 
 Test 3a: insert points from file; check range() with random query rectangles
   * input0.txt
-    java.util.NoSuchElementException: KdTree is empty
+    java.lang.NullPointerException
 
-    KdTree.range(KdTree.java:107)
+    KdTree$Node.access$100(KdTree.java:172)
+    KdTree.range(KdTree.java:112)
+    KdTree.range(KdTree.java:106)
     TestKdTree.checkRange(TestKdTree.java:552)
     TestKdTree.checkRange(TestKdTree.java:504)
     TestKdTree.test3a(TestKdTree.java:1347)
@@ -611,95 +311,18 @@ Test 3b: insert non-degenerate points; check range() with random query rectangle
 Test 3c: insert distinct points; check range() with random query rectangles
   * 2 random distinct points and random rectangles in a 2-by-2 grid
   * 10 random distinct points and random rectangles in a 4-by-4 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.0, 0.75] x [0.0, 1.0]
-    - sequence of points inserted:
-      A  0.25 0.0
-      B  0.75 0.5
-      C  0.5 1.0
-      D  0.25 1.0
-      E  1.0 0.5
-      F  0.0 0.25
-      G  0.25 0.75
-      H  1.0 1.0
-      I  0.75 0.25
-      J  0.5 0.75
-    - student   range():  A F B I C
-    - reference range():  A F B I C D G J
-
   * 20 random distinct points and random rectangles in a 8-by-8 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.25, 0.5] x [0.25, 0.75]
-    - sequence of points inserted:
-      A  1.0 0.625
-      B  0.125 0.25
-      C  0.75 1.0
-      D  0.375 0.25
-      E  0.875 0.0
-      F  0.875 0.25
-      G  1.0 0.875
-      H  0.5 0.125
-      I  1.0 1.0
-      J  0.875 0.125
-      K  0.75 0.875
-      L  0.625 0.5
-      M  0.0 0.125
-      N  0.375 0.0
-      O  0.75 0.0
-      P  0.875 1.0
-      Q  0.125 1.0
-      R  0.125 0.5
-      S  0.125 0.0
-      T  0.125 0.125
-    - student   range():  empty
-    - reference range():  D
-
   * 100 random distinct points and random rectangles in a 16-by-16 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.0, 0.5] x [0.5, 0.875]
-    - student   range():  C F E G L H O T O V U G Y
-    - reference range():  C E L O J R F G H T V P O U I L Y S G T D E B W
-
   * 1000 random distinct points and random rectangles in a 64-by-64 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.1875, 0.921875] x [0.234375, 0.734375]
-    - student   range():  A B D G P S J N R T P Q X M J V Y Y Q R Y R O J C S ...
-    - reference range():  A B D G T G E E U G K O L R S G T C E M U I C L G V ...
-
   * 10000 random distinct points and random rectangles in a 128-by-128 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.125, 0.5703125] x [0.3671875, 0.5546875]
-    - student   range():  A U E R X X Y M D C C I K J M I Q N X C A I R J X A ...
-    - reference range():  A U M M Y Z U G V T L C O H K W I F B H N K P K A Z ...
-
-==> FAILED
+==> passed
 
 Test 3d: insert general points; check range() with random query rectangles
   * 5000 random general points and random rectangles in a 2-by-2 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.5, 1.0] x [0.0, 1.0]
-    - student   range():  F Q Y
-    - reference range():  F Q Y H G I
-
   * 5000 random general points and random rectangles in a 16-by-16 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.0625, 1.0] x [0.1875, 0.8125]
-    - student   range():  J D C Y T E D D Y U Y K Z I P T D P V W H D G K D Q ...
-    - reference range():  J D T Y D T E U P Y Q M D G X E A Z U P H K L S L O ...
-
   * 5000 random general points and random rectangles in a 128-by-128 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.3359375, 0.6953125] x [0.4453125, 0.8203125]
-    - student   range():  B U T W C I X O X H D O X V Z O N Y V J E M W C P U ...
-    - reference range():  B M D N L C Z I E M B R U E X T K Z N O J I F L D T ...
-
   * 5000 random general points and random rectangles in a 1024-by-1024 grid
-    - failed on trial 1 of 10000
-    - query rectangle = [0.5234375, 0.76953125] x [0.0, 0.984375]
-    - student   range():  F V O J L Y W Z Q C A B J M O W H U V S J L P B P J ...
-    - reference range():  V Z B E U O I Z H W K Q F I V T S Y K G C I J Q N R ...
-
-==> FAILED
+==> passed
 
 Test 3e: insert random points; check range() with tiny rectangles
          enclosing each point
@@ -728,18 +351,10 @@ Test 4b: insert non-degenerate points; check range() with random query rectangle
 
 Test 5a: insert points from file; check nearest() with random query points
   * input0.txt
-    java.util.NoSuchElementException: KdTree is empty
-
-    KdTree.nearest(KdTree.java:124)
-    TestKdTree.checkNearest(TestKdTree.java:297)
-    TestKdTree.checkNearest(TestKdTree.java:263)
-    TestKdTree.test5a(TestKdTree.java:1431)
-    TestKdTree.main(TestKdTree.java:1678)
-
   * input1.txt
   * input5.txt
   * input10.txt
-==> FAILED
+==> passed
 
 Test 5b: insert non-degenerate points; check nearest() with random query points
   * 5 random non-degenerate points in a 8-by-8 grid
@@ -752,102 +367,16 @@ Test 5b: insert non-degenerate points; check nearest() with random query points
 Test 5c: insert distinct points; check nearest() with random query points
   * 10 random distinct points in a 4-by-4 grid
   * 15 random distinct points in a 8-by-8 grid
-    - failed on trial 3 of 10000
-    - sequence of points inserted:
-      A  0.5 0.875
-      B  0.375 0.125
-      C  0.0 0.875
-      D  0.25 0.0
-      E  0.75 0.875
-      F  0.5 0.25
-      G  0.75 0.5
-      H  0.75 0.375
-      I  0.375 0.5
-      J  0.375 0.625
-      K  0.75 0.75
-      L  0.125 1.0
-      M  0.75 0.0
-      N  0.625 0.125
-      O  0.5 0.75
-    - query point                   = (0.75, 0.25)
-    - student   nearest()           = (0.625, 0.125)
-    - reference nearest()           = (0.75, 0.375)
-    - student   distanceSquaredTo() = 0.03125
-    - reference distanceSquaredTo() = 0.015625
-
   * 20 random distinct points in a 16-by-16 grid
-    - failed on trial 36 of 10000
-    - sequence of points inserted:
-      A  0.8125 0.625
-      B  0.0625 0.5625
-      C  0.0625 0.25
-      D  0.75 0.6875
-      E  0.4375 0.3125
-      F  0.75 0.25
-      G  0.0 0.4375
-      H  0.625 0.5
-      I  0.875 0.375
-      J  0.5 0.6875
-      K  0.0 0.0625
-      L  0.1875 0.9375
-      M  0.625 0.25
-      N  0.5 0.8125
-      O  1.0 0.9375
-      P  0.625 0.9375
-      Q  0.25 0.0625
-      R  0.8125 0.5625
-      S  0.5 0.4375
-      T  0.0 0.5625
-    - query point                   = (0.8125, 0.5)
-    - student   nearest()           = (0.8125, 0.625)
-    - reference nearest()           = (0.8125, 0.5625)
-    - student   distanceSquaredTo() = 0.015625
-    - reference distanceSquaredTo() = 0.00390625
-
   * 100 random distinct points in a 32-by-32 grid
-    - failed on trial 1 of 10000
-    - query point                   = (0.75, 0.0625)
-    - student   nearest()           = (0.6875, 0.0625)
-    - reference nearest()           = (0.71875, 0.09375)
-    - student   distanceSquaredTo() = 0.00390625
-    - reference distanceSquaredTo() = 0.001953125
-
   * 10000 random distinct points in a 65536-by-65536 grid
-    - failed on trial 215 of 10000
-    - query point                   = (0.1229705810546875, 0.0044097900390625)
-    - student   nearest()           = (0.131195068359375, 0.0069580078125)
-    - reference nearest()           = (0.12017822265625, 0.0115509033203125)
-    - student   distanceSquaredTo() = 0.000074135605246
-    - reference distanceSquaredTo() = 0.000058792764321
-
-==> FAILED
+==> passed
 
 Test 5d: insert general points; check nearest() with random query points
   * 10000 random general points in a 16-by-16 grid
-    - failed on trial 1 of 10000
-    - query point                   = (0.25, 0.625)
-    - student   nearest()           = (0.25, 0.5625)
-    - reference nearest()           = (0.25, 0.625)
-    - student   distanceSquaredTo() = 0.00390625
-    - reference distanceSquaredTo() = 0
-
   * 10000 random general points in a 128-by-128 grid
-    - failed on trial 2 of 10000
-    - query point                   = (0.0078125, 0.765625)
-    - student   nearest()           = (0.0234375, 0.765625)
-    - reference nearest()           = (0.0078125, 0.765625)
-    - student   distanceSquaredTo() = 0.000244140625
-    - reference distanceSquaredTo() = 0
-
   * 10000 random general points in a 1024-by-1024 grid
-    - failed on trial 2 of 10000
-    - query point                   = (0.6396484375, 0.7529296875)
-    - student   nearest()           = (0.646484375, 0.74609375)
-    - reference nearest()           = (0.6376953125, 0.7490234375)
-    - student   distanceSquaredTo() = 0.000093460083008
-    - reference distanceSquaredTo() = 0.000019073486328
-
-==> FAILED
+==> passed
 
 Test 6a: insert points from file; check nearest() with random query points
          and check traversal of kd-tree
@@ -860,15 +389,15 @@ Test 6a: insert points from file; check nearest() with random query points
       C  0.2 0.3
       D  0.4 0.7
       E  0.9 0.6
-    - query point                   = (0.57, 0.77)
+    - query point                   = (0.16, 0.65)
     - student   nearest()           = (0.4, 0.7)
     - reference nearest()           = (0.4, 0.7)
-    - student   distanceSquaredTo() = 0.0338
-    - reference distanceSquaredTo() = 0.0338
+    - student   distanceSquaredTo() = 0.0601
+    - reference distanceSquaredTo() = 0.0601
     - student sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B E C D
+      A B C D
     - reference sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B D E
+      A B D
 
   * input10.txt
     - failed on trial 1 of 1000
@@ -884,13 +413,13 @@ Test 6a: insert points from file; check nearest() with random query points
       H  0.862 0.825
       I  0.785 0.725
       J  0.499 0.208
-    - query point                   = (0.93, 0.04)
-    - student   nearest()           = (0.499, 0.208)
-    - reference nearest()           = (0.499, 0.208)
-    - student   distanceSquaredTo() = 0.213985
-    - reference distanceSquaredTo() = 0.213985
+    - query point                   = (0.96, 0.37)
+    - student   nearest()           = (0.785, 0.725)
+    - reference nearest()           = (0.785, 0.725)
+    - student   distanceSquaredTo() = 0.15665
+    - reference distanceSquaredTo() = 0.15665
     - student sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A C B D G H J I
+      A C D B G J H I
     - reference sequence of kd-tree nodes involved in calls to distanceSquaredTo():
       A B G J H I
 
@@ -899,108 +428,88 @@ Test 6a: insert points from file; check nearest() with random query points
 Test 6b: insert non-degenerate points; check nearest() with random query points
          and check traversal of kd-tree
   * 5 random non-degenerate points in a 8-by-8 grid
+  * 10 random non-degenerate points in a 16-by-16 grid
     - failed on trial 1 of 1000
     - performs incorrect traversal of kd-tree during call to nearest()
     - sequence of points inserted:
-      A  0.25 0.125
-      B  0.0 0.625
-      C  1.0 0.5
-      D  0.5 1.0
-      E  0.875 0.875
-    - query point                   = (0.625, 0.25)
-    - student   nearest()           = (0.25, 0.125)
-    - reference nearest()           = (0.25, 0.125)
-    - student   distanceSquaredTo() = 0.15625
-    - reference distanceSquaredTo() = 0.15625
+      A  0.1875 0.0
+      B  0.25 0.875
+      C  0.8125 0.75
+      D  0.5 0.6875
+      E  0.4375 1.0
+      F  1.0 0.9375
+      G  0.625 0.5
+      H  0.0625 0.625
+      I  0.875 0.5625
+      J  0.5625 0.3125
+    - query point                   = (0.75, 0.0625)
+    - student   nearest()           = (0.5625, 0.3125)
+    - reference nearest()           = (0.5625, 0.3125)
+    - student   distanceSquaredTo() = 0.09765625
+    - reference distanceSquaredTo() = 0.09765625
     - student sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B C D E
+      A H B C D G J I
     - reference sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A C D E B
-
-  * 10 random non-degenerate points in a 16-by-16 grid
-    - failed on trial 2 of 1000
-    - performs incorrect traversal of kd-tree during call to nearest()
-    - sequence of points inserted:
-      A  0.0625 0.4375
-      B  0.1875 0.375
-      C  0.5625 1.0
-      D  0.875 0.9375
-      E  0.3125 0.8125
-      F  1.0 0.0
-      G  0.125 0.25
-      H  0.375 0.875
-      I  0.9375 0.625
-      J  0.4375 0.3125
-    - query point                   = (0.5, 0.0625)
-    - student   nearest()           = (0.4375, 0.3125)
-    - reference nearest()           = (0.4375, 0.3125)
-    - student   distanceSquaredTo() = 0.06640625
-    - reference distanceSquaredTo() = 0.06640625
-    - student sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B F C G E D J I
-    - reference sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B F G J
+      A B C D G J I
 
   * 20 random non-degenerate points in a 32-by-32 grid
     - failed on trial 1 of 1000
     - performs incorrect traversal of kd-tree during call to nearest()
     - sequence of points inserted:
-      A  0.15625 0.0
-      B  0.25 0.09375
-      C  0.375 0.9375
-      D  0.71875 0.46875
-      E  0.0625 0.875
-      F  0.125 0.0625
-      G  0.3125 0.21875
-      H  0.90625 0.625
-      I  0.59375 0.3125
-      J  0.5 1.0
-      K  0.09375 0.1875
-      L  0.21875 0.15625
-      M  0.40625 0.5625
-      N  0.78125 0.8125
-      O  0.65625 0.84375
-      P  0.4375 0.78125
-      Q  0.46875 0.28125
-      R  1.0 0.90625
-      S  0.34375 0.25
-      T  0.96875 0.6875
-    - query point                   = (0.75, 0.65625)
-    - student   nearest()           = (0.90625, 0.625)
-    - reference nearest()           = (0.90625, 0.625)
-    - student   distanceSquaredTo() = 0.025390625
-    - reference distanceSquaredTo() = 0.025390625
+      A  0.21875 0.25
+      B  0.4375 0.71875
+      C  0.65625 0.5625
+      D  0.0625 0.09375
+      E  0.25 0.6875
+      F  0.59375 0.1875
+      G  0.96875 0.875
+      H  0.46875 0.3125
+      I  0.1875 0.375
+      J  0.375 0.125
+      K  1.0 0.84375
+      L  0.9375 1.0
+      M  0.0 0.8125
+      N  0.71875 0.28125
+      O  0.875 0.59375
+      P  0.125 0.03125
+      Q  0.625 0.5
+      R  0.90625 0.53125
+      S  0.8125 0.625
+      T  0.84375 0.9375
+    - query point                   = (0.78125, 0.34375)
+    - student   nearest()           = (0.71875, 0.28125)
+    - reference nearest()           = (0.71875, 0.28125)
+    - student   distanceSquaredTo() = 0.0078125
+    - reference distanceSquaredTo() = 0.0078125
     - student sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A E B F C K G D S I H J R M T N P O
+      A D I B C E F H J Q N O S
     - reference sequence of kd-tree nodes involved in calls to distanceSquaredTo():
-      A B C D H J M N P O R T
+      A B C N O S
 
   * 30 random non-degenerate points in a 64-by-64 grid
-    - failed on trial 1 of 1000
+    - failed on trial 3 of 1000
     - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 16
-    - number of reference entries = 10
+    - number of student   entries = 11
+    - number of reference entries = 8
     - entry 1 of the two sequences are not equal
-    - student   entry 1 = (0.125, 0.484375)
-    - reference entry 1 = (0.296875, 0.5)
+    - student   entry 1 = (0.125, 0.125)
+    - reference entry 1 = (0.265625, 0.453125)
 
   * 50 random non-degenerate points in a 128-by-128 grid
     - failed on trial 1 of 1000
     - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 10
-    - number of reference entries = 6
-    - entry 2 of the two sequences are not equal
-    - student   entry 2 = (0.5859375, 0.2109375)
-    - reference entry 2 = (0.2578125, 0.6953125)
+    - entry 1 of the two sequences are not equal
+    - student   entry 1 = (0.578125, 0.390625)
+    - reference entry 1 = (0.7734375, 0.8984375)
 
   * 1000 random non-degenerate points in a 2048-by-2048 grid
     - failed on trial 1 of 1000
     - performs incorrect traversal of kd-tree during call to nearest()
-    - number of student   entries = 36
-    - number of reference entries = 23
-    - entry 1 of the two sequences are not equal
-    - student   entry 1 = (0.216796875, 0.1123046875)
-    - reference entry 1 = (0.8798828125, 0.63037109375)
+    - number of student   entries = 27
+    - number of reference entries = 17
+    - entry 4 of the two sequences are not equal
+    - student   entry 4 = (0.3818359375, 0.015625)
+    - reference entry 4 = (0.29248046875, 0.3212890625)
 
 ==> FAILED
 
@@ -1034,133 +543,34 @@ Test 8b: check intermixed sequence of calls to insert(), isEmpty(),
          (p1, p2, p3, p4, p5, p6), respectively
   * 20000 calls with distinct points in a 1-by-1 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 6 of 20000
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of operations was:
-           st.insert(0.0, 0.0)
-           st.nearest((1.0, 1.0))   ==>  (0.0, 0.0)
-           st.contains((1.0, 0.0))  ==>  false
-           st.insert(1.0, 0.0)
-           st.insert(1.0, 1.0)
-           st.contains((0.0, 1.0))  ==>  true
-
   * 20000 calls with distinct points in a 10-by-10 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 14 of 20000
-    - rectangle = [0.1, 0.2] x [0.3, 0.8]
-    - student   range():  empty
-    - reference range():  R
-    - sequence of operations was:
-           st.insert(0.8, 0.9)
-           st.contains((0.0, 0.7))  ==>  false
-           st.insert(0.4, 0.7)
-           st.range([0.3, 1.0] x [0.1, 0.8])  ==>  D
-           st.range([0.1, 0.6] x [0.3, 0.8])  ==>  D
-           st.insert(0.4, 0.6)
-           st.contains((0.5, 0.2))  ==>  false
-           st.range([0.3, 0.7] x [0.0, 0.4])  ==>  empty
-           st.insert(0.1, 0.7)
-           st.contains((0.3, 0.2))  ==>  false
-           st.contains((0.6, 0.8))  ==>  false
-           st.insert(0.7, 0.7)
-           st.contains((0.7, 0.5))  ==>  false
-           st.range([0.1, 0.2] x [0.3, 0.8])  ==>  empty
-
   * 20000 calls with distinct points in a 100-by-100 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 85 of 20000
-    - student   size() = 15
-    - reference size() = 16
-
   * 20000 calls with distinct points in a 1000-by-1000 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 92 of 20000
-    - student   contains() = true
-    - reference contains() = false
-
   * 20000 calls with distinct points in a 8192-by-8192 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 639 of 20000
-    - student   contains() = true
-    - reference contains() = false
-
   * 20000 calls with distinct points in a 65536-by-65536 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 966 of 20000
-    - student   size() = 283
-    - reference size() = 284
-
-==> FAILED
+==> passed
 
 Test 8c: check intermixed sequence of calls to insert(), isEmpty(),
          size(), contains(), range(), and nearest() with probabilities
          (p1, p2, p3, p4, p5, p6), respectively
   * 20000 calls with general points in a 1-by-1 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 4 of 20000
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of operations was:
-           st.size()  ==>  0
-           st.insert(1.0, 1.0)
-           st.insert(1.0, 1.0)
-           st.contains((1.0, 0.0))  ==>  true
-
   * 20000 calls with general points in a 10-by-10 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 45 of 20000
-    - student   contains() = true
-    - reference contains() = false
-
   * 20000 calls with general points in a 100-by-100 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 21 of 20000
-    - student   contains() = true
-    - reference contains() = false
-    - sequence of operations was:
-           st.insert(0.42, 0.56)
-           st.nearest((0.41, 0.06))   ==>  (0.42, 0.56)
-           st.contains((0.15, 0.72))  ==>  false
-           st.isEmpty()  ==>  false
-           st.insert(0.66, 0.15)
-           st.nearest((0.13, 0.46))   ==>  (0.42, 0.56)
-           st.range([0.05, 0.08] x [0.76, 0.86])  ==>  empty
-           st.insert(0.89, 0.05)
-           st.range([0.14, 0.4] x [0.32, 0.96])  ==>  empty
-           st.insert(0.29, 0.43)
-           st.contains((0.29, 0.22))  ==>  false
-           st.range([0.4, 0.49] x [0.47, 0.8])  ==>  Y
-           st.range([0.76, 0.99] x [0.22, 0.62])  ==>  empty
-           st.size()  ==>  4
-           st.range([0.18, 0.53] x [0.26, 0.53])  ==>  L
-           st.contains((0.84, 0.55))  ==>  false
-           st.range([0.54, 0.58] x [0.02, 0.3])  ==>  empty
-           st.contains((0.65, 0.71))  ==>  false
-           st.nearest((0.1, 0.65))   ==>  (0.29, 0.43)
-           st.nearest((0.95, 0.0))   ==>  (0.89, 0.05)
-           st.contains((0.63, 0.15))  ==>  true
-
   * 20000 calls with general points in a 1000-by-1000 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 152 of 20000
-    - student   contains() = true
-    - reference contains() = false
-
   * 20000 calls with general points in a 8192-by-8192 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 578 of 20000
-    - rectangle = [0.538818359375, 0.8572998046875] x [0.03662109375, 0.748046875]
-    - student   range():  Y F A S U Q Y Z D G I H B M D N O J G V K N R L A K ...
-    - reference range():  S Q H A Z B M V K Y F A U Y D D K V N N G I O R J G ...
-
   * 20000 calls with general points in a 65536-by-65536 grid
     and probabilities (0.3, 0.05, 0.05, 0.2, 0.2, 0.2)
-    - failed on trial 1276 of 20000
-    - student   contains() = true
-    - reference contains() = false
-
-==> FAILED
+==> passed
 
 Test 9: check intermixed sequence of calls to insert(), isEmpty(),
         size(), contains(), range(), and nearest() with probabilities
@@ -1172,42 +582,34 @@ Test 9: check intermixed sequence of calls to insert(), isEmpty(),
     and probabilities (0.0, 0.2, 0.2, 0.6, 0.0, 0.0)
   * 1000 calls with no points in a 1024-by-1024 grid
     and probabilities (0.0, 0.2, 0.2, 0.0, 0.6, 0.0)
-    java.util.NoSuchElementException: KdTree is empty
+    java.lang.NullPointerException
 
-    KdTree.range(KdTree.java:107)
+    KdTree$Node.access$100(KdTree.java:172)
+    KdTree.range(KdTree.java:112)
+    KdTree.range(KdTree.java:106)
     TestKdTree.checkAll(TestKdTree.java:881)
     TestKdTree.test9(TestKdTree.java:1561)
     TestKdTree.main(TestKdTree.java:1708)
 
     - sequence of operations was:
            st.isEmpty()  ==>  true
-           st.range([0.2236328125, 0.5888671875] x [0.556640625, 0.859375])
+           st.range([0.0380859375, 0.1318359375] x [0.017578125, 0.52734375])
 
   * 1000 calls with no points in a 1024-by-1024 grid
     and probabilities (0.0, 0.2, 0.2, 0.0, 0.0, 0.6)
-    java.util.NoSuchElementException: KdTree is empty
-
-    KdTree.nearest(KdTree.java:124)
-    TestKdTree.checkAll(TestKdTree.java:918)
-    TestKdTree.test9(TestKdTree.java:1562)
-    TestKdTree.main(TestKdTree.java:1708)
-
-    - sequence of operations was:
-           st.nearest((0.7060546875, 0.8525390625))
-
   * 1000 calls with no points in a 1024-by-1024 grid
     and probabilities (0.0, 0.2, 0.2, 0.2, 0.2, 0.2)
-    java.util.NoSuchElementException: KdTree is empty
+    java.lang.NullPointerException
 
-    KdTree.range(KdTree.java:107)
+    KdTree$Node.access$100(KdTree.java:172)
+    KdTree.range(KdTree.java:112)
+    KdTree.range(KdTree.java:106)
     TestKdTree.checkAll(TestKdTree.java:881)
     TestKdTree.test9(TestKdTree.java:1563)
     TestKdTree.main(TestKdTree.java:1708)
 
     - sequence of operations was:
-           st.size()  ==>  0
-           st.isEmpty()  ==>  true
-           st.range([0.474609375, 0.7138671875] x [0.3916015625, 0.990234375])
+           st.range([0.5322265625, 0.630859375] x [0.2802734375, 0.701171875])
 
 ==> FAILED
 
@@ -1222,7 +624,7 @@ Test 11: check that the specified exception is thrown with null arguments
 ==> passed
 
 
-Total: 11/28 tests passed!
+Total: 24/28 tests passed!
 
 
 ================================================================
@@ -1311,38 +713,38 @@ Inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed   160000    1361484
-=> passed   320000    1391441
-=> passed   640000    1119767
-=> passed  1280000     899633
+=> passed   160000    1482517
+=> passed   320000    1520355
+=> passed   640000    1228374
+=> passed  1280000     994697
 ==> 4/4 tests passed
 
 Performing contains() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed   160000     317471
-=> passed   320000     277407
-=> passed   640000     282606
-=> passed  1280000     330384
+=> passed   160000     298645
+=> passed   320000     353378
+=> passed   640000     317998
+=> passed  1280000     330286
 ==> 4/4 tests passed
 
 Performing range() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed    10000       3824
-=> passed    20000       1804
-=> passed    40000        740
+=> passed    10000       3965
+=> passed    20000       1841
+=> passed    40000        762
 ==> 3/3 tests passed
 
 Performing nearest() queries after inserting n points into a PointSET
 
                n      ops per second
 ----------------------------------------
-=> passed    10000       4263
-=> passed    20000       2090
-=> passed    40000        862
+=> passed    10000       4572
+=> passed    20000       2085
+=> passed    40000        829
 ==> 3/3 tests passed
 
 Total: 14/14 tests passed!
@@ -1363,10 +765,10 @@ Test 1a-d: Insert n points into a 2d tree. The table gives the average number of
                                                                                                 Point2D
                n      ops per second       RectHV()           x()               y()             equals()
 ----------------------------------------------------------------------------------------------------------------
-=> passed   160000     904194               1.0              33.2              31.7              21.6
-=> passed   320000     860781               1.0              33.8              32.3              22.0
-=> passed   640000     698234               1.0              36.1              34.6              23.5
-=> passed  1280000     537861               1.0              39.2              37.7              25.6
+=> passed   160000     714512               1.0              33.2              31.7              21.6
+=> passed   320000     505037               1.0              33.8              32.3              22.0
+=> passed   640000     401981               1.0              36.1              34.6              23.5
+=> passed  1280000     527841               1.0              39.2              37.7              25.6
 ==> 4/4 tests passed
 
 
@@ -1376,14 +778,14 @@ Test 2a-h: Perform contains() queries after inserting n points into a 2d tree. T
                                                                                Point2D
                n      ops per second       x()               y()               equals()
 -----------------------------------------------------------------------------------------------
-=> passed    10000     397742              18.5              17.5              18.0
-=> passed    20000     408148              19.7              18.7              19.2
-=> passed    40000     389961              21.8              20.8              21.3
-=> passed    80000     373159              22.0              21.0              21.5
-=> passed   160000     294850              23.2              22.2              22.7
-=> passed   320000     279083              25.0              24.0              24.5
-=> passed   640000     273274              25.7              24.7              25.2
-=> passed  1280000     250629              27.2              26.2              26.7
+=> passed    10000     396120              18.5              17.5              18.0
+=> passed    20000     404606              19.7              18.7              19.2
+=> passed    40000     362562              21.8              20.8              21.3
+=> passed    80000     327984              22.0              21.0              21.5
+=> passed   160000     304191              23.2              22.2              22.7
+=> passed   320000     276006              25.0              24.0              24.5
+=> passed   640000     250014              25.7              24.7              25.2
+=> passed  1280000     225962              27.2              26.2              26.7
 ==> 8/8 tests passed
 
 
@@ -1392,14 +794,14 @@ Test 3a-h: Perform range() queries after inserting n points into a 2d tree. The 
 
                n      ops per second       intersects()      contains()        x()               y()
 ---------------------------------------------------------------------------------------------------------------
-=> passed    10000     204361              49.4              31.1              50.1              12.1
-=> passed    20000     217253              51.7              32.6              53.3              16.2
-=> passed    40000     249014              63.9              39.3              63.1              14.1
-=> passed    80000     228576              66.1              40.7              65.2              14.9
-=> passed   160000     219266              69.0              42.5              70.9              20.4
-=> passed   320000     164107              66.0              40.2              65.2              15.7
-=> passed   640000     130363              71.0              43.3              70.7              19.2
-=> passed  1280000     119380              77.7              47.0              74.8              14.2
+=> passed    10000     270756              49.4              31.1              50.1              12.1
+=> passed    20000     259423              51.7              32.6              53.3              16.2
+=> passed    40000     229534              63.9              39.3              63.1              14.1
+=> passed    80000     211662              66.1              40.7              65.2              14.9
+=> passed   160000     175733              69.0              42.5              70.9              20.4
+=> passed   320000     157213              66.0              40.2              65.2              15.7
+=> passed   640000     132736              71.0              43.3              70.7              19.2
+=> passed  1280000     119007              77.7              47.0              74.8              14.2
 ==> 8/8 tests passed
 
 
@@ -1409,20 +811,19 @@ Test 4a-h: Perform nearest() queries after inserting n points into a 2d tree. Th
                                          Point2D                 RectHV
                n      ops per second     distanceSquaredTo()     distanceSquaredTo()        x()               y()
 ------------------------------------------------------------------------------------------------------------------------
-=> passed    10000   172994                   0.0                    0.0                   245.8             238.1
-=> passed    20000   153086                   0.0                    0.0                   278.4             273.7
-=> passed    40000   130188                   0.0                    0.0                   385.2             362.2
-=> passed    80000   106030                   0.0                    0.0                   367.4             379.2
-=> passed   160000    90500                   0.0                    0.0                   456.8             442.3
-=> passed   320000    79182                   0.0                    0.0                   460.9             463.2
-=> passed   640000    70080                   0.0                    0.0                   482.4             491.0
-=> passed  1280000    59517                   0.0                    0.0                   596.6             569.9
-==> 8/8 tests passed
+=> passed    10000   102513                 322.5                  232.1                   641.4             600.4
+=> passed    20000    96836                 312.3                  226.1                   605.6             586.7
+=> FAILED    40000    52583                 718.7   (1.2x)         504.6   (1.7x)         1427.5   (1.8x)   1303.3   (1.6x)
+=> FAILED    80000    54109                 639.6   (1.1x)         454.4   (1.5x)         1197.3   (1.5x)   1241.0   (1.6x)
+=> FAILED   160000    28508                1314.8   (2.2x)         914.1   (3.0x)         2568.0   (3.2x)   2347.1   (2.9x)
+=> FAILED   320000    19789                1636.3   (2.7x)        1146.5   (3.8x)         3106.6   (3.9x)   3158.9   (3.9x)
+=> FAILED   640000    16898   (0.8x)       1663.6   (2.8x)        1166.4   (3.9x)         3190.9   (4.0x)   3166.1   (4.0x)
+=> FAILED  1280000    10322   (0.5x)       1996.8   (3.3x)        1402.4   (4.7x)         3888.5   (4.9x)   3889.9   (4.9x)
+==> 2/8 tests passed
 
 
 
-Total: 28/28 tests passed!
+Total: 22/28 tests passed!
 
 
 ================================================================
-
