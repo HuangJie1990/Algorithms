@@ -14,7 +14,10 @@ public class SortTest {
                 5, 6, 3, 4, 7, 8, 1, 2, 9, 1, 0, 0, 0
         };
         for (int i = 0; i < a.length; i++) {
-            StdOut.println(Quick.select(a,i));
+            Insertion.sort(a);
+        }
+        for (int i = 0; i < a.length; i++) {
+            StdOut.println(a[i]);
         }
     }
 }

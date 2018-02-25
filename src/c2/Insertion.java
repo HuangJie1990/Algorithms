@@ -19,10 +19,15 @@ public class Insertion {
             }
             */
             //这种写法只有在最坏情况下比较(N-1)N/2次，最好情况下比较(N-1)次
-            for (int j = i; j > 0 && Sort.less(a[j], a[j - 1]); j--) {
+            /*for (int j = i; j > 0 && Sort.less(a[j], a[j - 1]); j--) {
 
                 //最坏情况下交换(N-1)N/2次，最好情况下交换0次
                 Sort.exch(a, j, j - 1);
+            }*/
+            int j = i;
+            while (j > 0 && Sort.less(a[j], a[j - 1])) {
+                Sort.exch(a, j, j - 1);
+                j--;
             }
             assert Sort.isSorted(a, 0, i);
         }

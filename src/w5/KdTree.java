@@ -106,54 +106,36 @@ public class KdTree {
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null) throw new IllegalArgumentException("argument to range() is null");
         Queue<Point2D> queue = new Queue<>();
-        range(root, rect, queue);
+        Queue<Node> nodes = new Queue<>();
+        if (root == null) return queue;
+        nodes.enqueue(root);
+        while (!nodes.isEmpty()) {
+            Node x = nodes.dequeue();
+            if (rect.contains(x.point)) queue.enqueue(x.point);
+            if (x.left != null && rect.intersects(x.left.rect)) nodes.enqueue(x.left);
+            if (x.right != null && rect.intersects(x.right.rect)) nodes.enqueue(x.right);
+        }
         return queue;
-    }
-
-    private void range(Node h, RectHV r, Queue<Point2D> queue) {
-        if (h != null && r.contains(h.point)) queue.enqueue(h.point);
-        if (h.left != null && r.intersects(h.left.rect)) range(h.left, r, queue);
-        if (h.right != null && r.intersects(h.right.rect)) range(h.right, r, queue);
     }
 
 
     //a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D p) {
         if (p == null) throw new IllegalArgumentException("argument to nearest() is null");
-        Node near = null;
-//        double min = Double.POSITIVE_INFINITY;
-//        Queue<Node> queue = new Queue<>();
-//        if (root == null) return near;
-//        queue.enqueue(root);
-//        while (!queue.isEmpty()) {
-//            Node h = queue.dequeue();
-//            double distance = h.point.distanceSquaredTo(p);
-//            if (distance < min) {
-//                near = h.point;
-//                min = distance;
-//            }
-//            if (h.left != null && h.left.rect.distanceSquaredTo(p) < min) queue.enqueue(h.left);
-//            if (h.right != null && h.right.rect.distanceSquaredTo(p) < min) queue.enqueue(h.right);
-//        }
-        near = nearest(root, p, near, Double.POSITIVE_INFINITY);
-        if (near == null) return null;
-        return near.point;
-    }
-
-    private Node nearest(Node h, Point2D p, Node near, Double min) {
-        if (h == null) return null;
-        Double distance = h.point.distanceSquaredTo(p);
-        if (distance < min) {
-            near = h;
-            min = distance;
-        }
-        if (h.left != null && h.left.rect.distanceSquaredTo(p) < min) {
-            near = nearest(h.left, p, near, min);
-            min = near.point.distanceSquaredTo(p);
-        }
-        if (h.right != null && h.right.rect.distanceSquaredTo(p) < min) {
-            near = nearest(h.right, p, near, min);
-            min = near.point.distanceSquaredTo(p);
+        Point2D near = null;
+        double min = Double.POSITIVE_INFINITY;
+        Queue<Node> queue = new Queue<>();
+        if (root == null) return near;
+        queue.enqueue(root);
+        while (!queue.isEmpty()) {
+            Node h = queue.dequeue();
+            double distance = h.point.distanceTo(p);
+            if (distance < min) {
+                near = h.point;
+                min = distance;
+            }
+            while (h.left != null && h.left.rect.distanceTo(p) < min) queue.enqueue(h.left);
+            while (h.right != null && h.right.rect.distanceTo(p) < min) queue.enqueue(h.right);
         }
         return near;
     }
