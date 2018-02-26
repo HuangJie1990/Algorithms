@@ -38,7 +38,7 @@ public class Outcast {
 
     // see test client below
     public static void main(String[] args) {
-        Stopwatch stopwatch1=new Stopwatch();
+        Stopwatch stopwatch1 = new Stopwatch();
         WordNet wordnet = new WordNet(args[0], args[1]);
         Outcast outcast = new Outcast(wordnet);
         for (int t = 2; t < args.length; t++) {

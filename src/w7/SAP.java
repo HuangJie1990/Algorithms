@@ -14,18 +14,18 @@ import java.util.HashMap;
  **/
 public class SAP {
 
-    private Digraph digraph;
-    private HashMap<Children, Ancestor> map;
+    private final Digraph digraph;
+    private final HashMap<Children, Ancestor> map;
 
 
-    //constructor takes a digraph (not necessarily a DAG)
+    // constructor takes a digraph (not necessarily a DAG)
     public SAP(Digraph G) {
         if (G == null) throw new IllegalArgumentException("argument is null");
         digraph = new Digraph(G);
         map = new HashMap<>();
     }
 
-    //length of shortest ancestral path between v and w; -1 if no such path
+    // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
         validate(v);
         validate(w);
@@ -37,7 +37,7 @@ public class SAP {
         return map.get(c1).length;
     }
 
-    //a common ancestor of v and w thar participates in a shortest ancestral path; -1 if no such path
+    // a common ancestor of v and w thar participates in a shortest ancestral path; -1 if no such path
     public int ancestor(int v, int w) {
         validate(v);
         validate(w);
@@ -117,8 +117,8 @@ public class SAP {
     }
 
     private static class Children {
-        private int v;
-        private int w;
+        private final int v;
+        private final int w;
 
         public Children(int v, int w) {
             this.v = v;
@@ -145,8 +145,8 @@ public class SAP {
     }
 
     private class Ancestor {
-        private int ancestor;
-        private int length;
+        private final int ancestor;
+        private final int length;
 
         Ancestor(int ancestor, int length) {
             this.ancestor = ancestor;
