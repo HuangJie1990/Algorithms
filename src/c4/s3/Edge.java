@@ -1,9 +1,9 @@
 package c4.s3;
 
 public class Edge implements Comparable<Edge> {
-    private int v;
-    private int w;
-    private double weight;
+    private final int v;
+    private final int w;
+    private final double weight;
 
     public Edge(int v, int w, double weight) {
         this.v = v;
@@ -26,8 +26,8 @@ public class Edge implements Comparable<Edge> {
     }
 
     @Override
-    public int compareTo(Edge o) {
-        return Double.compare(this.weight, o.weight);
+    public int compareTo(Edge that) {
+        return Double.compare(this.weight, that.weight);
     }
 
     public String toString() {
