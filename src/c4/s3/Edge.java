@@ -1,5 +1,11 @@
 package c4.s3;
 
+/**
+ * 带权重的边的数据类型
+ *
+ * @author huangjie
+ * @create 2018-02-26-20:07
+ **/
 public class Edge implements Comparable<Edge> {
     private final int v;
     private final int w;

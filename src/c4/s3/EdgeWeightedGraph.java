@@ -1,9 +1,14 @@
 package c4.s3;
 
-import c4.s3.Edge;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 
+/**
+ * 加权无向图的数据类型
+ *
+ * @author huangjie
+ * @create 2018-02-26-20:08
+ **/
 public class EdgeWeightedGraph {
 
     private final int V;
@@ -13,7 +18,7 @@ public class EdgeWeightedGraph {
 
     public EdgeWeightedGraph(int v) {
         V = v;
-        edges=new Bag<>();
+        edges = new Bag<>();
         adj = (Bag<Edge>[]) new Bag[V];
         for (int i = 0; i < V; i++) {
             adj[i] = new Bag<Edge>();
@@ -22,6 +27,7 @@ public class EdgeWeightedGraph {
 
     public EdgeWeightedGraph(In in) {
         this(in.readInt());
+        //在addEdge()中有E++；所以这里用一个本地变量E来存储边的数目
         int E = in.readInt();
         for (int i = 0; i < E; i++) {
             int v = in.readInt();
@@ -51,7 +57,21 @@ public class EdgeWeightedGraph {
         return adj[v];
     }
 
-    public Iterable<Edge> edges(){return edges;}
+    public Iterable<Edge> edges() {
+        return edges;
+    }
+
+//    存在多次计算问题
+//    public Iterable<Edge> edges() {
+//        Bag<Edge> bag = new Bag<>();
+//        for (int v = 0; v < V; v++) {
+//            for (Edge e :
+//                    adj[v]) {
+//                if (e.other(v) > v) bag.add(e);
+//            }
+//        }
+//        return bag;
+//    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
