@@ -1,4 +1,4 @@
-package c4;
+package c4.s1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
@@ -21,15 +21,15 @@ public class SearchTest {
         }*/
 
 
-       DepthFirstSearch depthFirstSearch=new DepthFirstSearch(graph,s);
+        DFS dfs=new IterativeDepthFirstSearch(graph,s);
         for (int v = 0; v < graph.V(); v++) {
-            if(depthFirstSearch.marked(v)){
+            if(dfs.marked(v)){
                 StdOut.print(v + " ");
             }
         }
         StdOut.println();
 
-        if(depthFirstSearch.count()<graph.V()){
+        if(dfs.count()<graph.V()){
             StdOut.println("Not connected");
         }
     }

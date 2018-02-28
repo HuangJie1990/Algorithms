@@ -1,5 +1,7 @@
 package c4;
 
+import c4.s1.Graph;
+
 public class Cycle {
 
     private boolean marked[];

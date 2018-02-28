@@ -1,5 +1,6 @@
 package c4;
 
+import c4.s1.Graph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdIn;

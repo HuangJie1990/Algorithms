@@ -21,11 +21,11 @@ public class Digraph {
 
     public Digraph(In in) {
         this(in.readInt());
-        int e=in.readInt();
+        int e = in.readInt();
         for (int i = 0; i < e; i++) {
-            int v=in.readInt();
-            int w=in.readInt();
-            addEdge(v,w);
+            int v = in.readInt();
+            int w = in.readInt();
+            addEdge(v, w);
         }
     }
 
@@ -61,5 +61,18 @@ public class Digraph {
             }
         }
         return R;
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(V + " vertices, " + E + " edges\n");
+        for (int v = 0; v < V; v++) {
+            s.append(v + ":");
+            for (int w : adj[v]) {
+                s.append(" " + w);
+            }
+            s.append("\n");
+        }
+        return s.toString();
     }
 }

@@ -1,5 +1,6 @@
 package c4;
 
+import c4.s1.Graph;
 import edu.princeton.cs.algs4.Queue;
 
 public class CC {

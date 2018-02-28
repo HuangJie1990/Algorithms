@@ -1,4 +1,4 @@
-package c4;
+package c4.s1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
@@ -9,11 +9,11 @@ public class PathsTest {
         Graph graph = new Graph(new In(args[0]));
         System.out.print(graph.toString());
         int s = Integer.parseInt(args[1]);
-        DepthFirstPaths depthFirstPaths = new DepthFirstPaths(graph, s);
+        IterativeDepthFirstSearch dfs = new IterativeDepthFirstSearch(graph, s);
         for (int i = 0; i < graph.V(); i++) {
             StdOut.print(s + " to " + i + " : ");
-            if (depthFirstPaths.hasPathTo(i)) {
-                for (int w : depthFirstPaths.pathTo(i)) {
+            if (dfs.hasPathTo(i)) {
+                for (int w : dfs.pathTo(i)) {
                     if (w == s) {
                         StdOut.print(s);
                     }

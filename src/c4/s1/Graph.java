@@ -1,4 +1,4 @@
-package c4;
+package c4.s1;
 
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;

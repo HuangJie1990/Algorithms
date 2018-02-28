@@ -1,7 +1,16 @@
 package c4.s3;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.IndexMinPQ;
+import edu.princeton.cs.algs4.StdOut;
 
+/**
+ * 最小生成树的Prim算法（即时版本）
+ *
+ * @author huangjie
+ * @create 2018-02-27-9:48
+ **/
 public class PrimMST extends MST {
 
     private boolean[] marked;
@@ -41,6 +50,11 @@ public class PrimMST extends MST {
         return weight;
     }
 
+    @Override
+    public Iterable<Edge> mfes() {
+        return null;
+    }
+
     private void visit(EdgeWeightedGraph graph, int v) {
         marked[v] = true;
         for (Edge edge : graph.adj(v)) {
@@ -56,7 +70,7 @@ public class PrimMST extends MST {
     }
 
     public static void main(String[] args){
-        In in=new In(args[2]);
+        In in=new In(args[0]);
         EdgeWeightedGraph graph=new EdgeWeightedGraph(in);
         StdOut.println(graph);
         MST mst=new PrimMST(graph);

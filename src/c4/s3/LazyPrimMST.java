@@ -5,6 +5,12 @@ import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdOut;
 
+/**
+ * 最小生成树的Prim算法的延时实现
+ *
+ * @author huangjie
+ * @create 2018-02-27-9:17
+ **/
 public class LazyPrimMST extends MST {
     private boolean[] marked;
     private Queue<Edge> mst;
@@ -22,7 +28,7 @@ public class LazyPrimMST extends MST {
             int v = e.either(), w = e.other(v);
             if (marked[v] && marked[w]) continue;
             mst.enqueue(e);
-            weight+=e.weight();
+            weight += e.weight();
             if (!marked[v]) visit(graph, v);
             if (!marked[w]) visit(graph, w);
         }
@@ -38,6 +44,11 @@ public class LazyPrimMST extends MST {
         return weight;
     }
 
+    @Override
+    public Iterable<Edge> mfes() {
+        return null;
+    }
+
     private void visit(EdgeWeightedGraph graph, int v) {
         marked[v] = true;
         for (Edge e : graph.adj(v)) {
@@ -45,12 +56,12 @@ public class LazyPrimMST extends MST {
         }
     }
 
-    public static void main(String[] args){
-        In in=new In(args[0]);
-        EdgeWeightedGraph graph=new EdgeWeightedGraph(in);
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        EdgeWeightedGraph graph = new EdgeWeightedGraph(in);
         StdOut.println(graph);
-        MST mst=new LazyPrimMST(graph);
-        for(Edge e:mst.edges()){
+        MST mst = new LazyPrimMST(graph);
+        for (Edge e : mst.edges()) {
             StdOut.println(e);
         }
         StdOut.println(mst.weight());

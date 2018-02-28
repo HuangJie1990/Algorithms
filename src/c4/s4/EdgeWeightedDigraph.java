@@ -45,10 +45,12 @@ public class EdgeWeightedDigraph {
         return E;
     }
 
+    //edges pointing from v
     public Iterable<DirectedEdge> adj(int v) {
         return adj[v];
     }
 
+    //all edges
     public Iterable<DirectedEdge> edges() {
         return edges;
     }

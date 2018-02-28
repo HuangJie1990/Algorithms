@@ -3,6 +3,12 @@ package c4.s4;
 import edu.princeton.cs.algs4.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
 
+/**
+ * DijkstraSP算法
+ *
+ * @author huangjie
+ * @create 2018-02-28-10:32
+ **/
 public class DijkstraSP extends SP {
 
     private double[] distTo;
@@ -15,11 +21,27 @@ public class DijkstraSP extends SP {
             distTo[i] = Double.POSITIVE_INFINITY;
         }
         edgeTo = new DirectedEdge[digraph.V()];
-        pq=new IndexMinPQ<Double>(digraph.V());
-        distTo[v] = 0;
+        pq = new IndexMinPQ<>(digraph.V());
+        distTo[v] = 0.0;
         pq.insert(v, 0.0);
         while (!pq.isEmpty()) {
             relax(digraph, pq.delMin());
+        }
+    }
+
+    public DijkstraSP(EdgeWeightedDigraph digraph, int v, int w) {
+        distTo = new double[digraph.V()];
+        for (int i = 0; i < digraph.V(); i++) {
+            distTo[i] = Double.POSITIVE_INFINITY;
+        }
+        edgeTo = new DirectedEdge[digraph.V()];
+        pq = new IndexMinPQ<>(digraph.V());
+        distTo[v] = 0.0;
+        pq.insert(v, 0.0);
+        while (!pq.isEmpty()) {
+            int t = pq.delMin();
+            if(t==w) break;
+            relax(digraph,t);
         }
     }
 

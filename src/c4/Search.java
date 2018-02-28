@@ -1,6 +1,7 @@
 package c4;
 
 import ChapterOne.QuickFindUF;
+import c4.s1.Graph;
 
 public class Search {
     private Graph graph;
