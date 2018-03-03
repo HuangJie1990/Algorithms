@@ -47,7 +47,7 @@ public class WordNet {
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(",");
             int v = Integer.parseInt(a[0]);
-            roots[v] = a.length == 1 ? false : true;
+            roots[v] = a.length != 1;
             for (int i = 1; i < a.length; i++) {
                 int w = Integer.parseInt(a[i]);
                 digraph.addEdge(v, w);
