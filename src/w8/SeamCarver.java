@@ -13,6 +13,7 @@ public class SeamCarver {
     private int[][] e;
 
     public SeamCarver(Picture picture) {
+        if (picture == null) throw new IllegalArgumentException("argument is null");
         colors = new int[picture.height()][picture.width()];
         e = new int[picture.height()][picture.width()];
         for (int i = 0; i < height(); i++) {
@@ -47,23 +48,35 @@ public class SeamCarver {
 
     //energy of pixel at column x and row y
     public double energy(int x, int y) {
+        validateColumn(x);
+        validateRow(y);
         return Math.sqrt(e[y][x]);
     }
 
 
     public int[] findHorizontalSeam() {
-        int[][] distTo=new int[height()][width()];
-        int[][] edgeTo=new int[height()][width()-1];
+        int[][] distTo = new int[height()][width()];
+        int[][] edgeTo = new int[height()][width() - 1];
         for (int i = 0; i < height(); i++) {
             for (int j = 0; j < width(); j++) {
-                distTo[i][j]=Integer.MAX_VALUE;
+                distTo[i][j] = Integer.MAX_VALUE;
             }
         }
         for (int i = 0; i < width(); i++) {
             for (int j = 0; j < height(); j++) {
-
+                horizontalRelax(distTo, edgeTo, i, j);
             }
         }
+        int min = 0;
+        for (int i = 0; i < height(); i++) {
+            if (distTo[i][width() - 1] < distTo[min][width() - 1]) min = i;
+        }
+        int[] path = new int[width()];
+        path[width() - 1] = min;
+        for (int i = width() - 2; i >= 0; i--) {
+            path[i] = edgeTo[path[i + 1]][i];
+        }
+        return path;
     }
 
     public int[] findVerticalSeam() {
@@ -79,9 +92,9 @@ public class SeamCarver {
                 verticalRelax(distTo, edgeTo, j, i);
             }
         }
-        int min = Integer.MAX_VALUE;
+        int min = 0;
         for (int i = 0; i < width(); i++) {
-            if (distTo[height() - 1][i] < min) min = i;
+            if (distTo[height() - 1][i] < distTo[height() - 1][min]) min = i;
         }
         int[] path = new int[height()];
         path[height() - 1] = min;
@@ -92,9 +105,33 @@ public class SeamCarver {
     }
 
     public void removeHorizontalSeam(int[] seam) {
+        if (seam == null) throw new IllegalArgumentException("argument is null");
+        if (height() <= 1) throw new IllegalArgumentException("picture's height is not enough");
+        int[][] temp = new int[height() - 1][width()];
     }
 
     public void removeVerticalSeam(int[] seam) {
+        if (seam == null) throw new IllegalArgumentException("argument is null");
+        if (width() <= 1) throw new IllegalArgumentException("picture's width is not enough");
+        int[][] temp = new int[height()][width() - 1];
+        int min = width(), max = 0;
+        for (int i = 0; i < seam.length; i++) {
+            validateColumn(seam[i]);
+            if (seam[i] < min) min = seam[i];
+            if (seam[i] > max) max = seam[i];
+        }
+        for (int i = 0; i < height(); i++) {
+            for (int j = 0; j < width() - 1; j++) {
+                if (j < seam[i]) temp[i][j] = colors[i][j];
+                temp[i][j] = colors[i][j + 1];
+            }
+        }
+        colors = temp;
+        for (int i = 0; i < height(); i++) {
+            for (int j = min - 1; j <= Math.min(max,width()-1); j++) {
+                calculateEnergy(j,i);
+            }
+        }
     }
 
     //calculate energy of pixel at column x and row y
@@ -109,11 +146,11 @@ public class SeamCarver {
     }
 
     private void validateColumn(int col) {
-        if (col < 0 || col >= width() - 1) throw new IllegalArgumentException("column is out of range");
+        if (col < 0 || col > width() - 1) throw new IllegalArgumentException("column is out of range");
     }
 
     private void validateRow(int row) {
-        if (row < 0 || row >= height() - 1) throw new IllegalArgumentException("row is out of range");
+        if (row < 0 || row > height() - 1) throw new IllegalArgumentException("row is out of range");
     }
 
     private void verticalRelax(int[][] distTo, int[][] edgeTo, int col, int row) {
@@ -126,35 +163,45 @@ public class SeamCarver {
         if (left >= 0) {
             if (distTo[above][left] + e[row][col] < distTo[row][col]) {
                 distTo[row][col] = distTo[above][left] + e[row][col];
-                edgeTo[row-1][col] = left;
+                edgeTo[row - 1][col] = left;
             }
         }
         if (distTo[above][col] + e[row][col] < distTo[row][col]) {
             distTo[row][col] = distTo[above][col] + e[row][col];
-            edgeTo[row-1][col] = col;
+            edgeTo[row - 1][col] = col;
         }
         int right = col + 1;
         if (right < width()) {
             if (distTo[above][right] + e[row][col] < distTo[row][col]) {
                 distTo[row][col] = distTo[above][right] + e[row][col];
-                edgeTo[row-1][col] = right;
+                edgeTo[row - 1][col] = right;
             }
         }
     }
 
-    private void horizontalRelax(int[][] distTo,int[][] edgeTo,int col,int row){
-        if(col==0){
-            distTo[row][col]=e[row][col];
+    private void horizontalRelax(int[][] distTo, int[][] edgeTo, int col, int row) {
+        if (col == 0) {
+            distTo[row][col] = e[row][col];
             return;
         }
-        int left=col-1;
-        int above=row-1;
-        if(above>=0){
-            if(distTo[above][left]+e[row][col]<distTo[row][col]){
-                distTo[row][col]=distTo[above][left]+e[row][col];
-                edgeTo[row][col-1]=above;
+        int left = col - 1;
+        int above = row - 1;
+        if (above >= 0) {
+            if (distTo[above][left] + e[row][col] < distTo[row][col]) {
+                distTo[row][col] = distTo[above][left] + e[row][col];
+                edgeTo[row][col - 1] = above;
             }
         }
-        
+        if (distTo[row][left] + e[row][col] < distTo[row][col]) {
+            distTo[row][col] = distTo[row][left] + e[row][col];
+            edgeTo[row][col - 1] = row;
+        }
+        int below = row + 1;
+        if (below < height()) {
+            if (distTo[below][left] + e[row][col] < distTo[row][col]) {
+                distTo[row][col] = distTo[below][left] + e[row][col];
+                edgeTo[row][col - 1] = below;
+            }
+        }
     }
 }
