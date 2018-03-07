@@ -1,11 +1,6 @@
 package w7;
 
-import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedCycle;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -61,6 +56,19 @@ public class WordNet {
         sap = new SAP(digraph);
     }
 
+    // do unit testing of this class
+    public static void main(String[] args) {
+        WordNet wordnet = new WordNet(args[0], args[1]);
+        Iterable<String> nouns = wordnet.nouns();
+        while (!StdIn.isEmpty()) {
+            String nounA = StdIn.readString();
+            String nounB = StdIn.readString();
+            int distance = wordnet.distance(nounA, nounB);
+            String sap = wordnet.sap(nounA, nounB);
+            StdOut.printf("distance = %d, sap = %s\n", distance, sap);
+        }
+    }
+
     // returns all WordNet nouns
     public Iterable<String> nouns() {
         return map.keySet();
@@ -95,18 +103,5 @@ public class WordNet {
     private void validate(String noun) {
         if (noun == null) throw new IllegalArgumentException("argument is null");
         if (!isNoun(noun)) throw new IllegalArgumentException("argument is not a WordNet noun");
-    }
-
-    // do unit testing of this class
-    public static void main(String[] args) {
-        WordNet wordnet = new WordNet(args[0], args[1]);
-        Iterable<String> nouns = wordnet.nouns();
-        while (!StdIn.isEmpty()) {
-            String nounA = StdIn.readString();
-            String nounB = StdIn.readString();
-            int distance = wordnet.distance(nounA, nounB);
-            String sap = wordnet.sap(nounA, nounB);
-            StdOut.printf("distance = %d, sap = %s\n", distance, sap);
-        }
     }
 }

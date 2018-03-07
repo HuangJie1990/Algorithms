@@ -10,7 +10,7 @@ public class SPTest {
         StdOut.println(digraph);
         int s = Integer.parseInt(args[1]);
 
-        SP sp=new DijkstraSP(digraph,s,7);
+        SP sp = new DijkstraSP(digraph, s, 7);
 
         for (int t = 0; t < digraph.V(); t++) {
             StdOut.print(s + " to " + t);

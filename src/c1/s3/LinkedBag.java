@@ -15,7 +15,7 @@ public class LinkedBag<Item> extends Bag<Item> {
         if (item == null) throw new IllegalArgumentException("argument to add(Item item) is null");
         Node oldFirst = first;
         first = new Node();
-        first.item=item;
+        first.item = item;
         first.next = oldFirst;
         n++;
     }
@@ -40,7 +40,7 @@ public class LinkedBag<Item> extends Bag<Item> {
 
         @Override
         public boolean hasNext() {
-            return current !=null;
+            return current != null;
         }
 
         @Override

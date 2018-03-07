@@ -16,8 +16,7 @@ public class PathsTest {
                 for (int w : dfs.pathTo(i)) {
                     if (w == s) {
                         StdOut.print(s);
-                    }
-                    else {
+                    } else {
                         StdOut.print("-" + w);
                     }
                 }

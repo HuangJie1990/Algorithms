@@ -6,9 +6,9 @@ import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 
 public class BreadthFirstPaths {
+    private final int s;
     private boolean marked[];
     private int edgeTo[];
-    private final int s;
 
     public BreadthFirstPaths(Graph graph, int s) {
         marked = new boolean[graph.V()];

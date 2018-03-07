@@ -2,19 +2,18 @@ package c1;
 
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.NoSuchElementException;
-
 public class BinarySearch {
+
+    private static int depth;
 
     /*
     this class should not be initialized.
      */
     private BinarySearch() {
     }
-    private static int depth;
 
     public static int rank(int key, int[] a) {
-        depth=0;
+        depth = 0;
         return rank(key, a, 0, a.length - 1);
     }
 
@@ -31,20 +30,18 @@ public class BinarySearch {
     }*/
 
     private static int rank(int key, int[] a, int lo, int hi) {
-        String value=String.format("lo: %d, hi: %d",lo,hi);
-        String format="%"+(depth+value.length())+"s\n";
-        StdOut.printf(format,value);
+        String value = String.format("lo: %d, hi: %d", lo, hi);
+        String format = "%" + (depth + value.length()) + "s\n";
+        StdOut.printf(format, value);
         if (lo > hi) return -1;
         int mid = lo + (hi - lo) / 2;
-        if (key > a[mid]){
+        if (key > a[mid]) {
             depth++;
             return rank(key, a, mid + 1, hi);
-        }
-        else if (key < a[mid]){
+        } else if (key < a[mid]) {
             depth++;
             return rank(key, a, lo, mid - 1);
-        }
-        else return mid;
+        } else return mid;
     }
 
     public static void main(String[] args) {

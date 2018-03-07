@@ -34,6 +34,17 @@ public class LazyPrimMST extends MST {
         }
     }
 
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        EdgeWeightedGraph graph = new EdgeWeightedGraph(in);
+        StdOut.println(graph);
+        MST mst = new LazyPrimMST(graph);
+        for (Edge e : mst.edges()) {
+            StdOut.println(e);
+        }
+        StdOut.println(mst.weight());
+    }
+
     @Override
     public Iterable<Edge> edges() {
         return mst;
@@ -54,16 +65,5 @@ public class LazyPrimMST extends MST {
         for (Edge e : graph.adj(v)) {
             if (!marked[e.other(v)]) pq.insert(e);
         }
-    }
-
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        EdgeWeightedGraph graph = new EdgeWeightedGraph(in);
-        StdOut.println(graph);
-        MST mst = new LazyPrimMST(graph);
-        for (Edge e : mst.edges()) {
-            StdOut.println(e);
-        }
-        StdOut.println(mst.weight());
     }
 }

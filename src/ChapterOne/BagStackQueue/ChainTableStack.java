@@ -9,6 +9,29 @@ public class ChainTableStack<Item> implements Iterable<Item> {
     private Node first;
     private int n;
 
+    public static void main(String[] args) {
+
+        ChainTableStack<Integer> chainTableStack = new ChainTableStack();
+        for (int i = 0; i < 10; i++) {
+            chainTableStack.push(i);
+            StdOut.println(String.format("Push %d into stack, the size of stack is %d", i, chainTableStack.size()));
+        }
+        for (int i : chainTableStack) {
+            StdOut.println(String.format("Display %d of stack, the size of stack is %d", i, chainTableStack.size()));
+        }
+
+//        chainTableStack.removeLast();
+
+        chainTableStack.delete(5);
+        StdOut.println();
+        StdOut.println(chainTableStack.find(chainTableStack.first(), 5));
+        StdOut.println();
+
+        for (int i : chainTableStack) {
+            StdOut.println(String.format("Display %d of stack, the size of stack is %d", i, chainTableStack.size()));
+        }
+    }
+
     public void push(Item item) {
         Node oldFirst = first;
         first = new Node();
@@ -104,29 +127,6 @@ public class ChainTableStack<Item> implements Iterable<Item> {
             Item item = firstNode.item;
             firstNode = firstNode.next;
             return item;
-        }
-    }
-
-    public static void main(String[] args) {
-
-        ChainTableStack<Integer> chainTableStack = new ChainTableStack();
-        for (int i = 0; i < 10; i++) {
-            chainTableStack.push(i);
-            StdOut.println(String.format("Push %d into stack, the size of stack is %d", i, chainTableStack.size()));
-        }
-        for (int i : chainTableStack) {
-            StdOut.println(String.format("Display %d of stack, the size of stack is %d", i, chainTableStack.size()));
-        }
-
-//        chainTableStack.removeLast();
-
-        chainTableStack.delete(5);
-        StdOut.println();
-        StdOut.println(chainTableStack.find(chainTableStack.first(),5));
-        StdOut.println();
-
-        for (int i : chainTableStack) {
-            StdOut.println(String.format("Display %d of stack, the size of stack is %d", i, chainTableStack.size()));
         }
     }
 }

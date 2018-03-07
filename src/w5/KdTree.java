@@ -1,12 +1,7 @@
 package w5;
 
 
-import edu.princeton.cs.algs4.Point2D;
-import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.RectHV;
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
 /**
  * @author
@@ -18,6 +13,20 @@ public class KdTree {
     private int N;
 
     public KdTree() {
+    }
+
+    public static void main(String[] args) {
+        KdTree tree = new KdTree();
+        while (!StdIn.isEmpty()) {
+            double x = StdIn.readDouble();
+            double y = StdIn.readDouble();
+            tree.insert(new Point2D(x, y));
+            StdDraw.clear();
+            tree.draw();
+            StdDraw.show();
+            StdOut.println(tree.size());
+            StdOut.println(tree.isEmpty());
+        }
     }
 
     //is the set empty
@@ -74,7 +83,6 @@ public class KdTree {
         return true;
     }
 
-
     //draw all points to standard draw
     public void draw() {
         StdDraw.setScale(0, 1);
@@ -118,7 +126,6 @@ public class KdTree {
         return queue;
     }
 
-
     //a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D p) {
         if (p == null) throw new IllegalArgumentException("argument to nearest() is null");
@@ -140,32 +147,6 @@ public class KdTree {
         return near;
     }
 
-    public static void main(String[] args) {
-        KdTree tree = new KdTree();
-        while (!StdIn.isEmpty()) {
-            double x = StdIn.readDouble();
-            double y = StdIn.readDouble();
-            tree.insert(new Point2D(x, y));
-            StdDraw.clear();
-            tree.draw();
-            StdDraw.show();
-            StdOut.println(tree.size());
-            StdOut.println(tree.isEmpty());
-        }
-    }
-
-    private class Node {
-        private Point2D point;
-        private RectHV rect;
-        private Node left;
-        private Node right;
-
-        public Node(Point2D p, RectHV rect) {
-            this.point = p;
-            this.rect = rect;
-        }
-    }
-
     private int compare(Point2D p, Point2D q, int ori) {
         validate(p);
         validate(q);
@@ -183,5 +164,17 @@ public class KdTree {
 
     private void validate(Point2D p) {
         if (p == null) throw new IllegalArgumentException("argument is null");
+    }
+
+    private class Node {
+        private Point2D point;
+        private RectHV rect;
+        private Node left;
+        private Node right;
+
+        public Node(Point2D p, RectHV rect) {
+            this.point = p;
+            this.rect = rect;
+        }
     }
 }

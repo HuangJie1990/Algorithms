@@ -128,8 +128,8 @@ public class SeamCarver {
         }
         colors = temp;
         for (int i = 0; i < height(); i++) {
-            for (int j = min - 1; j <= Math.min(max,width()-1); j++) {
-                calculateEnergy(j,i);
+            for (int j = min - 1; j <= Math.min(max, width() - 1); j++) {
+                calculateEnergy(j, i);
             }
         }
     }

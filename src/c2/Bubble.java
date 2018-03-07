@@ -12,7 +12,7 @@ public class Bubble {
                 if (Sort.less(a[j], a[j - 1]))
                     Sort.exch(a, j - 1, j);
             }
-            assert Sort.isSorted(a,0,i);
+            assert Sort.isSorted(a, 0, i);
         }
         assert Sort.isSorted(a);
     }

@@ -60,11 +60,11 @@ public class LinkedList<Item> implements Iterable<Item> {
     }
 
     public void remove(Node head, Item item) {
-        if(head==null) return;
-        Node p=head;
-        Node pre=null;
-        while (p!=null){
-            if(p.data.equals(item)) this.head.next=this.head.next;
+        if (head == null) return;
+        Node p = head;
+        Node pre = null;
+        while (p != null) {
+            if (p.data.equals(item)) this.head.next = this.head.next;
         }
     }
 

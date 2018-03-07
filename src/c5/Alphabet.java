@@ -17,10 +17,9 @@ public class Alphabet {
     public static final Alphabet ASCII = new Alphabet(128);
     public static final Alphabet EXTENDED_ASCII = new Alphabet(256);
     public static final Alphabet UNICODE16 = new Alphabet(65536);
-
+    private final int R;
     private char[] alphabet;
     private int[] inverse;
-    private final int R;
 
     public Alphabet(String alpha) {
         boolean[] unicode = new boolean[Character.MAX_VALUE];
@@ -55,6 +54,29 @@ public class Alphabet {
 
     public Alphabet() {
         this(256);
+    }
+
+    public static void main(String[] args) {
+        int[] encoded1 = Alphabet.BASE64.toIndices("NowIsTheTimeForAllGoodMen");
+        for (int i : encoded1) {
+            StdOut.print(i + " ");
+        }
+        String decoded1 = Alphabet.BASE64.toChars(encoded1);
+        StdOut.println(decoded1);
+
+        int[] encoded2 = Alphabet.DNA.toIndices("AACGAACGGTTTACCCCG");
+        for (int i : encoded2) {
+            StdOut.print(i + " ");
+        }
+        String decoded2 = Alphabet.DNA.toChars(encoded2);
+        StdOut.println(decoded2);
+
+        int[] encoded3 = Alphabet.DECIMAL.toIndices("01234567890123456789");
+        for (int i : encoded3) {
+            StdOut.print(i + " ");
+        }
+        String decoded3 = Alphabet.DECIMAL.toChars(encoded3);
+        StdOut.println(decoded3);
     }
 
     public char toChar(int index) {
@@ -104,28 +126,5 @@ public class Alphabet {
             chars[i] = toChar(indices[i]);
         }
         return new String(chars);
-    }
-
-    public static void main(String[] args) {
-        int[] encoded1 = Alphabet.BASE64.toIndices("NowIsTheTimeForAllGoodMen");
-        for (int i : encoded1) {
-            StdOut.print(i + " ");
-        }
-        String decoded1 = Alphabet.BASE64.toChars(encoded1);
-        StdOut.println(decoded1);
-
-        int[] encoded2 = Alphabet.DNA.toIndices("AACGAACGGTTTACCCCG");
-        for (int i : encoded2) {
-            StdOut.print(i + " ");
-        }
-        String decoded2 = Alphabet.DNA.toChars(encoded2);
-        StdOut.println(decoded2);
-
-        int[] encoded3 = Alphabet.DECIMAL.toIndices("01234567890123456789");
-        for (int i : encoded3) {
-            StdOut.print(i + " ");
-        }
-        String decoded3 = Alphabet.DECIMAL.toChars(encoded3);
-        StdOut.println(decoded3);
     }
 }

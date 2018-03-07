@@ -13,6 +13,23 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         items = (Item[]) new Object[2];
     }
 
+    public static void main(String[] args) {
+        ResizingArrayStack<Integer> resizingArrayStack = new ResizingArrayStack<>();
+        for (int i = 0; i < 17; i++) {
+            resizingArrayStack.push(i);
+            StdOut.println(String.format("Push %d into stack, the size of stack is %d, the capacity of stack is %d", i, resizingArrayStack.size(), resizingArrayStack.capacity()));
+        }
+
+        for (int i : resizingArrayStack) {
+            StdOut.println(i);
+        }
+
+        while (!resizingArrayStack.isEmpty()) {
+            int i = resizingArrayStack.pop();
+            StdOut.println(String.format("Pop %d out stack, the size of stack is %d, the capacity of stack is %d", i, resizingArrayStack.size(), resizingArrayStack.capacity()));
+        }
+    }
+
     private void resize(int cap) {
         Item[] temp = (Item[]) new Object[cap];
         for (int i = 0; i < n; i++) {
@@ -46,23 +63,6 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
 
     public int size() {
         return n;
-    }
-
-    public static void main(String[] args) {
-        ResizingArrayStack<Integer> resizingArrayStack = new ResizingArrayStack<>();
-        for (int i = 0; i < 17; i++) {
-            resizingArrayStack.push(i);
-            StdOut.println(String.format("Push %d into stack, the size of stack is %d, the capacity of stack is %d", i, resizingArrayStack.size(), resizingArrayStack.capacity()));
-        }
-
-        for (int i : resizingArrayStack) {
-            StdOut.println(i);
-        }
-
-        while (!resizingArrayStack.isEmpty()) {
-            int i = resizingArrayStack.pop();
-            StdOut.println(String.format("Pop %d out stack, the size of stack is %d, the capacity of stack is %d", i, resizingArrayStack.size(), resizingArrayStack.capacity()));
-        }
     }
 
     @Override

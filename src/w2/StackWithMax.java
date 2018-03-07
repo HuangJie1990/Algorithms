@@ -3,7 +3,6 @@ package w2;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -25,6 +24,24 @@ public class StackWithMax<Item extends Comparable<Item>> implements Iterable<Ite
     public StackWithMax(int n) {
         items = (Item[]) new Comparable[n];
         max = (Item[]) new Comparable[n];
+    }
+
+    public static void main(String[] args) {
+        StackWithMax<Integer> stack = new StackWithMax<>();
+        while (!StdIn.isEmpty()) {
+            String s = StdIn.readString();
+            if (s.equals("-")) StdOut.println(stack.pop());
+            else if (s.equals("show")) {
+                for (int i : stack
+                        ) {
+                    StdOut.print(i + " ");
+                }
+                StdOut.println();
+            } else if (s.equals("max")) StdOut.println(stack.max());
+            else if (s.equals("size")) StdOut.println(stack.size() + " items left on stack");
+            else stack.push(Integer.parseInt(s));
+        }
+        StdOut.println(stack.size() + " items left on stack");
     }
 
     private void resize(int cap) {
@@ -103,23 +120,5 @@ public class StackWithMax<Item extends Comparable<Item>> implements Iterable<Ite
         public void remove() {
             throw new UnsupportedOperationException("remove is unsupported");
         }
-    }
-
-    public static void main(String[] args) {
-        StackWithMax<Integer> stack = new StackWithMax<>();
-        while (!StdIn.isEmpty()) {
-            String s = StdIn.readString();
-            if (s.equals("-")) StdOut.println(stack.pop());
-            else if (s.equals("show")) {
-                for (int i : stack
-                        ) {
-                    StdOut.print(i + " ");
-                }
-                StdOut.println();
-            } else if (s.equals("max")) StdOut.println(stack.max());
-            else if (s.equals("size")) StdOut.println(stack.size() + " items left on stack");
-            else stack.push(Integer.parseInt(s));
-        }
-        StdOut.println(stack.size() + " items left on stack");
     }
 }

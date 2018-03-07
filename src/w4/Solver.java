@@ -48,18 +48,6 @@ public class Solver {
         }
     }
 
-    public int moves() {
-        return isSolvable ? n : -1;
-    }
-
-    public boolean isSolvable() {
-        return isSolvable;
-    }
-
-    public Iterable<Board> solution() {
-        return isSolvable ? solution : null;
-    }
-
     public static void main(String[] args) {
         // create initial board from file
         In in = new In(args[0]);
@@ -83,11 +71,23 @@ public class Solver {
         }
     }
 
+    public int moves() {
+        return isSolvable ? n : -1;
+    }
+
+    public boolean isSolvable() {
+        return isSolvable;
+    }
+
+    public Iterable<Board> solution() {
+        return isSolvable ? solution : null;
+    }
+
     private class Node implements Comparable<Node> {
+        public final int priority;
         public Board board;
         public int moves;
         public Node pre;
-        public final int priority;
 
         public Node(Board board) {
             this(board, null);

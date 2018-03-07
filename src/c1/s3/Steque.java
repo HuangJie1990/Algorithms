@@ -3,7 +3,6 @@ package c1.s3;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -13,6 +12,20 @@ public class Steque<Item> implements Iterable<Item> {
     private int n;
 
     public Steque() {
+    }
+
+    public static void main(String[] args) {
+        Steque<Character> steque = new Steque<>();
+        while (!StdIn.isEmpty()) {
+            Character character = StdIn.readChar();
+            if (Character.isUpperCase(character)) steque.push(character);
+            else if (Character.isLowerCase(character)) steque.enqueue(character);
+            else if (character.equals('-')) StdOut.print(steque.pop() + " ");
+        }
+        StdOut.println("(" + steque.size() + " left on stack)");
+        for (Character s : steque) {
+            StdOut.print(s + " ");
+        }
     }
 
     public void push(Item item) {
@@ -77,20 +90,6 @@ public class Steque<Item> implements Iterable<Item> {
             Item item = current.item;
             current = current.next;
             return item;
-        }
-    }
-
-    public static void main(String[] args) {
-        Steque<Character> steque = new Steque<>();
-        while (!StdIn.isEmpty()) {
-            Character character = StdIn.readChar();
-            if (Character.isUpperCase(character)) steque.push(character);
-            else if (Character.isLowerCase(character)) steque.enqueue(character);
-            else if (character.equals('-')) StdOut.print(steque.pop() + " ");
-        }
-        StdOut.println("(" + steque.size() + " left on stack)");
-        for (Character s : steque) {
-            StdOut.print(s + " ");
         }
     }
 }

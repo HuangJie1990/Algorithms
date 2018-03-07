@@ -73,32 +73,6 @@ public class FastCollinearPoints {
         }
     }
 
-    public int numberOfSegments() {
-        return lines.size();
-    }
-
-    public LineSegment[] segments() {
-
-        return segments;
-    }
-
-    private void validate(Point p) {
-        if (p == null) throw new IllegalArgumentException("point is null");
-    }
-
-    private void check(Point v, Point w) {
-        if (v.compareTo(w) == 0) throw new IllegalArgumentException("there are repeated points");
-    }
-
-    private boolean permutation(Point[] a, Point[] b) {
-        int sizea = a.length;
-        int sizeb = b.length;
-        if (sizea != sizeb) return false;
-        else if (a[0].compareTo(b[0]) != 0) return false;
-        else if (a[sizea - 1].compareTo(b[sizeb - 1]) != 0) return false;
-        else return true;
-    }
-
     public static void main(String[] args) {
 
         // read the n points from a file
@@ -127,5 +101,31 @@ public class FastCollinearPoints {
             segment.draw();
         }
         StdDraw.show();
+    }
+
+    public int numberOfSegments() {
+        return lines.size();
+    }
+
+    public LineSegment[] segments() {
+
+        return segments;
+    }
+
+    private void validate(Point p) {
+        if (p == null) throw new IllegalArgumentException("point is null");
+    }
+
+    private void check(Point v, Point w) {
+        if (v.compareTo(w) == 0) throw new IllegalArgumentException("there are repeated points");
+    }
+
+    private boolean permutation(Point[] a, Point[] b) {
+        int sizea = a.length;
+        int sizeb = b.length;
+        if (sizea != sizeb) return false;
+        else if (a[0].compareTo(b[0]) != 0) return false;
+        else if (a[sizea - 1].compareTo(b[sizeb - 1]) != 0) return false;
+        else return true;
     }
 }

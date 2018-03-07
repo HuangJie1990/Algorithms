@@ -36,6 +36,17 @@ public class PrimMST extends MST {
         }
     }
 
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        EdgeWeightedGraph graph = new EdgeWeightedGraph(in);
+        StdOut.println(graph);
+        MST mst = new PrimMST(graph);
+        for (Edge e : mst.edges()) {
+            StdOut.println(e);
+        }
+        StdOut.println(mst.weight());
+    }
+
     @Override
     public Iterable<Edge> edges() {
         Bag<Edge> bag = new Bag<>();
@@ -67,16 +78,5 @@ public class PrimMST extends MST {
                 else pq.insert(w, distTo[w]);
             }
         }
-    }
-
-    public static void main(String[] args){
-        In in=new In(args[0]);
-        EdgeWeightedGraph graph=new EdgeWeightedGraph(in);
-        StdOut.println(graph);
-        MST mst=new PrimMST(graph);
-        for(Edge e:mst.edges()){
-            StdOut.println(e);
-        }
-        StdOut.println(mst.weight());
     }
 }

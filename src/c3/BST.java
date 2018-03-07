@@ -9,20 +9,6 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
 
     private Node root;
 
-    private class Node {
-        private Key key;
-        private Value value;
-        private Node left;
-        private Node right;
-        private int n;
-
-        public Node(Key key, Value value, int n) {
-            this.key = key;
-            this.value = value;
-            this.n = n;
-        }
-    }
-
     @Override
     public Key min() {
         if (root == null) throw new NoSuchElementException("called min() with empty symbol table");
@@ -192,6 +178,14 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         return get(root, key);
     }
+
+    private Value get(Node x, Key key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp > 0) return get(x.right, key);
+        else if (cmp < 0) return get(x.left, key);
+        else return x.value;
+    }
 //    public Value get(Key key) {
 //        Node x = root;
 //        while (x != null) {
@@ -202,15 +196,6 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
 //        }
 //        return null;
 //    }
-
-
-    private Value get(Node x, Key key) {
-        if (x == null) return null;
-        int cmp = key.compareTo(x.key);
-        if (cmp > 0) return get(x.right, key);
-        else if (cmp < 0) return get(x.left, key);
-        else return x.value;
-    }
 
     @Override
     public void delete(Key key) {
@@ -261,16 +246,30 @@ public class BST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> 
         return keys(min(), max());
     }
 
-    //中序遍历
-
-    public void print(){
+    public void print() {
         print(root);
     }
+
+    //中序遍历
 
     private void print(Node x) {
         if (x == null) return;
         print(x.left);
         StdOut.print(x.key + " ");
         print(x.right);
+    }
+
+    private class Node {
+        private Key key;
+        private Value value;
+        private Node left;
+        private Node right;
+        private int n;
+
+        public Node(Key key, Value value, int n) {
+            this.key = key;
+            this.value = value;
+            this.n = n;
+        }
     }
 }

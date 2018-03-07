@@ -8,6 +8,8 @@ import edu.princeton.cs.algs4.StdOut;
  **/
 public class Sort {
 
+    private static int cmp;
+
     private Sort() {
     }
 
@@ -24,8 +26,6 @@ public class Sort {
         }
         return true;
     }
-
-    private static int cmp;
 
     public static boolean less(Comparable v, Comparable w) {
         cmp++;

@@ -14,8 +14,8 @@ import java.util.Arrays;
 public class BruteCollinearPoints {
 
     private final ArrayList<LineSegment> lines;
-    private LineSegment[] segments;
     private final Point[] p;
+    private LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
 
@@ -56,22 +56,6 @@ public class BruteCollinearPoints {
         segments = lines.toArray(new LineSegment[lines.size()]);
     }
 
-    public int numberOfSegments() {
-        return lines.size();
-    }
-
-    public LineSegment[] segments() {
-        return segments;
-    }
-
-    private void validate(Point point) {
-        if (point == null) throw new IllegalArgumentException("point is null");
-    }
-
-    private void check(Point v, Point w) {
-        if (v.compareTo(w) == 0) throw new IllegalArgumentException("there are repeated points");
-    }
-
     public static void main(String[] args) {
 
         // read the n points from a file
@@ -100,5 +84,21 @@ public class BruteCollinearPoints {
             segment.draw();
         }
         StdDraw.show();
+    }
+
+    public int numberOfSegments() {
+        return lines.size();
+    }
+
+    public LineSegment[] segments() {
+        return segments;
+    }
+
+    private void validate(Point point) {
+        if (point == null) throw new IllegalArgumentException("point is null");
+    }
+
+    private void check(Point v, Point w) {
+        if (v.compareTo(w) == 0) throw new IllegalArgumentException("there are repeated points");
     }
 }

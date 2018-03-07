@@ -12,9 +12,9 @@ public class LinkedStack<Item> extends Stack<Item> {
         if (item == null) throw new IllegalArgumentException("argument to push(Item item) is null");
         Node oldFirst = first;
         first = new Node();
-        first.item=item;
-        if(isEmpty()) last=first;
-        else first.next=oldFirst;
+        first.item = item;
+        if (isEmpty()) last = first;
+        else first.next = oldFirst;
         n++;
     }
 
@@ -27,14 +27,14 @@ public class LinkedStack<Item> extends Stack<Item> {
         return item;
     }
 
-    private class Node {
-        Item item;
-        Node next;
-    }
-
     @Override
     public Iterator<Item> iterator() {
         return new LinkedStackIterator();
+    }
+
+    private class Node {
+        Item item;
+        Node next;
     }
 
     private class LinkedStackIterator implements Iterator<Item> {

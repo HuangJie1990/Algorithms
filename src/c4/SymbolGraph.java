@@ -41,6 +41,18 @@ public class SymbolGraph {
         }
     }
 
+    public static void main(String[] args) {
+        String filename = args[0];
+        String delim = args[1];
+        SymbolGraph sg = new SymbolGraph(filename, delim);
+        Graph graph = sg.G();
+
+        while (StdIn.hasNextLine()) {
+            String source = StdIn.readLine();
+            for (int w : graph.adj(sg.index(source))) StdOut.println("    " + sg.name(w));
+        }
+    }
+
     public Graph G() {
         return G;
     }
@@ -55,17 +67,5 @@ public class SymbolGraph {
 
     public String name(int v) {
         return keys[v];
-    }
-
-    public static void main(String[] args) {
-        String filename = args[0];
-        String delim = args[1];
-        SymbolGraph sg = new SymbolGraph(filename, delim);
-        Graph graph = sg.G();
-
-        while (StdIn.hasNextLine()) {
-            String source = StdIn.readLine();
-            for (int w : graph.adj(sg.index(source))) StdOut.println("    " + sg.name(w));
-        }
     }
 }

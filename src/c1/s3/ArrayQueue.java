@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ArrayQueue<Item> extends Queue<Item> {
-    private Item[] items;
     private static final int DEFAULT_CAPACITY = 1;
+    private Item[] items;
 
     public ArrayQueue() {
         this(DEFAULT_CAPACITY);

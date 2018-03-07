@@ -23,7 +23,7 @@ public class LSD {
             int[] count = new int[R + 1];
             //计算频率
             for (int i = 0; i < N; i++) {
-                count[strings[i].charAt(w)+1]++;
+                count[strings[i].charAt(w) + 1]++;
             }
             //将频率转换为索引
             for (int i = 0; i < R; i++) {
@@ -44,7 +44,7 @@ public class LSD {
         In in = new In("src\\c5\\lsd.txt");
         String[] strings = in.readAllStrings();
         sort(strings, strings[0].length());
-        for(String s:strings){
+        for (String s : strings) {
             StdOut.println(s);
         }
     }

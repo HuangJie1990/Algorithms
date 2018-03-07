@@ -20,9 +20,9 @@ public class MergeX {
         Merge.merge(a, aux, lo, mid, hi);
     }
 
-    public static void sort(Comparable[] a){
-        int n=a.length;
-        Comparable[] aux=new Comparable[n];
-        sort(a,aux,0,n-1);
+    public static void sort(Comparable[] a) {
+        int n = a.length;
+        Comparable[] aux = new Comparable[n];
+        sort(a, aux, 0, n - 1);
     }
 }

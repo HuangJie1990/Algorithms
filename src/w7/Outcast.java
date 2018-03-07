@@ -16,6 +16,19 @@ public class Outcast {
         this.wordnet = wordnet;
     }
 
+    // see test client below
+    public static void main(String[] args) {
+        Stopwatch stopwatch1 = new Stopwatch();
+        WordNet wordnet = new WordNet(args[0], args[1]);
+        Outcast outcast = new Outcast(wordnet);
+        for (int t = 2; t < args.length; t++) {
+            In in = new In(args[t]);
+            String[] nouns = in.readAllStrings();
+            StdOut.println(args[t] + ": " + outcast.outcast(nouns));
+        }
+        StdOut.println(stopwatch1.elapsedTime());
+    }
+
     // given an array of WordNet nouns, return an outcast
     public String outcast(String[] nouns) {
         int max = -1;
@@ -34,18 +47,5 @@ public class Outcast {
             }
         }
         return smax;
-    }
-
-    // see test client below
-    public static void main(String[] args) {
-        Stopwatch stopwatch1 = new Stopwatch();
-        WordNet wordnet = new WordNet(args[0], args[1]);
-        Outcast outcast = new Outcast(wordnet);
-        for (int t = 2; t < args.length; t++) {
-            In in = new In(args[t]);
-            String[] nouns = in.readAllStrings();
-            StdOut.println(args[t] + ": " + outcast.outcast(nouns));
-        }
-        StdOut.println(stopwatch1.elapsedTime());
     }
 }

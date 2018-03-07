@@ -20,6 +20,27 @@ public class QueueWithTwoStacks<Item> implements Iterable<Item> {
         stack2 = new Stack<>();
     }
 
+    public static void main(String[] args) {
+        QueueWithTwoStacks<String> queue = new QueueWithTwoStacks<>();
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (item.equals("-") && !queue.isEmpty()) {
+                StdOut.print(queue.dequeue() + " ");
+            } else if (item.equals("show")) {
+                for (String s : queue) {
+                    StdOut.println(s);
+                }
+            } else if (item.equals("size")) {
+                StdOut.println("(" + queue.size() + " left on stack)");
+            } else if (item.equals("exit")) {
+                break;
+            } else {
+                queue.enqueue(item);
+            }
+        }
+        StdOut.println("(" + queue.size() + " left on stack)");
+    }
+
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -82,26 +103,5 @@ public class QueueWithTwoStacks<Item> implements Iterable<Item> {
         public void remove() {
             throw new UnsupportedOperationException("remove is unsupported");
         }
-    }
-
-    public static void main(String[] args) {
-        QueueWithTwoStacks<String> queue = new QueueWithTwoStacks<>();
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (item.equals("-") && !queue.isEmpty()) {
-                StdOut.print(queue.dequeue() + " ");
-            } else if (item.equals("show")) {
-                for (String s : queue) {
-                    StdOut.println(s);
-                }
-            } else if (item.equals("size")) {
-                StdOut.println("(" + queue.size() + " left on stack)");
-            } else if (item.equals("exit")) {
-                break;
-            } else {
-                queue.enqueue(item);
-            }
-        }
-        StdOut.println("(" + queue.size() + " left on stack)");
     }
 }

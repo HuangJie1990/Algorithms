@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.Transaction;
 
 public class TopM {
     public static void main(String[] args) {
-        int M=Integer.parseInt(args[0]);
+        int M = Integer.parseInt(args[0]);
         In in = new In(args[1]);
         PriorityQueue<Transaction> pq = new MaxPQ<>(0);
         StdOut.println(pq.max());

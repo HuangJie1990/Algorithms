@@ -9,14 +9,22 @@ public class ChainTableBag<Item> implements Iterable<Item> {
     private int n;
     private Node first;
 
+    public static void main(String[] args) {
+
+        ChainTableBag<Integer> chainTableBag = new ChainTableBag<>();
+        for (int i = 0; i < 10; i++) {
+            chainTableBag.add(i);
+            StdOut.println(String.format("Add %d into bag, the size of bag is %d", i, chainTableBag.size()));
+        }
+
+        for (int i : chainTableBag) {
+            StdOut.println(i);
+        }
+    }
+
     @Override
     public Iterator<Item> iterator() {
         return new BagIterator();
-    }
-
-    private class Node {
-        Item item;
-        Node next;
     }
 
     public void add(Item item) {
@@ -35,6 +43,11 @@ public class ChainTableBag<Item> implements Iterable<Item> {
         return n;
     }
 
+    private class Node {
+        Item item;
+        Node next;
+    }
+
     private class BagIterator implements Iterator<Item> {
         Node firstNode = first;
 
@@ -48,19 +61,6 @@ public class ChainTableBag<Item> implements Iterable<Item> {
             Item item = firstNode.item;
             firstNode = firstNode.next;
             return item;
-        }
-    }
-
-    public static void main(String[] args){
-
-        ChainTableBag<Integer> chainTableBag=new ChainTableBag<>();
-        for (int i = 0; i < 10; i++) {
-            chainTableBag.add(i);
-            StdOut.println(String.format("Add %d into bag, the size of bag is %d",i,chainTableBag.size()));
-        }
-
-        for (int i:chainTableBag){
-            StdOut.println(i);
         }
     }
 }

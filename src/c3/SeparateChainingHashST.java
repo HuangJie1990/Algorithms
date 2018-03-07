@@ -32,8 +32,7 @@ public class SeparateChainingHashST<Key, Value> {
         st[hash(key)].put(key, value);
     }
 
-    public Iterable<Key> keys()
-    {
+    public Iterable<Key> keys() {
         Queue<Key> queue = new Queue<>();
         for (SequentialSearchST<Key, Value> sequentialSearchST : st) {
             for (Key key : sequentialSearchST.keys()) {

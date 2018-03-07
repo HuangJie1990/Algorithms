@@ -12,8 +12,8 @@ public class LinkedQueue<Item> extends Queue<Item> {
         if (item == null) throw new IllegalArgumentException("argument to push(Item item) is null");
         Node oldLast = last;
         last = new Node();
-        last.item=item;
-        last.next=null;
+        last.item = item;
+        last.next = null;
         if (isEmpty()) first = last;
         else oldLast.next = last;
         n++;

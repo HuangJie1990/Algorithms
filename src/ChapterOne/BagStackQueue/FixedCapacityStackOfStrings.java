@@ -2,8 +2,6 @@ package ChapterOne.BagStackQueue;
 
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.Iterator;
-
 /**
  * @Author 黄杰
  * @Date 2017-11-09 11:23
@@ -18,6 +16,20 @@ public class FixedCapacityStackOfStrings {
 
     public FixedCapacityStackOfStrings(int cap) {
         strings = new String[cap];
+    }
+
+    public static void main(String[] args) {
+        FixedCapacityStackOfStrings fixedCapacityStackOfStrings = new FixedCapacityStackOfStrings(10);
+        for (int i = 0; i < 10; i++) {
+            fixedCapacityStackOfStrings.push(Integer.toString(i));
+            StdOut.println(String.format("The stack push %s out, the size of stack is %d, is the stack empty: %b, is the stack full: %b", Integer.toString(i), fixedCapacityStackOfStrings.size(), fixedCapacityStackOfStrings.isEmpty(), fixedCapacityStackOfStrings.isFull()));
+        }
+
+
+        while (!fixedCapacityStackOfStrings.isEmpty()) {
+            String s = fixedCapacityStackOfStrings.pop();
+            StdOut.println(String.format("The stack pop %s out, the size of stack is %d, is the stack empty: %b", s, fixedCapacityStackOfStrings.size(), fixedCapacityStackOfStrings.isEmpty()));
+        }
     }
 
     public void push(String string) {
@@ -38,21 +50,7 @@ public class FixedCapacityStackOfStrings {
         return n;
     }
 
-    public boolean isFull(){
-        return n==strings.length;
-    }
-
-    public static void main(String[] args) {
-        FixedCapacityStackOfStrings fixedCapacityStackOfStrings = new FixedCapacityStackOfStrings(10);
-        for (int i = 0; i < 10; i++) {
-            fixedCapacityStackOfStrings.push(Integer.toString(i));
-            StdOut.println(String.format("The stack push %s out, the size of stack is %d, is the stack empty: %b, is the stack full: %b", Integer.toString(i), fixedCapacityStackOfStrings.size(), fixedCapacityStackOfStrings.isEmpty(),fixedCapacityStackOfStrings.isFull()));
-        }
-
-
-        while (!fixedCapacityStackOfStrings.isEmpty()) {
-            String s = fixedCapacityStackOfStrings.pop();
-            StdOut.println(String.format("The stack pop %s out, the size of stack is %d, is the stack empty: %b", s, fixedCapacityStackOfStrings.size(), fixedCapacityStackOfStrings.isEmpty()));
-        }
+    public boolean isFull() {
+        return n == strings.length;
     }
 }

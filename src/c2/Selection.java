@@ -10,7 +10,7 @@ public class Selection {
     }
 
     public static void sort(Comparable[] a) {
-        int N=a.length;
+        int N = a.length;
         for (int i = 0; i < N; i++) {
             int min = i;
             //比较N-j次，共比较（N-1)N/2次

@@ -21,15 +21,15 @@ public class SearchTest {
         }*/
 
 
-        DFS dfs=new IterativeDepthFirstSearch(graph,s);
+        DFS dfs = new IterativeDepthFirstSearch(graph, s);
         for (int v = 0; v < graph.V(); v++) {
-            if(dfs.marked(v)){
+            if (dfs.marked(v)) {
                 StdOut.print(v + " ");
             }
         }
         StdOut.println();
 
-        if(dfs.count()<graph.V()){
+        if (dfs.count() < graph.V()) {
             StdOut.println("Not connected");
         }
     }

@@ -29,7 +29,7 @@ public class WeightedQuickUnionWithCompressionUF {
 
     private int root(int i) {
         while (id[i] != i) {
-            id[i]=id[id[i]];
+            id[i] = id[id[i]];
             i = id[i];
         }
         return i;

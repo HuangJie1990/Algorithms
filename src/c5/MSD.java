@@ -8,9 +8,9 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class MSD {
 
+    private static final int M = 0;
     private static Alphabet alphabet = Alphabet.LOWERCASE;
     private static int R = alphabet.R();
-    private static final int M = 0;
     private static String[] aux;
 
 

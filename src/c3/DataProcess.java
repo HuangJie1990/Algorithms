@@ -30,6 +30,6 @@ public class DataProcess {
                 bst.keys("D", "V")) {
             StdOut.print(key + " ");
         }
-        StdOut.print(bst.size("D","V"));
+        StdOut.print(bst.size("D", "V"));
     }
 }

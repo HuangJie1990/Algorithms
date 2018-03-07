@@ -25,7 +25,7 @@ public class CC {
         for (int w : graph.adj(v)) {
             if (!marked[w]) {
 //                dfs(graph, w);
-                bfs(graph,v);
+                bfs(graph, v);
             }
         }
     }

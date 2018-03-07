@@ -8,17 +8,20 @@ import java.util.LinkedList;
  **/
 public class Interview {
 
-    private Interview(){};
+    private Interview() {
+    }
 
-    public void shuffle(LinkedList<Comparable> list){
+    ;
+
+    public void shuffle(LinkedList<Comparable> list) {
 
     }
 
-    public void shuffle(LinkedList<Comparable> list,LinkedList<Comparable> aux,int lo,int hi){
+    public void shuffle(LinkedList<Comparable> list, LinkedList<Comparable> aux, int lo, int hi) {
 
     }
 
-    public void merge(LinkedList<Comparable> list,LinkedList<Comparable> aux,int lo,int mid,int hi){
+    public void merge(LinkedList<Comparable> list, LinkedList<Comparable> aux, int lo, int mid, int hi) {
 
     }
 }

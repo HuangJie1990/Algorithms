@@ -28,8 +28,8 @@ public class Board {
                 }
                 if (b[i][j] != d * i + j + 1) {
                     hamming++;
-                    manhattan += Math.abs((b[i][j]-1) / d - i);
-                    manhattan += Math.abs((b[i][j]-1) % d - j);
+                    manhattan += Math.abs((b[i][j] - 1) / d - i);
+                    manhattan += Math.abs((b[i][j] - 1) % d - j);
                 }
             }
         }

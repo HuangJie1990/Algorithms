@@ -1,24 +1,13 @@
 package c3;
 
 import edu.princeton.cs.algs4.Queue;
+
 public class SequentialSearchST<Key, Value> {
 
     private Node first;
     private int n;
 
     public SequentialSearchST() {
-    }
-
-    private class Node {
-        Key key;
-        Value value;
-        Node next;
-
-        public Node(Key key, Value value, Node next) {
-            this.key = key;
-            this.value = value;
-            this.next = next;
-        }
     }
 
     public Value get(Key key) {
@@ -87,5 +76,17 @@ public class SequentialSearchST<Key, Value> {
             queue.enqueue(x.key);
         }
         return queue;
+    }
+
+    private class Node {
+        Key key;
+        Value value;
+        Node next;
+
+        public Node(Key key, Value value, Node next) {
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
     }
 }

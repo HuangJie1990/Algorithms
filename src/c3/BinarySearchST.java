@@ -7,14 +7,17 @@ import java.util.NoSuchElementException;
 public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<Key, Value> {
 
     private static final int InitialCapacity = 2;
-
+    private Key[] keys;
+    private Value[] values;
+    private int n;
     public BinarySearchST() {
         this(InitialCapacity);
     }
 
-    private Key[] keys;
-    private Value[] values;
-    private int n;
+    public BinarySearchST(int capacity) {
+        keys = (Key[]) new Comparable[capacity];
+        values = (Value[]) new Object[capacity];
+    }
 
     private void resize(int capacity) {
         assert capacity >= n;
@@ -26,11 +29,6 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> extends SortST<K
         }
         keys = keysTemp;
         values = valuesTemp;
-    }
-
-    public BinarySearchST(int capacity) {
-        keys = (Key[]) new Comparable[capacity];
-        values = (Value[]) new Object[capacity];
     }
 
     @Override

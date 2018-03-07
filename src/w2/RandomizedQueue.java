@@ -15,6 +15,32 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         items = (Item[]) new Object[2];
     }
 
+    public static void main(String[] args) {
+        RandomizedQueue<String> queue = new RandomizedQueue<String>();
+
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+
+            if (item.equals("-") && !queue.isEmpty()) {
+                StdOut.print(queue.dequeue() + " ");
+            } else if (item.equals("--") && !queue.isEmpty()) {
+                StdOut.print(queue.sample() + " ");
+            } else if (item.equals("show")) {
+                for (String s : queue) {
+                    StdOut.println(s);
+                }
+            } else if (item.equals("size")) {
+                StdOut.println("(" + queue.size() + " left on stack)");
+            } else if (item.equals("exit")) {
+                break;
+            } else {
+                queue.enqueue(item);
+            }
+        }
+
+        StdOut.println("(" + queue.size() + " left on stack)");
+    }
+
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -45,14 +71,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return items[index];
     }
 
-
     @Override
     public Iterator<Item> iterator() {
         return new RandomizeIterator();
-    }
-
-    private class Node {
-        Item item;
     }
 
     private void resize(int cap) {
@@ -61,6 +82,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             temp[i] = items[i];
         }
         items = temp;
+    }
+
+    private class Node {
+        Item item;
     }
 
     private class RandomizeIterator implements Iterator<Item> {
@@ -92,31 +117,5 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         public void remove() {
             throw new UnsupportedOperationException("remove is unsupported");
         }
-    }
-
-    public static void main(String[] args) {
-        RandomizedQueue<String> queue = new RandomizedQueue<String>();
-
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-
-            if (item.equals("-") && !queue.isEmpty()) {
-                StdOut.print(queue.dequeue() + " ");
-            } else if (item.equals("--") && !queue.isEmpty()) {
-                StdOut.print(queue.sample() + " ");
-            } else if (item.equals("show")) {
-                for (String s : queue) {
-                    StdOut.println(s);
-                }
-            } else if (item.equals("size")) {
-                StdOut.println("(" + queue.size() + " left on stack)");
-            } else if (item.equals("exit")) {
-                break;
-            } else {
-                queue.enqueue(item);
-            }
-        }
-
-        StdOut.println("(" + queue.size() + " left on stack)");
     }
 }

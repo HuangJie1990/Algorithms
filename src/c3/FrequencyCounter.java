@@ -56,7 +56,7 @@ public class FrequencyCounter {
             st.put(s[i], ints[i]);
         }
         for (String key : st.keys()) {
-            System.out.println(String.format("%s's value is %d.",key,st.get(key)));
+            System.out.println(String.format("%s's value is %d.", key, st.get(key)));
         }
     }
 }

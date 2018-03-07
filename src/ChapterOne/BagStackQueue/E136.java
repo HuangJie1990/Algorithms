@@ -3,11 +3,11 @@ package ChapterOne.BagStackQueue;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 
-public class E136{
+public class E136 {
     //反转queue
-    public static void main(String[] args){
-        Stack<String> stack=new Stack<>();
-        Queue<String> queue=new Queue<>();
+    public static void main(String[] args) {
+        Stack<String> stack = new Stack<>();
+        Queue<String> queue = new Queue<>();
         queue.enqueue("one");
         queue.enqueue("two");
         queue.enqueue("three");

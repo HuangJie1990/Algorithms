@@ -29,6 +29,31 @@ public class Point implements Comparable<Point> {
     }
 
     /**
+     * Unit tests the Point data type.
+     */
+    public static void main(String[] args) {
+
+        In in = new In(args[0]);
+        int n = in.readInt();
+        Point[] points = new Point[n];
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
+        }
+
+        StdOut.println(points[0]);
+        Arrays.sort(points, points[0].slopeOrder());
+        for (int i = 0; i < n; i++) {
+            StdOut.println(points[i] + " " + points[0].slopeTo(points[i]));
+        }
+    }
+
+    private static void check(Point p) {
+        if (p == null) throw new NullPointerException();
+    }
+
+    /**
      * Draws this point to standard draw.
      */
     public void draw() {
@@ -93,7 +118,6 @@ public class Point implements Comparable<Point> {
         return new SlopeComparator(this);
     }
 
-
     /**
      * Returns a string representation of this point.
      * This method is provide for debugging;
@@ -104,27 +128,6 @@ public class Point implements Comparable<Point> {
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
-    }
-
-    /**
-     * Unit tests the Point data type.
-     */
-    public static void main(String[] args) {
-
-        In in = new In(args[0]);
-        int n = in.readInt();
-        Point[] points = new Point[n];
-        for (int i = 0; i < n; i++) {
-            int x = in.readInt();
-            int y = in.readInt();
-            points[i] = new Point(x, y);
-        }
-
-        StdOut.println(points[0]);
-        Arrays.sort(points, points[0].slopeOrder());
-        for (int i = 0; i < n; i++) {
-            StdOut.println(points[i] + " " + points[0].slopeTo(points[i]));
-        }
     }
 
     private class SlopeComparator implements Comparator<Point> {
@@ -140,10 +143,6 @@ public class Point implements Comparable<Point> {
             check(o2);
             return Double.compare(invokePoint.slopeTo(o1), invokePoint.slopeTo(o2));
         }
-    }
-
-    private static void check(Point p) {
-        if (p == null) throw new NullPointerException();
     }
 }
 

@@ -1,11 +1,7 @@
 package w5;
 
 
-import edu.princeton.cs.algs4.Point2D;
-import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.RectHV;
-import edu.princeton.cs.algs4.SET;
-import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.*;
 
 /**
  * @author
@@ -18,6 +14,10 @@ public class PointSET {
     //construct an empty set of points
     public PointSET() {
         ps = new SET<>();
+    }
+
+    public static void main(String[] args) {
+
     }
 
     //is the set empty
@@ -75,9 +75,5 @@ public class PointSET {
             }
         }
         return min;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

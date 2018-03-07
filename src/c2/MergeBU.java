@@ -12,9 +12,9 @@ public class MergeBU {
         int n = a.length;
         aux = new Comparable[n];
         for (int size = 1; size < n; size += size) {
-            for (int lo = 0; lo < n-size; lo += size * 2) {
-                int mid = lo + size - 1, hi = Math.min(lo + size * 2 - 1,n-1);
-                merge(a,lo,mid,hi);
+            for (int lo = 0; lo < n - size; lo += size * 2) {
+                int mid = lo + size - 1, hi = Math.min(lo + size * 2 - 1, n - 1);
+                merge(a, lo, mid, hi);
             }
         }
     }

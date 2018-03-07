@@ -9,6 +9,23 @@ public class ChainTableQueue<Item> implements Iterable<Item> {
     private Node last;
     private int n;
 
+    public static void main(String[] args) {
+
+        ChainTableQueue<Integer> chainTableQueue = new ChainTableQueue<>();
+        for (int i = 0; i < 10; i++) {
+            chainTableQueue.enqueue(i);
+            StdOut.println(String.format("Enqueue %d into queue, the size of queue is %d", i, chainTableQueue.size()));
+        }
+
+        for (int i : chainTableQueue) {
+            StdOut.println(i);
+        }
+
+        while (chainTableQueue.isEmpty()) {
+
+        }
+    }
+
     public void enqueue(Item item) {
         Node oldLast = last;
         last = new Node();
@@ -56,23 +73,6 @@ public class ChainTableQueue<Item> implements Iterable<Item> {
             Item item = first.item;
             first = first.next;
             return item;
-        }
-    }
-
-    public static void main(String[] args) {
-
-        ChainTableQueue<Integer> chainTableQueue = new ChainTableQueue<>();
-        for (int i = 0; i < 10; i++) {
-            chainTableQueue.enqueue(i);
-            StdOut.println(String.format("Enqueue %d into queue, the size of queue is %d", i, chainTableQueue.size()));
-        }
-
-        for (int i : chainTableQueue) {
-            StdOut.println(i);
-        }
-
-        while (chainTableQueue.isEmpty()){
-
         }
     }
 }

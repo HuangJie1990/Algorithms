@@ -32,10 +32,10 @@ public class WeightedQuickUnionUF {
         if (size[i] < size[j]) {
             id[i] = j;
             size[j] += size[i];
-            max[j] = Math.max(max[i],max[j]);
+            max[j] = Math.max(max[i], max[j]);
         } else {
             id[j] = i;
-            max[i] = Math.max(max[i],max[j]);
+            max[i] = Math.max(max[i], max[j]);
             size[i] += size[i];
         }
         count--;

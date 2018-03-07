@@ -9,10 +9,10 @@ import edu.princeton.cs.algs4.Stack;
  * @create 2018-02-27-11:34
  **/
 public class IterativeDepthFirstSearch extends DFS {
+    private final int s;
     private boolean[] marked;
     private int count;
     private int[] edgeTo;
-    private final int s;
 
     public IterativeDepthFirstSearch(Graph graph, int s) {
         this.s = s;

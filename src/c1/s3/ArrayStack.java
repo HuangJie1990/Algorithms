@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ArrayStack<Item> extends Stack<Item> {
-    private Item[] items;
     private static final int DEFAULT_CAPACITY = 1;
+    private Item[] items;
 
     public ArrayStack() {
         this(DEFAULT_CAPACITY);
@@ -28,7 +28,7 @@ public class ArrayStack<Item> extends Stack<Item> {
     public Item pop() {
         if (isEmpty()) throw new NoSuchElementException("stack is empty");
         Item item = items[--n];
-        items[n]=null;
+        items[n] = null;
         if (n > 0 && n == items.length / 4) resize(items.length / 2);
         return item;
     }

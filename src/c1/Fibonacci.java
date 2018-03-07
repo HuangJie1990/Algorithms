@@ -8,6 +8,8 @@ import edu.princeton.cs.algs4.StdOut;
  **/
 public class Fibonacci {
 
+    private static int[] f;
+
     private Fibonacci() {
     }
 
@@ -16,8 +18,6 @@ public class Fibonacci {
         f[0] = 0;
         f[1] = 1;
     }
-
-    private static int[] f;
 
 //    public static int fibonacci(int n) {
 //        if (n == 0) return 0;

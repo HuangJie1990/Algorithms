@@ -27,36 +27,6 @@ public class Graph {
         }
     }
 
-    public int V() {
-        return V;
-    }
-
-    public int E() {
-        return E;
-    }
-
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
-        adj[w].add(v);
-        E++;
-    }
-
-    public Iterable<Integer> adj(int v) {
-        return adj[v];
-    }
-
-    public String toString() {
-        String s = V + " vertices, " + E + " edges\n";
-        for (int i = 0; i < V; i++) {
-            s += i + ": ";
-            for (int w : this.adj(i)) {
-                s += w + " ";
-            }
-            s += "\n";
-        }
-        return s;
-    }
-
     public static int degree(Graph graph, int v) {
         int degree = 0;
         for (int w : graph.adj(v)) degree++;
@@ -87,5 +57,35 @@ public class Graph {
             }
         }
         return count / 2;
+    }
+
+    public int V() {
+        return V;
+    }
+
+    public int E() {
+        return E;
+    }
+
+    public void addEdge(int v, int w) {
+        adj[v].add(w);
+        adj[w].add(v);
+        E++;
+    }
+
+    public Iterable<Integer> adj(int v) {
+        return adj[v];
+    }
+
+    public String toString() {
+        String s = V + " vertices, " + E + " edges\n";
+        for (int i = 0; i < V; i++) {
+            s += i + ": ";
+            for (int w : this.adj(i)) {
+                s += w + " ";
+            }
+            s += "\n";
+        }
+        return s;
     }
 }

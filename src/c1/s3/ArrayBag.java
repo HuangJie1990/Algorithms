@@ -3,8 +3,8 @@ package c1.s3;
 import java.util.Iterator;
 
 public class ArrayBag<Item> extends Bag<Item> {
-    private Item[] items;
     private static final int DEFAULT_CAPACITY = 1;
+    private Item[] items;
 
     public ArrayBag() {
         super();

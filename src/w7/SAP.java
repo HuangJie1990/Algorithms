@@ -1,10 +1,6 @@
 package w7;
 
-import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
 import java.util.HashMap;
 
@@ -23,6 +19,19 @@ public class SAP {
         if (G == null) throw new IllegalArgumentException("argument is null");
         digraph = new Digraph(G);
         map = new HashMap<>();
+    }
+
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        Digraph digraph = new Digraph(in);
+        SAP sap = new SAP(digraph);
+        while (!StdIn.isEmpty()) {
+            int v = StdIn.readInt();
+            int w = StdIn.readInt();
+            int length = sap.length(v, w);
+            int ancestor = sap.ancestor(v, w);
+            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
+        }
     }
 
     // length of shortest ancestral path between v and w; -1 if no such path
@@ -151,19 +160,6 @@ public class SAP {
         Ancestor(int ancestor, int length) {
             this.ancestor = ancestor;
             this.length = length;
-        }
-    }
-
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digraph digraph = new Digraph(in);
-        SAP sap = new SAP(digraph);
-        while (!StdIn.isEmpty()) {
-            int v = StdIn.readInt();
-            int w = StdIn.readInt();
-            int length = sap.length(v, w);
-            int ancestor = sap.ancestor(v, w);
-            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
         }
     }
 }

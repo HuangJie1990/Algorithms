@@ -5,9 +5,9 @@ import c4.s2.Digraph;
 import edu.princeton.cs.algs4.Stack;
 
 public class DepthFirstPaths {
+    private final int s;
     private boolean marked[];
     private int edgeTo[];
-    private final int s;
 
     public DepthFirstPaths(Digraph digraph, int s) {
         marked = new boolean[digraph.V()];

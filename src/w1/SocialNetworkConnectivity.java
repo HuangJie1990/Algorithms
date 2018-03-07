@@ -47,6 +47,12 @@ public class SocialNetworkConnectivity {
         }
     }
 
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        SocialNetworkConnectivity snc = new SocialNetworkConnectivity(in);
+        StdOut.println(snc.time);
+    }
+
     //add member to st if st does contain this member already
     private void add(String key) {
         if (!st.contains(key))
@@ -60,11 +66,5 @@ public class SocialNetworkConnectivity {
 
     public String time() {
         return time;
-    }
-
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        SocialNetworkConnectivity snc = new SocialNetworkConnectivity(in);
-        StdOut.println(snc.time);
     }
 }

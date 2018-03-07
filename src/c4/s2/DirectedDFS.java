@@ -19,18 +19,9 @@ public class DirectedDFS {
         dfs(digraph, s);
     }
 
-    private void dfs(Digraph digraph, int v) {
-        marked[v] = true;
-        for (int w : digraph.adj(v)) if (!marked[w]) dfs(digraph, w);
-    }
-
     private DirectedDFS(Digraph digraph, Iterable<Integer> sources) {
         marked = new boolean[digraph.V()];
         for (int v : sources) dfs(digraph, v);
-    }
-
-    public boolean marked(int v) {
-        return marked[v];
     }
 
     public static void main(String[] args) {
@@ -50,5 +41,14 @@ public class DirectedDFS {
             }
         }
         StdOut.println();
+    }
+
+    private void dfs(Digraph digraph, int v) {
+        marked[v] = true;
+        for (int w : digraph.adj(v)) if (!marked[w]) dfs(digraph, w);
+    }
+
+    public boolean marked(int v) {
+        return marked[v];
     }
 }

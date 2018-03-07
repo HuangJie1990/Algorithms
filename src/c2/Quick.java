@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdRandom;
 public class Quick {
 
     private static int partition(Comparable[] a, int lo, int hi) {
-        int i = lo, j = hi+1;
+        int i = lo, j = hi + 1;
         while (true) {
             while (Sort.less(a[++i], a[lo])) {
                 if (i == hi) break;

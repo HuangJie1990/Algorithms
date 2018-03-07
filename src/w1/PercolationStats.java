@@ -42,6 +42,20 @@ public class PercolationStats {
 
     /**
      * @param
+     * @return void
+     * @description test client
+     **/
+    public static void main(String[] args) {
+        int n = Integer.parseInt(args[0]);
+        int trails = Integer.parseInt(args[1]);
+        PercolationStats percolationStats = new PercolationStats(n, trails);
+        StdOut.printf("%-25s= %f\n", "mean", percolationStats.mean());
+        StdOut.printf("%-25s= %f\n", "stddev", percolationStats.stddev());
+        StdOut.printf("%-25s= [%f, %f]\n", "95% confidence interval", percolationStats.confidenceLo(), percolationStats.confidenceHi());
+    }
+
+    /**
+     * @param
      * @return double,
      * @description sample mean of percolation threshold
      **/
@@ -74,19 +88,5 @@ public class PercolationStats {
      **/
     public double confidenceHi() {
         return mean + 1.96 * stddev / Math.sqrt(times);
-    }
-
-    /**
-     * @param
-     * @return void
-     * @description test client
-     **/
-    public static void main(String[] args) {
-        int n = Integer.parseInt(args[0]);
-        int trails = Integer.parseInt(args[1]);
-        PercolationStats percolationStats = new PercolationStats(n, trails);
-        StdOut.printf("%-25s= %f\n", "mean", percolationStats.mean());
-        StdOut.printf("%-25s= %f\n", "stddev", percolationStats.stddev());
-        StdOut.printf("%-25s= [%f, %f]\n", "95% confidence interval", percolationStats.confidenceLo(), percolationStats.confidenceHi());
     }
 }

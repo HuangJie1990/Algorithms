@@ -40,8 +40,8 @@ public class DijkstraSP extends SP {
         pq.insert(v, 0.0);
         while (!pq.isEmpty()) {
             int t = pq.delMin();
-            if(t==w) break;
-            relax(digraph,t);
+            if (t == w) break;
+            relax(digraph, t);
         }
     }
 
