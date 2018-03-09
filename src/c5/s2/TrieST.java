@@ -94,12 +94,27 @@ public class TrieST<Value> extends StringST<Value> {
 
     @Override
     void delete(String key) {
+        root = delete(root, key, 0);
+    }
 
+    private Node delete(Node x, String key, int d) {
+        if (x == null) return null;
+        if (d == key.length()) x.value = null;
+        else {
+            char c = key.charAt(d);
+            x.next[c] = delete(x.next[c], key, d + 1);
+        }
+        if (x.value != null) return x;
+
+        for (char c = 0; c < R; c++) {
+            if (x.next[c] != null) return x;
+        }
+        return null;
     }
 
     @Override
     boolean contains(String key) {
-        return false;
+        return get(key) != null;
     }
 
     @Override
@@ -154,6 +169,7 @@ public class TrieST<Value> extends StringST<Value> {
 
     @Override
     int size() {
+        //延时递归方法size()
         //return size(root);
         return N;
     }

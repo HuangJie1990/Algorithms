@@ -12,6 +12,7 @@ package w8;
 
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 
 public class PrintEnergy {
 
@@ -19,6 +20,7 @@ public class PrintEnergy {
         Picture picture = new Picture(args[0]);
         StdOut.printf("image is %d pixels wide by %d pixels high.\n", picture.width(), picture.height());
 
+        Stopwatch stopwatch=new Stopwatch();
         SeamCarver sc = new SeamCarver(picture);
 
         StdOut.printf("Printing energy calculated for each pixel.\n");
@@ -28,6 +30,7 @@ public class PrintEnergy {
                 StdOut.printf("%9.2f ", sc.energy(col, row));
             StdOut.println();
         }
+        StdOut.println(stopwatch.elapsedTime());
     }
 
 }
