@@ -1,6 +1,10 @@
 package w10;
 
 import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.HashMap;
 
 /**
  * An immutable data type that finds all valid wors in a given Boggle board, using a given dictionary
@@ -21,16 +25,31 @@ public class BoggleSolver {
         }
     }
 
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        String[] dictionary = in.readAllStrings();
+        BoggleSolver solver = new BoggleSolver(dictionary);
+        BoggleBoard board = new BoggleBoard(args[1]);
+        int score = 0;
+        for (String word :
+                solver.getAllValidWords(board)) {
+            StdOut.println(word);
+            score += solver.scoreOf(word);
+        }
+        StdOut.println("Score = " + score);
+    }
+
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
         int rows = board.rows(), cols = board.cols();
-        boolean[][] marked = new boolean[rows][cols];
+        HashMap<String, Integer> words = new HashMap<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-
+                boolean[][] marked = new boolean[rows][cols];
+                dfs(board, marked, i, j, new StringBuilder(), words);
             }
         }
-        return null;
+        return words.keySet();
     }
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
@@ -77,10 +96,14 @@ public class BoggleSolver {
         return dies;
     }
 
-    private void dfs(BoggleBoard board, boolean[][] marked, int row, int col, StringBuilder prefix, Bag<String> matches) {
+    private void dfs(BoggleBoard board, boolean[][] marked, int row, int col, StringBuilder prefix, HashMap<String, Integer> matches) {
         char c = board.getLetter(row, col);
+        boolean isQ = false;
         prefix.append(c);
-//        if (c == 'Q') prefix.append('U');
+        if (c == 'Q') {
+            isQ = true;
+            prefix.append('U');
+        }
         if (prefix.length() == 1) {
             if (!dic.hasKeysWithPrefix(prefix.toString())) return;
             marked[row][col] = true;
@@ -94,14 +117,24 @@ public class BoggleSolver {
                     if (!marked[die.row][die.col]) dfs(board, marked, die.row, die.col, prefix, matches);
                 }
             }
+            marked[row][col] = false;
+            prefix.deleteCharAt(prefix.length() - 1);
+            if (isQ) prefix.deleteCharAt(prefix.length() - 1);
         } else {
             if (dic.contains(prefix.toString())) {
                 marked[row][col] = true;
-                matches.add(prefix.toString());
+                matches.put(prefix.toString(), 0);
             }
             if (dic.hasKeysWithPrefix(prefix.toString())) {
-
+                marked[row][col] = true;
+                for (Die die :
+                        adj(board, row, col)) {
+                    if (!marked[die.row][die.col]) dfs(board, marked, die.row, die.col, prefix, matches);
+                }
             }
+            marked[row][col] = false;
+            prefix.deleteCharAt(prefix.length() - 1);
+            if (isQ) prefix.deleteCharAt(prefix.length() - 1);
         }
     }
 
@@ -113,8 +146,5 @@ public class BoggleSolver {
             this.row = row;
             this.col = col;
         }
-    }
-
-    public static void main(String[] args) {
     }
 }

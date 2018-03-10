@@ -236,7 +236,7 @@ public class OptTST<Value> {
             return true;
         }
         collect(x.mid, new StringBuilder(prefix), queue);
-        return false;
+        return queue.isEmpty() ? false : true;
     }
 
     // all keys in subtrie rooted at x with given prefix
