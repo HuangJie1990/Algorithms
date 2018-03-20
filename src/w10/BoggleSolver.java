@@ -3,6 +3,7 @@ package w10;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 
 import java.util.HashMap;
 
@@ -28,25 +29,44 @@ public class BoggleSolver {
     public static void main(String[] args) {
         In in = new In(args[0]);
         String[] dictionary = in.readAllStrings();
+        Stopwatch stopwatch = new Stopwatch();
+        for (int i = 0; i < 9; i++) {
+            BoggleSolver solver = new BoggleSolver(dictionary);
+            BoggleBoard board = new BoggleBoard(args[1]);
+            int score = 0;
+            for (String word :
+                    solver.getAllValidWords(board)) {
+//                StdOut.println(word);
+                score += solver.scoreOf(word);
+            }
+            StdOut.println("Score = " + score);
+        }
         BoggleSolver solver = new BoggleSolver(dictionary);
         BoggleBoard board = new BoggleBoard(args[1]);
         int score = 0;
         for (String word :
                 solver.getAllValidWords(board)) {
-            StdOut.println(word);
+//            StdOut.println(word);
             score += solver.scoreOf(word);
         }
         StdOut.println("Score = " + score);
+        StdOut.println(stopwatch.elapsedTime() / 10);
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
         int rows = board.rows(), cols = board.cols();
+        Bag<Die>[][] adj = (Bag<Die>[][]) new Bag[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                adj[i][j] = adj(board, i, j);
+            }
+        }
         HashMap<String, Integer> words = new HashMap<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 boolean[][] marked = new boolean[rows][cols];
-                dfs(board, marked, i, j, new StringBuilder(), words);
+                dfs(board, adj, marked, i, j, new StringBuilder(), words);
             }
         }
         return words.keySet();
@@ -96,7 +116,7 @@ public class BoggleSolver {
         return dies;
     }
 
-    private void dfs(BoggleBoard board, boolean[][] marked, int row, int col, StringBuilder prefix, HashMap<String, Integer> matches) {
+    private void dfs(BoggleBoard board, Bag<Die>[][] adj, boolean[][] marked, int row, int col, StringBuilder prefix, HashMap<String, Integer> matches) {
         char c = board.getLetter(row, col);
         boolean isQ = false;
         prefix.append(c);
@@ -107,14 +127,14 @@ public class BoggleSolver {
         if (prefix.length() == 1) {
             if (!dic.hasKeysWithPrefix(prefix.toString())) return;
             marked[row][col] = true;
-            for (Die die : adj(board, row, col)) {
-                if (!marked[die.row][die.col]) dfs(board, marked, die.row, die.col, prefix, matches);
+            for (Die die : adj[row][col]) {
+                if (!marked[die.row][die.col]) dfs(board, adj, marked, die.row, die.col, prefix, matches);
             }
         } else if (prefix.length() == 2) {
             if (dic.hasKeysWithPrefix(prefix.toString())) {
                 marked[row][col] = true;
-                for (Die die : adj(board, row, col)) {
-                    if (!marked[die.row][die.col]) dfs(board, marked, die.row, die.col, prefix, matches);
+                for (Die die : adj[row][col]) {
+                    if (!marked[die.row][die.col]) dfs(board, adj, marked, die.row, die.col, prefix, matches);
                 }
             }
             marked[row][col] = false;
@@ -127,9 +147,8 @@ public class BoggleSolver {
             }
             if (dic.hasKeysWithPrefix(prefix.toString())) {
                 marked[row][col] = true;
-                for (Die die :
-                        adj(board, row, col)) {
-                    if (!marked[die.row][die.col]) dfs(board, marked, die.row, die.col, prefix, matches);
+                for (Die die : adj[row][col]) {
+                    if (!marked[die.row][die.col]) dfs(board, adj, marked, die.row, die.col, prefix, matches);
                 }
             }
             marked[row][col] = false;
