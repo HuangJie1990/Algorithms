@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/git repository/CPPAlgorithms/List.cpp
+List.h
+E:/git repository/CPPAlgorithms/List.h
+
+E:/git repository/CPPAlgorithms/List.h
+algorithm
+-
+utility
+-
+
+E:/git repository/CPPAlgorithms/Radix.h
+iostream
+-
+
+E:/git repository/CPPAlgorithms/SuffixArray.cpp
+
+E:/git repository/CPPAlgorithms/SuffixArray.h
+iostream
+-
+cstring
+-
+algorithm
+-
+
+E:/git repository/CPPAlgorithms/Vector.cpp
+Vector.h
+E:/git repository/CPPAlgorithms/Vector.h
+
+E:/git repository/CPPAlgorithms/Vector.h
+algorithm
+-
+utility
+-
+
+E:/git repository/CPPAlgorithms/main.cpp
+iostream
+-
+Vector.h
+E:/git repository/CPPAlgorithms/Vector.h
+Radix.h
+E:/git repository/CPPAlgorithms/Radix.h
+SuffixArray.h
+E:/git repository/CPPAlgorithms/SuffixArray.h
+

@@ -2,7 +2,6 @@ package w11;
 
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
-import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Arrays;
 
@@ -78,14 +77,15 @@ public class BurrowsWheeler {
         // reconstruct the original input string
         for (int i = 0; next[i] != 0; ) {
             int j = next[i];
-            StdOut.print(head[j]);
+            BinaryStdOut.write(head[j]);
             i = j;
         }
-        StdOut.print(head[0]);
+        BinaryStdOut.write(head[0]);
+        BinaryStdOut.close();
     }
 
     public static void main(String[] args) {
-        if (args[0].contentEquals("-")) BurrowsWheeler.transform();
-        else if (args[0].contentEquals("+")) BurrowsWheeler.inverseTransform();
+        if (args[0].equals("-")) BurrowsWheeler.transform();
+        else if (args[0].equals("+")) BurrowsWheeler.inverseTransform();
     }
 }

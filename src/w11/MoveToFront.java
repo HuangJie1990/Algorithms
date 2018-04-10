@@ -8,17 +8,18 @@ import edu.princeton.cs.algs4.BinaryStdOut;
  * @create 2018-03-16-15:17
  **/
 public class MoveToFront {
+    private static final int R = 256;
 
     // apply move-to-front encoding, reading from standard input and writing to standard output
     public static void encode() {
-        char[] position = new char[256];
+        char[] position = new char[R];
         for (char i = 0; i < position.length; i++) {
             position[i] = i;
         }
         while (!BinaryStdIn.isEmpty()) {
             char c = BinaryStdIn.readChar();
             BinaryStdOut.write(position[c]);
-            for (int i = 0; i < 256; i++) {
+            for (int i = 0; i < R; i++) {
                 if (position[i] < position[c]) position[i]++;
             }
             position[c] = 0;
@@ -27,7 +28,7 @@ public class MoveToFront {
     }
 
     public static void decode() {
-        char[] position = new char[256];
+        char[] position = new char[R];
         for (char i = 0; i < position.length; i++) {
             position[i] = i;
         }
@@ -44,7 +45,7 @@ public class MoveToFront {
     }
 
     public static void main(String[] args) {
-        if (args[0].contentEquals("-")) MoveToFront.encode();
-        else if (args[0].contentEquals("+")) MoveToFront.decode();
+        if (args[0].equals("-")) MoveToFront.encode();
+        else if (args[0].equals("+")) MoveToFront.decode();
     }
 }
